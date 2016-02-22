@@ -1,0 +1,44 @@
+/*
+ *	Login Page
+ */
+
+.link-read-only {
+	width: 100%;
+	margin-top: 20px;
+}
+.bloc-read-only {
+	border-top: solid 1px #EEE;
+	margin-top: 30px;
+	padding-top: 30px;
+}
+
+/*
+ *	Common elements
+ */
+
+.alert-box {
+	position: absolute;
+	top: 60px;
+	right: 5px;
+	width: 300px;
+	z-index: 1000;
+}
+.alert-box-header {}
+.alert-box-header .alert {
+	margin-bottom: 0 !important;
+	padding: 14px;
+	font-weight: bold;
+}
+.multi-select-custom-style {
+	width: 100%;
+	max-height: 83px;
+	border: none !important;
+	background: transparent !important;
+	/*overflow-y: auto;
+	overflow-x: hidden;*/
+}
+.multi-select-custom-style .add-element{
+	height:12px;
+	width:12px;
+	float:right;
+}

@@ -1,0 +1,11 @@
+<ui-select ui-select-wrap ng-model="MODEL_COL_FIELD" theme="selectize" ng-disabled="disabled" ng-change="grid.appScope.setRowDirty(grid, row.entity, col.name)" append-to-body="true">
+	<ui-select-match placeholder="Sélectionner...">
+		<span ng-show="COL_FIELD.libelle">{{ COL_FIELD.libelle }}</span>
+		<small ng-show="!COL_FIELD.libelle"><b>{{ COL_FIELD.code }}</b></small>
+		<button class="clear-ui-select" ng-click="grid.appScope.clear($event, grid, row, col)">X</button>
+	</ui-select-match>
+	<ui-select-choices repeat="item in col.colDef.editDropdownOptionsArray | filter: $select.search | orderBy:'libelle'">
+		<span ng-bind-html="item.libelle | highlight: $select.search">{{ item.libelle }}</span>
+		<span ng-show="item.libelle != item.code" ng-bind-html="item.code | highlight: $select.search">{{ item.code }}</span>
+	</ui-select-choices>
+</ui-select>

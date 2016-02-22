@@ -1,0 +1,10 @@
+<ui-select ui-select-wrap multiple sortable="true" ng-model="MODEL_COL_FIELD" theme="bootstrap" ng-change="grid.appScope.setRowDirty(grid, row.entity, col.name)" ng-disabled="!col.colDef.enableCellEdit" append-to-body="true" class="multi-select-custom-style">
+	<ui-select-match placeholder="Liste">{{$item.libelle}}</ui-select-match>
+	<ui-select-choices repeat="item.code as item in col.colDef.editDropdownOptionsArray | propsFilter: {libelle: $select.search, code: $select.search}">
+		<div ng-bind-html="item.libelle | highlight: $select.search"></div>
+		<small>
+			<span ng-show="item.rang">rang: {{item.rang}}</span>
+			<span ng-show="item.code">code: <span ng-bind-html="''+item.code | highlight: $select.search"></span></span>
+		</small>
+	</ui-select-choices>
+</ui-select>

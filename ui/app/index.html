@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" ng-app="boEditor">
+	<head>
+		<meta charset="utf-8">
+		<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+		
+		<title>BackOffice Editorialisation</title>
+
+		<link rel="shortcut icon" href="img/favicon.ico" />
+		<link rel="icon" href="img/favicon.ico" />
+		<link rel="icon" type="image/png" href="img/favicon.png" />
+		<link rel="shortcut icon" href="img/favicon.ico">
+			
+		<!-- CSS: Third-party 'bower-managed' dependencies -->
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="bower_components/ionicons/css/ionicons.min.css" />
+		<link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.min.css" />
+
+		<link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.min.css" />
+		<link rel="stylesheet" href="bower_components/ngprogress/ngProgress.css" />
+		<link rel="stylesheet" href="bower_components/selectize/dist/css/selectize.default.css" />
+		<link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css" />
+		<link rel="stylesheet" href="bower_components/angular-toggle-switch/angular-toggle-switch.css" />
+		
+		<!-- CSS: BO Filtres -->
+		<link rel="stylesheet" href="app_edito_filtres/css/app.css" />
+
+		<!-- CSS: BO Filtres -->
+		<link rel="stylesheet" href="app_edito_rubriques/css/app.css" />
+		<link rel="stylesheet" href="css/app.css" />
+
+		<!-- CSS: AdminLTE dependencies -->
+		<link rel="stylesheet" href="vendor/adminlte/dist/css/AdminLTE.css" />
+		<link rel="stylesheet" href="vendor/adminlte/dist/css/skins/_all-skins.min.css" />
+	</head>
+	<body class="fixed" ng-class="{'sidebar-collapse': toggleLeftSidebar, 'sidebar-open': toggleLeftSidebar}" ng-cloak>
+		<div class="view-container">
+			<div class="alert-box">
+  				<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+			</div>
+			<div ui-view></div>
+		</div>
+	
+		<!-- JS -->
+		<!-- JS Dependencies: Third-party 'bower-managed' dependencies -->
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="bower_components/angular/angular.min.js"></script>
+		<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+		<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+		<script src="bower_components/angular-route/angular-route.min.js"></script>
+		<script src="bower_components/angular-resource/angular-resource.min.js"></script>
+		<script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+	    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+		<script src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
+		<!--<script src="http://ui-grid.info/release/ui-grid-unstable.js"></script>-->
+		<script src="bower_components/angular-ui-select/dist/select.min.js"></script>
+		<script src="bower_components/URIjs/src/URI.min.js"></script>
+		<script src="bower_components/ngprogress/build/ngProgress.min.js"></script>
+		<script src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
+		<script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script> 
+		<script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+		<script src="bower_components/angular-toggle-switch/angular-toggle-switch.min.js"></script>
+
+		<!-- Admin LTE -->
+		<script src="vendor/adminlte/dist/js/app.js" type="text/javascript"></script>
+		<script src="vendor/adminlte/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+
+		<!-- Client Algolia -->
+		<script src="bower_components/algoliasearch/dist/algoliasearch.min.js"></script>
+
+		<!-- Async JS -->
+		<script type="text/javascript" src="bower_components/async/lib/async.js"></script>
+
+		<!-- Filter JS Scripts -->
+		<script src="app_edito_filtres/js/app.js"></script>
+		<script src="app_edito_filtres/js/conf/config.js"></script>
+		<script src="app_edito_filtres/js/controllers/main.js"></script>
+		<script src="app_edito_filtres/js/controllers/dashboard.js"></script>
+		<script src="app_edito_filtres/js/controllers/rubrique.js"></script>
+		<script src="app_edito_filtres/js/controllers/segment.js"></script>
+		<script src="app_edito_filtres/js/controllers/categorie.js"></script>
+		<script src="app_edito_filtres/js/controllers/critere.js"></script>
+		<script src="app_edito_filtres/js/controllers/publication.js"></script>
+		<script src="app_edito_filtres/js/controllers/previsualisation.js"></script>
+
+		<script src="app_edito_filtres/js/directives/main.js"></script>
+		<script src="app_edito_filtres/js/filters/main.js"></script>
+		<script src="app_edito_filtres/js/services/main.js"></script>
+		<script src="app_edito_filtres/js/animations/main.js"></script>
+
+		<!-- Rubriques JS Scripts -->
+		<script src="app_edito_rubriques/js/app.js"></script>
+		<script src="app_edito_rubriques/js/conf/config.js"></script>
+
+		<script src="app_edito_rubriques/js/controllers/main.js"></script>
+		<script src="app_edito_rubriques/js/controllers/dashboard.js"></script>
+		<script src="app_edito_rubriques/js/controllers/settings.js"></script>
+		<script src="app_edito_rubriques/js/controllers/contributif.js"></script>
+		<script src="app_edito_rubriques/js/controllers/cviv.js"></script>
+		<script src="app_edito_rubriques/js/controllers/thematiques.js"></script>
+		<script src="app_edito_rubriques/js/controllers/verticales_segments.js"></script>
+		<script src="app_edito_rubriques/js/controllers/liens_transactionnels_contenus.js"></script>
+		<script src="app_edito_rubriques/js/controllers/publication.js"></script>
+		<script src="app_edito_rubriques/js/controllers/history.js"></script>
+		<script src="app_edito_rubriques/js/directives/main.js"></script>
+		<script src="app_edito_rubriques/js/filters/main.js"></script>
+		<script src="app_edito_rubriques/js/services/main.js"></script>
+		
+		<script src="app_edito_rubriques/js/animations/main.js"></script>
+
+		<!-- Common JS Scripts -->
+		<script src="js/app.js"></script>
+		<script src="js/conf/config.js"></script>
+
+		<script src="js/controllers/main.js"></script>
+		<script src="js/controllers/user.js"></script>
+
+		<script src="js/services/main.js"></script>
+		<!-- Helper -->
+		<script src="js/services/helper.js"></script>
+	</body>
+</html>
