@@ -1,0 +1,11 @@
+logs/*
+!.gitkeep
+node_modules/
+tmp
+.idea
+.DS_Store
+angular-boEditoFilter-snapshots
+bower_components/
+/.project
+/.pydevproject
+npm-debug.log
