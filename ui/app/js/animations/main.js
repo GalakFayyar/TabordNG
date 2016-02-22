@@ -1,5 +1,6 @@
-'use strict';
+(function() {
+	'use strict';
 
-/* Animations */
-
-var boRubriqueEditorAnimations = angular.module('boRubriqueEditor.Animations', ['ngAnimate']);
+	/* Animations */
+	//angular.module('tabordNG');
+})();

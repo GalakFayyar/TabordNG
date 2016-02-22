@@ -1,23 +1,24 @@
-'use strict';
+(function() {
+	'use strict';
 
-/* Directives */
+	/* Directives */
 
-var boRubriqueEditorDirectives = angular.module('boRubriqueEditor.Directives', ['ui.grid', 'ui.grid.edit', 'ui.select']);
+	angular.module('tabordNG').directive('directiveEvalCodeAngularJs', directiveEvalCodeAngularJs);
+	angular.module('tabordNG').directive('uiSelectWrap', uiSelectWrap);
 
-boRubriqueEditorDirectives.directive('directiveEvalCodeAngularJs', function($compile, $parse) {
-	return {
-		restrict: 'A',
-		link: function(scope, element, attr) {
-			scope.$watch(attr.content, function() {
-				element.html($parse(attr.content)(scope))
-				$compile(element.contents())(scope)
-			}, true)
+	function directiveEvalCodeAngularJs ($compile, $parse) {
+		return {
+			restrict: 'A',
+			link: function(scope, element, attr) {
+				scope.$watch(attr.content, function() {
+					element.html($parse(attr.content)(scope))
+					$compile(element.contents())(scope)
+				}, true)
+			}
 		}
 	}
-});
 
-boRubriqueEditorDirectives.directive('uiSelectWrap', ['$document', 'uiGridEditConstants', 
-	function ($document, uiGridEditConstants) {
+	function uiSelectWrap ($document, uiGridEditConstants) {
 		return {
 			restrict : 'A',
 			link: function(scope, element, attr) {
@@ -31,4 +32,4 @@ boRubriqueEditorDirectives.directive('uiSelectWrap', ['$document', 'uiGridEditCo
 			}
 		}
 	}
-]);
+})();

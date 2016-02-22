@@ -1,12 +1,14 @@
-'use strict';
+(function() {
+	'use strict';
 
-/* Config */
+	/* Config */
 
-angular.module('tabordng.Config', []).constant('tabordngConfig', {
-	'version': '0.0.1',
-	'apis': {
-		//TODO : define url authentification api
-	},
-	'activateLogging': true,
-	'timeoutAlertMessages': 5000
-});
+	angular.module('tabordNG').constant('tabordngConfig', {
+		'version': '0.0.1',
+		'api': {
+			'url': 'http://localhost:8079/tabord/api/' //TODO : define url authentification api
+		},
+		'activateLogging': true,
+		'timeoutAlertMessages': 5000
+	});
+})();

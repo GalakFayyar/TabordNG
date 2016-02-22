@@ -1,50 +1,54 @@
-'use strict';
+(function() {
+	'use strict';
 
-/* Filters */
-var boRubriqueEditoRubriques = angular.module('boRubriqueEditor.Filters', []);
+	/* Filters */
+	/*
+	*	Filtre qui permet de remplacer ngBindHtmlUnsafe
+	*/
+	angular.module('tabordNG').filter('unsafe', unsafe);
 
-/*
-*	Filtre qui permet de remplacer ngBindHtmlUnsafe
-*/
-boRubriqueEditoRubriques.filter('unsafe', function ($sce, $rootScope) {
-	return function (html) {
-		return $sce.trustAsHtml(html);
-	};
-});
+	function unsafe ($sce, $rootScope) {
+		return function (html) {
+			return $sce.trustAsHtml(html);
+		};
+	}
 
-/**
- * AngularJS default filter with the following expression:
- * "person in people | filter: {name: $select.search, age: $select.search}"
- * performs a AND between 'name: $select.search' and 'age: $select.search'.
- * We want to perform a OR.
- */
-boRubriqueEditoRubriques.filter('propsFilter', function () {
-  return function (items, props) {
-    var out = [];
+	/**
+	 * AngularJS default filter with the following expression:
+	 * "person in people | filter: {name: $select.search, age: $select.search}"
+	 * performs a AND between 'name: $select.search' and 'age: $select.search'.
+	 * We want to perform a OR.
+	 */
+	angular.module('tabordNG').filter('propsFilter', propsFilter);
 
-    if (angular.isArray(items)) {
-      items.forEach(function(item) {
-        var itemMatches = false;
+	function propsFilter () {
+	  	return function (items, props) {
+			var out = [];
 
-        var keys = Object.keys(props);
-        for (var i = 0; i < keys.length; i++) {
-          var prop = keys[i];
-          var text = props[prop].toLowerCase();
-          if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-            itemMatches = true;
-            break;
-          }
-        }
+			if (angular.isArray(items)) {
+				items.forEach(function (item) {
+					var itemMatches = false;
 
-        if (itemMatches) {
-          out.push(item);
-        }
-      });
-    } else {
-      // Let the output be the input untouched
-      out = items;
-    }
+					var keys = Object.keys(props);
+					for (var i = 0; i < keys.length; i++) {
+						var prop = keys[i];
+						var text = props[prop].toLowerCase();
+						if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+							itemMatches = true;
+							break;
+						}
+					}
 
-    return out;
-  };
-});
+					if (itemMatches) {
+						out.push(item);
+					}
+				});
+			} else {
+				// Let the output be the input untouched
+				out = items;
+			}
+
+			return out;
+		};
+	}
+})();
