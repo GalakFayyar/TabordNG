@@ -24,7 +24,7 @@
 					$rootScope.redirectLogin();
 				} else {
 					// TODO : default selon droit (premier bo autorisé pour le user)
-					$state.go('/');
+					$state.go('app');
 				}
 			}
 		);
@@ -34,6 +34,8 @@
 		$scope.password = '';
 		
 		$scope.login = function() {
+			$state.go('app');
+			/*
 			UserService.authenticate($.param({username : $scope.username, password : $scope.password}), function(authenticatedUser) {
 				$rootScope.user = authenticatedUser;
 
@@ -47,21 +49,22 @@
 						}
 
 						//$location.path("/");
-						$state.go('/');
+						$state.go('app');
 					}, function(){
 					});
 				}, function(){
-					$state.go('/');
+					$state.go('app');
 					//delete $rootScope.user;
 				});
 			});
+			*/
 		};
 
-		$scope.goToSelectedBo = function () {
+		$scope.authenticate_anonymous = function () {
 			$rootScope.user = {
 				username: 'anonymous'
 			};
-			$state.go('/');
+			$state.go('app');
 		};
 
 		$rootScope.checkUserGranted = function (action_to_check) {

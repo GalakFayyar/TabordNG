@@ -1,0 +1,33 @@
+<!-- Logo -->
+<a href ui-sref="app" ui-sref-opts="{reload: 'app'}" class="logo">Tabord <span class="color-red">NG</span></a>
+
+<!-- Header Navbar: style can be found in header.less -->
+<nav class="navbar navbar-static-top skin-blue" role="navigation">
+	<!-- Sidebar toggle button-->
+	<a href="" ng-click="toggleLeftSidebar()" class="sidebar-toggle" data-toggle="offcanvas" role="button"> <span class="sr-only">Toggle navigation</span></a>
+	<div class="navbar-custom-menu">
+		<ul class="nav navbar-nav">
+
+			<li style="margin-left:5px;margin-top:15px;color:#FFF;" ng-show="loading_freeze_mod.active">
+				<!-- <span>chargement...</span> -->
+				<i class="glyphicon glyphicon-repeat icon-refresh-animate"></i>
+			</li>
+
+			<!-- User Account: style can be found in dropdown.less -->
+			<li class="dropdown user user-menu">
+				<a href="" class="dropdown-toggle" data-toggle="dropdown">
+					<span class="hidden-xs">{{user.username}}</span><b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="" ng-click="changeBo()"><span class="glyphicon glyphicon-filter"></span> Edition des Filtres</a>
+					</li>
+					<li>
+						<a href="" ng-click="logout()"><span class="glyphicon glyphicon-off"></span> Logout</a>
+					</li>
+				</ul>
+			</li>
+			
+		</ul>
+	</div>
+</nav>

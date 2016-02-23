@@ -35,13 +35,13 @@
 		$stateProvider
 		.state('login', {
 			url: '/login',
-			templateUrl: 'views/login.html',
+			templateUrl: 'views/common/login.html',
 			controller: 'LoginController'
 		})
 		/******************************************************************/
 		.state('app', {
 			url: '/',
-			templateUrl: '/views/index.html',
+			templateUrl: 'views/index.html',
 			controller: 'MainController'
 		});
 		/******************************************************************/
