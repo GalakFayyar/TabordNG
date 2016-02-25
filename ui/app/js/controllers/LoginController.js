@@ -5,7 +5,7 @@
 
 	LoginController.$inject = ['$scope', '$rootScope', '$location', '$cookieStore', 'UserService', 'ConfigService', '$state'];
 	function LoginController ($scope, $rootScope, $location, $cookieStore, UserService, ConfigService, $state) {	
-		$scope.apiConfig = ConfigService.getConfig({}, function(apiConfig, getResponseHeaders) {
+		/*$scope.apiConfig = ConfigService.getConfig({}, function(apiConfig, getResponseHeaders) {
 				$rootScope.permissions = apiConfig.permissions;
 				$scope.features = apiConfig.features;
 
@@ -27,14 +27,32 @@
 					$state.go('app');
 				}
 			}
-		);
+		);*/
 
 		// initialisation des variables locales
 		$scope.username = '';
 		$scope.password = '';
 		
 		$scope.login = function() {
-			$state.go('app');
+			//$state.go('app');
+			UserService.authenticate({}, {username: $scope.username, password: $scope.password}, function (authenticatedUser) {
+				console.log(authenticatedUser);
+				if (authenticatedUser.data && authenticatedUser.data.authenticated) {
+					console.log('authentication succesful');
+					$rootScope.user = authenticatedUser;
+
+					if ($scope.rememberMe) {
+						$cookieStore.put('tabordngUser', $rootScope.user);
+					}
+
+					$state.go('app');
+				} else {
+					console.log('authentication failed');
+				}
+			}, function (toto) {
+				console.log(toto);
+			});
+
 			/*
 			UserService.authenticate($.param({username : $scope.username, password : $scope.password}), function(authenticatedUser) {
 				$rootScope.user = authenticatedUser;

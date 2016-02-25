@@ -3,29 +3,18 @@
 
 	/* Services */
 	angular.module('tabordNG').factory('UserService', UserService);
+	angular.module('tabordNG').factory('TestService', TestService);
 
-	UserService.$inject = ['$resource', '$rootScope', 'tabordngConfig'];
-	function UserService ($resource, $rootScope, tabordngConfig) {
-		return $resource(tabordngConfig.api.url + ':action/:username/:accessType', {}, {
+	UserService.$inject = ['$resource', 'tabordngConfig'];
+	function UserService ($resource, tabordngConfig) {
+		return $resource(tabordngConfig.api.url + ':action/:login', {}, {
 			authenticate : {
 				method : 'POST',
 				params : {
-					'action' : 'token'
+					'action' : 'authenticate'
 				},
 				headers : {
 					'Content-Type' : 'application/x-www-form-urlencoded'
-				}
-			},
-			check : {
-				method : 'GET',
-				params : {
-					'action' : 'check'
-				}
-			},
-			getUser : {
-				method : 'GET',
-				params : {
-					'action' : 'users'
 				}
 			},
 			logout : {
@@ -33,14 +22,17 @@
 				params : {
 					'action' : 'logout'
 				}
-			},
-			register : {
-				method : 'POST',
+			}
+		});
+	};
+
+	TestService.$inject = ['$resource', 'tabordngConfig'];
+	function TestService ($resource, tabordngConfig) {
+		return $resource(tabordngConfig.api.url + ':resource/:id', {}, {
+			get_codes_tva : {
+				method : 'GET',
 				params : {
-					'action' : 'register'
-				},
-				headers : {
-					'Content-Type' : 'application/json'
+					'resource': 'codes_tva'
 				}
 			}
 		});

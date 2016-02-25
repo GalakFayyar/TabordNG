@@ -48,7 +48,7 @@
 		$locationProvider.hashPrefix('!');
 
 		// Register error provider that shows message on failed requests or redirects to login page on unauthenticated requests
-		$httpProvider.interceptors.push(function ($q, $rootScope, $location, $timeout, $injector) {
+		/*$httpProvider.interceptors.push(function ($q, $rootScope, $location, $timeout, $injector) {
 			return {
 				'responseError' : function (rejection) {
 					var status = rejection.status,
@@ -87,8 +87,39 @@
 
 					return $q.reject(rejection);
 				}
+				'request' : function(config) {
+					var isRestCall = config.url.indexOf('api') !== 0;
+					//var isRestCall = (typeof config.url == 'string') ? (config.url.indexOf('api') != 0) : false;
+					if (isRestCall && angular.isDefined($rootScope.user)) {
+						var authToken = $rootScope.user.token;
+						if (boFilterEditorConfig.useAuthTokenHeader) {
+							config.headers['auth-token'] = authToken;
+							// Ajout user si API filtre (pas pour requete auth par ex)
+							if ((config.url.indexOf(boFilterEditorConfig.apis.bo_edito_filtres.url) != -1) || (config.url.indexOf(boFilterEditorConfig.apis.bo_edito_filtres_batchs.url) != -1)) {
+								config.headers.user = $rootScope.user.username;
+							}
+						} else {
+							config.url = config.url + '?token=' + authToken;
+						}
+
+						if (($rootScope.currentBackOffice === "BOEF" && $rootScope.isReadOnlyMode) || ($rootScope.currentBackOffice === "BOER" && $rootScope.isReadOnlyModeBOER) || !angular.isDefined($rootScope.user.token)) {
+							var canceler = $q.defer();
+							var forbiddenMethods = ['POST', 'PUT', 'DELETE'];
+							// Permission de by-pass du readonly : si utilisation de l'url standard pour BOER
+							if (forbiddenMethods.indexOf(config.method) >= 0 && config.url.indexOf('status/conf/readonly_mode/false') == -1) {
+								// on annule la requête http
+								config.timeout = canceler.promise;
+								canceler.resolve();
+
+								var ngProgress = $injector.get('ngProgress');
+								ngProgress.reset();
+							}
+						}
+					}
+					return config || $q.when(config);
+				}
 			};
-		});
+		});*/
 	}
 
 	tabordngRun.$inject = ['$rootScope', '$location', '$cookieStore', '$state', '$injector'];

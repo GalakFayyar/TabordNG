@@ -7,9 +7,15 @@
 	angular.module('tabordNG').controller('HeaderController', HeaderController);
 	angular.module('tabordNG').controller('FooterController', FooterController);
 
-	MainController.$inject = ['$scope'];
-	function MainController ($scope) {
+	MainController.$inject = ['$scope', 'TestService'];
+	function MainController ($scope, TestService) {
 		$scope.toto = "test";
+		var codes = TestService.get_codes_tva({}, function(values) {
+			console.log(values.data);
+		}, function (){
+			console.log('ERROR');
+		});
+		
 	}
 
 	HeaderController.$inject = ['$scope'];
