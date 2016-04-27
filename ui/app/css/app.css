@@ -50,6 +50,11 @@
 	text-align: right !important;
 	padding-top: 15px !important;
 }
+ul.sidebar-menu li.activated a{
+	font-weight: bold;
+	color: #fff;
+	border-left-color: #00a65a;
+}
 
 /*
  *	Tool classes

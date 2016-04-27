@@ -33,17 +33,29 @@
 		// MVC routing patterns
 		$urlRouterProvider.otherwise('/app');	// default route
 		$stateProvider
-		.state('login', {
-			url: '/login',
-			templateUrl: 'views/common/login.html',
-			controller: 'LoginController'
-		})
-		/******************************************************************/
-		.state('app', {
-			url: '/',
-			templateUrl: 'views/index.html',
-			controller: 'MainController'
-		});
+			.state('login', {
+				url: '/login',
+				templateUrl: 'views/common/login.html',
+				controller: 'LoginController'
+			})
+			/******************************************************************/
+			.state('app', {
+				url: '/',
+				templateUrl: 'views/index.html',
+				controller: 'MainController'
+			})
+			/******************************************************************/
+			.state('dashboard', {
+				url: '/dashboard',
+				views: {
+					'content': {
+						//templateUrl: 'app_edito_rubriques/views/dashboard/dashboard.tpl.html',
+						templateUrl: 'views/dashboard/dashboard.html',
+						controller: 'DashboardController'
+					}
+				},
+				parent: 'app'
+			});
 		/******************************************************************/
 		$locationProvider.hashPrefix('!');
 
