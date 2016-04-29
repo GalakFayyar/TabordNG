@@ -60,9 +60,18 @@
 				url: '/pharmacie',
 				views: {
 					'content': {
-						//templateUrl: 'app_edito_rubriques/views/dashboard/dashboard.tpl.html',
 						templateUrl: 'views/dashboard/pharmacie.html',
 						controller: 'PharmacieController'
+					}
+				},
+				parent: 'app'
+			})
+			.state('pharmacie_chiffres', {
+				url: '/pharmacie/chiffres',
+				views: {
+					'content': {
+						templateUrl: 'views/dashboard/pharmacie_chiffres.html',
+						controller: 'PharmacieChiffresController'
 					}
 				},
 				parent: 'app'

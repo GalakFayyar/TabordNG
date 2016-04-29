@@ -1,4 +1,3 @@
-<!-- sidebar: style can be found in sidebar.less -->
 <section class="sidebar" resize>
 	<!-- Sidebar user panel -->
 	<!-- <div class="user-panel">
@@ -20,19 +19,103 @@
 		</div>
 	</form>-->
 
+	<ui-select  ng-model="current_pharmacie.periode.selected" 
+				theme="select2" 
+				class="ui-select-period"
+				search-enabled="false"
+				title="Sélectionner une période">
+		<ui-select-match placeholder="Sélectionner une période">Période : {{$select.selected.libelle}}</ui-select-match>
+		<ui-select-choices 
+				repeat="periode in current_pharmacie.periode.available_periods | filter: {libelle: $select.search, num: $select.search}">
+			<div ng-bind-html="periode.libelle | highlight: $select.search"></div>
+			<small>
+				n° période: <span ng-bind-html="''+periode.num | highlight: $select.search"></span>
+			</small>
+		</ui-select-choices>
+	</ui-select>
+
 	<!-- /.search form -->
 	<!-- sidebar menu: : style can be found in sidebar.less -->
 	<ul class="sidebar-menu">
 		<li class="header">TABLEAU DE BORD</li>
-		<li ui-sref-active="activated"><a href ui-sref="dashboard" ui-sref-opts="{reload: 'dashboard'}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+		<li ui-sref-active="activated"><a href ui-sref="dashboard" ui-sref-opts="{reload: 'dashboard'}"><i class="fa fa-dashboard"></i> Tableau de bord</a></li>
 		
 		<li class="header">LES CHIFFRES</li>
-		<li ui-sref-active="activated"><a href ui-sref="chiffre_affaire" ui-sref-opts="{reload: 'chiffre_affaire'}"><i class="fa fa-money"></i> Chiffre d'affaires</a></li>
-		
+		<li class="treeview">
+			<a href="#">
+				<i class="fa fa-hospital-o"></i> <span>Chiffres Pharmacie</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+			<ul class="treeview-menu">
+				<li>
+					<a href="#"><i class="fa fa-circle-o"></i> Résultats Exercice <i class="fa fa-angle-left pull-right"></i></a>
+					<ul class="treeview-menu">
+						<li><a href="#"><i class="fa fa-circle-o"></i> Chiffre d'affaire</a></li>
+						<li><a href="#"><i class="fa fa-circle-o"></i> Marge</a></li>
+						<li><a href="#"><i class="fa fa-circle-o"></i> Stock</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#"><i class="fa fa-circle-o"></i> Frais Exercice <i class="fa fa-angle-left pull-right"></i></a>
+					<ul class="treeview-menu">
+						<li><a href="#"><i class="fa fa-circle-o"></i> Frais Généraux</a></li>
+						<li><a href="#"><i class="fa fa-circle-o"></i> Frais Financiers</a></li>
+						<li><a href="#"><i class="fa fa-circle-o"></i> Impôts &amp; Taxes</a></li>
+						<li><a href="#"><i class="fa fa-circle-o"></i> Cessions Immos</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#"><i class="fa fa-circle-o"></i> Frais Courants <i class="fa fa-angle-left pull-right"></i></a>
+					<ul class="treeview-menu">
+						<li><a href="#"><i class="fa fa-circle-o"></i> Emprunts</a></li>
+						<li><a href="#"><i class="fa fa-circle-o"></i> Investissements</a></li>
+						<li><a href="#"><i class="fa fa-circle-o"></i> Amortissement</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#"><i class="fa fa-circle-o"></i> Consultations <i class="fa fa-angle-left pull-right"></i></a>
+					<ul class="treeview-menu">
+						<li><a href="#"><i class="fa fa-circle-o"></i> Achats</a></li>
+						<li><a href="#"><i class="fa fa-circle-o"></i> Panier Moyen</a></li>
+					</ul>
+				</li>
+				<li><a href="#"><i class="fa fa-circle-o"></i> Divers</a></li>
+			</ul>
+		</li>
+
+		<li class="treeview">
+			<a href="#">
+				<i class="fa fa-user"></i> <span>Chiffres Personnel</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+			<ul class="treeview-menu">
+				<li><a href="#"><i class="fa fa-circle-o"></i> Salaires</a></li>
+				<li><a href="#"><i class="fa fa-circle-o"></i> Charges Sociales</a></li>
+			</ul>
+		</li>
+
+
+		<!-- <li ui-sref-active="activated"><a href ui-sref="pharmacie_chiffres" ui-sref-opts="{reload: 'pharmacie_chiffres'}"><i class="fa fa-money"></i> Chiffres Pharmacie</a></li> -->
+		<!-- <li ui-sref-active="activated"><a href ui-sref="pharmacie_personnel" ui-sref-opts="{reload: 'pharmacie_personnel'}"><i class="fa fa-money"></i> Chiffres Personnel</a></li> -->
+
 		<li class="header">ENTREPRISE</li>
 		<li class="treeview">
-			<a href><i class="fa fa-table"></i> Thématiques <i class="fa fa-angle-down pull-right"></i></a>
-			<ul class="treeview-menu" style="display:block !important">
+			<a href="#">
+				<i class="fa fa-user"></i> <span> Gestion Associé</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+			<ul class="treeview-menu">
+				<li><a href="#"><i class="fa fa-circle-o"></i> Charges Sociales &amp; CSG</a></li>
+				<li><a href="#"><i class="fa fa-circle-o"></i> Prélèvements &amp; Apports</a></li>
+				<li><a href="#"><i class="fa fa-circle-o"></i> Remboursements</a></li>
+				<li><a href="#"><i class="fa fa-circle-o"></i> Frais Divers</a></li>
+				<li><a href="#"><i class="fa fa-circle-o"></i> Répartition</a></li>
+			</ul>
+		</li>
+
+		<li class="treeview">
+			<a href><i class="fa fa-table"></i>DEVELOPPEMENT <i class="fa fa-angle-down pull-right"></i></a>
+			<ul class="treeview-menu">
 			<!-- 
 			<a href><i class="fa fa-table"></i> Thématiques <i class="fa fa-angle-left pull-right"></i></a>
 			<ul class="treeview-menu"> 
@@ -42,4 +125,4 @@
 		</li>
 	</ul>
 </section>
-<!-- /.sidebar -->
+<!-- /.sidebar

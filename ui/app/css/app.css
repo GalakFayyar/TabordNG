@@ -55,6 +55,13 @@ ul.sidebar-menu li.activated a{
 	color: #fff;
 	border-left-color: #00a65a;
 }
+.ui-select-period {
+	width: 92%;
+	margin: 4% !important;
+}
+.ui-select-period a.ui-select-match {
+	color: #333 !important;
+}
 
 /*
  *	Tool classes

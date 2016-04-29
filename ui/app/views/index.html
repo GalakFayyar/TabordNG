@@ -3,7 +3,7 @@
 	<header class="main-header" ng-include="'views/common/header.html'" ng-controller="HeaderController"></header>
 	
 	<!-- Left side column. contains the logo and sidebar -->
-	<aside class="main-sidebar" ng-include="'views/common/left_side_bar.html'"></aside>
+	<aside class="main-sidebar" ng-include="'views/common/left_side_bar.html'" ng-controller="LeftSideBarController"></aside>
 
 	<!-- Right side column. Contains the navbar and content of the page. This is dynamically loaded by Angular MVC -->
 	<div class="content-wrapper" ui-view="content" ui-i18n="{{$root.lang}}"></div>
