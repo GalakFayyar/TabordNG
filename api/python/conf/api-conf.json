@@ -1,0 +1,45 @@
+{
+    "version":"0.0.1",
+    "author": "Thomas Falc'her",
+    "debug": true,
+    "host": "0.0.0.0",
+    "port": 8079,
+    "url_prefix": "/api",
+    "connectors": {
+        "pagination" : {
+            "limit": 100
+        },
+        "elasticsearch" : {},
+        "mongodb": {}
+    },
+    "apis": {},
+    "models": {},
+    "permissions":
+    {
+        "CONNECT": "BOER_EDITION",
+        "ADMIN": "BOER_EDITION_ADMIN"
+    },
+    "log":{
+        "level_values":{
+            "CRITICAL":50,
+            "ERROR":40,
+            "WARNING":30,
+            "INFO":20,
+            "DEBUG":10,
+            "commentaire":"Valeurs utilisables pour le level"
+        },
+        "level":"DEBUG",
+        "dir":"/tmp",
+        "filename":"api-tabord-ng.log",
+        "max_filesize":1000000,
+        "max_files":5
+    },
+    "upload_config": { 
+        "directory":"./upload/",
+        "allowed_files": ["csv", "dat", "txt"],
+        "file_size":""
+    },
+    "features": {
+        "KEY": false
+    }
+}

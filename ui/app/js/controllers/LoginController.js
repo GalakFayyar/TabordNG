@@ -34,7 +34,10 @@
 		$scope.password = '';
 		
 		$scope.login = function() {
-			//$state.go('app');
+			$state.go('dashboard');
+
+			// BOUCHON DEV
+			/*
 			UserService.authenticate({}, {username: $scope.username, password: $scope.password}, function (authenticatedUser) {
 				console.log(authenticatedUser);
 				if (authenticatedUser.data && authenticatedUser.data.authenticated) {
@@ -52,6 +55,7 @@
 			}, function (toto) {
 				console.log(toto);
 			});
+			*/
 
 			/*
 			UserService.authenticate($.param({username : $scope.username, password : $scope.password}), function(authenticatedUser) {

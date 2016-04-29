@@ -12,9 +12,6 @@
 				method : 'POST',
 				params : {
 					'action' : 'authenticate'
-				},
-				headers : {
-					'Content-Type' : 'application/x-www-form-urlencoded'
 				}
 			},
 			logout : {
