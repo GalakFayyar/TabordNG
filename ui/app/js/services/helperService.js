@@ -1,3 +1,4 @@
+/* global $ */
 (function() {
 	'use strict';
 
@@ -33,12 +34,6 @@
 		return {
 			changeFlagEditedOnRowEdited: function (grid_data, rowEntity, colDef) {
 				_changeFlagEditedOnRowEdited(grid_data, rowEntity, colDef);
-			},
-			checkAdminLTELoaded: function () {
-				if (!angular.isDefined($rootScope.BOER_adminLTE_already_loaded) || !$rootScope.BOER_adminLTE_already_loaded){
-					$.AdminLTE.init();
-					$rootScope.BOER_adminLTE_already_loaded = true;
-				}
 			},
 			getPaginationOptions: function () {
 				return {

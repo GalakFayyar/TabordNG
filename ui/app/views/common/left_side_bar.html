@@ -28,10 +28,8 @@
 		
 		<li class="header">LES CHIFFRES</li>
 		<li ui-sref-active="activated"><a href ui-sref="chiffre_affaire" ui-sref-opts="{reload: 'chiffre_affaire'}"><i class="fa fa-money"></i> Chiffre d'affaires</a></li>
-		<li ui-sref-active="activated"><a href ui-sref="marge" ui-sref-opts="{reload: 'dashboard'}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
 		
 		<li class="header">ENTREPRISE</li>
-		<li ui-sref-active="activated"><a href ui-sref="contributif" ui-sref-opts="{reload: 'contributif'}"><i class="fa fa-table"></i> Contributif</a></li>
 		<li class="treeview">
 			<a href><i class="fa fa-table"></i> Thématiques <i class="fa fa-angle-down pull-right"></i></a>
 			<ul class="treeview-menu" style="display:block !important">
@@ -39,19 +37,9 @@
 			<a href><i class="fa fa-table"></i> Thématiques <i class="fa fa-angle-left pull-right"></i></a>
 			<ul class="treeview-menu"> 
 			-->
-				<li ui-sref-active="activated"><a href ui-sref="thematique_de" ui-sref-opts="{reload: 'thematique_de'}"><i class="fa fa-circle-o"></i> Données Enrichies</a></li>
-				<li ui-sref-active="activated"><a href ui-sref="thematique_publicitaire" ui-sref-opts="{reload: 'thematique_publicitaire'}"><i class="fa fa-circle-o"></i> Publicitaires</a></li>
-				<li ui-sref-active="activated"><a href ui-sref="thematique_bon_plan" ui-sref-opts="{reload: 'thematique_bon_plan'}"><i class="fa fa-circle-o"></i> Bons Plans</a></li>
+				<li ui-sref-active="activated"><a href ui-sref="pharmacie" ui-sref-opts="{reload: 'pharmacie'}"><i class="fa fa-circle-o"></i> Pharmacie</a></li>
 			</ul>
 		</li>
-		<li ui-sref-active="activated"><a href ui-sref="cviv" ui-sref-opts="{reload: 'cviv'}"><i class="fa fa-table"></i> CVIV</a></li>
-		<li ui-sref-active="activated"><a href ui-sref="verticales_segments" ui-sref-opts="{reload: 'verticales_segments'}"><i class="fa fa-table"></i> Verticales et Segments</a></li>
-		<li ui-sref-active="activated"><a href ui-sref="liens_transactionnels_contenus" ui-sref-opts="{reload: 'liens_transactionnels_contenus'}"><i class="fa fa-table"></i> Liens Transactionnels et Contenus</a></li>
-		
-		<li class="header">ADMINISTRATION</li>
-		<li ui-sref-active="activated" ng-show="userAdmin || userGrantedPublication"><a href ui-sref="bo_er_publication" ui-sref-opts="{reload: 'bo_er_publication'}"><i class="glyphicon glyphicon-transfer"></i> Publication</a></li>
-		<li ui-sref-active="activated" ><a href ui-sref="bo_er_history" ui-sref-opts="{reload: 'bo_er_history'}"><i class="glyphicon glyphicon-hdd"></i> Historique</a></li>
-		<li ui-sref-active="activated" ng-show="userAdmin"><a href ui-sref="settings" ui-sref-opts="{reload: 'settings'}"><i class="fa fa-cog"></i> Paramétrage</a></li>
 	</ul>
 </section>
 <!-- /.sidebar -->

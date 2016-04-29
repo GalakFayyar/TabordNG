@@ -55,6 +55,17 @@
 					}
 				},
 				parent: 'app'
+			})
+			.state('pharmacie', {
+				url: '/pharmacie',
+				views: {
+					'content': {
+						//templateUrl: 'app_edito_rubriques/views/dashboard/dashboard.tpl.html',
+						templateUrl: 'views/dashboard/pharmacie.html',
+						controller: 'PharmacieController'
+					}
+				},
+				parent: 'app'
 			});
 		/******************************************************************/
 		$locationProvider.hashPrefix('!');
