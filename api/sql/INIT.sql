@@ -1,7 +1,7 @@
-CREATE DATABASE tabordng;
+CREATE DATABASE tabordng_dev;
 
 
-USE tabordng;
+USE tabordng_dev;
 
 
 CREATE TABLE utilisateurs(
