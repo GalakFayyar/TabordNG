@@ -16,7 +16,6 @@
 		}, function (){
 			console.log('ERROR');
 		});
-		
 	}
 
 	HeaderController.$inject = ['$scope'];
@@ -26,6 +25,16 @@
 
 	LeftSideBarController.$inject = ['$scope'];
 	function LeftSideBarController ($scope) {
+
+		// TODO : optimiser
+		// Corrige le pb de synchro des chargements entre
+		// les lib jquery et angularjs :
+		// jquery semble chargé avant les éléments du dom
+		// générés eux par angularjs ...
+		setTimeout(function() {
+			$.AdminLTE.tree('.sidebar-menu');
+		}, 10);
+
 		$scope.current_pharmacie = {
 			periode: {
 				available_periods: [

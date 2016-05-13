@@ -1,9 +1,12 @@
 <div class="login-box">
+	<div class="login-logo">
+		<a href>Tabord <span class="color-red">NG</span></a>
+	</div>
 	<div class="login-box-body">
 		<p class="login-box-msg">Veuillez vous authentifier</p>
 		<form class="form-horizontal" ng-submit="login()" form-autofill-fix>
 			<div class="form-group has-feedback">
-				<input type="text" ng-model="username" class="form-control" placeholder="Login utilisateur" ng-required/> 
+				<input type="text" ng-model="username" class="form-control" placeholder="Login utilisateur" ng-required ng-change="authentication.status=''"/> 
 				<span class="glyphicon glyphicon-user form-control-feedback"></span>
 			</div>
 			<div class="form-group has-feedback">
@@ -25,12 +28,14 @@
 				</div>
 			</div>
 
-			<div class="bloc-read-only">
+			<div ng-show="authentication.status=='failed'" class="alert alert-danger login-failed" role="alert"><strong>{{authentication.message}}</strong></div>
+
+			<!-- <div class="bloc-read-only">
 				<p class="login-box-msg">Ou</p>
 				<div class="row">
 					<button type="button" ng-click="authenticate_anonymous()" class="btn btn-primary btn-block btn-flat"><span class="glyphicon glyphicon-blackboard"></span> Mode Lecture Seule</button>
 				</div>
-			</div>
+			</div> -->
 		</form>
 	</div>
 </div>

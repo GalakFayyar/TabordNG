@@ -1,13 +1,12 @@
 from flask import Flask, jsonify, request
 from flask.ext.cors import CORS
-import json, hashlib
 from logger import logger, configure
-from flask.ext.mysql import MySQL
+
+import psycopg2
+import json, hashlib
 
 ### Init controller routes manager
 app = Flask(__name__)
-mysql = MySQL()
-
 
 ### Load app config
 conf = json.load(open('conf/api-conf.json'))
@@ -27,13 +26,20 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 url_prefix = conf['url_prefix']
 
 
-### MySQL configuration
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
-app.config['MYSQL_DATABASE_DB'] = 'tabordng'
+### PostgreSQL configuration
+app.config['MYSQL_DATABASE_USER'] = 'tom'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'tom'
+app.config['MYSQL_DATABASE_DB'] = 'tabordng_dev'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-mysql.init_app(app)
 
+try:
+    conn = psycopg2.connect("dbname='%s' user='%s' host='%s' password='%s'" %( app.config['MYSQL_DATABASE_DB'], 
+                                                                                app.config['MYSQL_DATABASE_USER'],
+                                                                                app.config['MYSQL_DATABASE_HOST'],
+                                                                                app.config['MYSQL_DATABASE_PASSWORD']))
+    cursor = conn.cursor()
+except:
+    print "I am unable to connect to the database"
 
 ### Root REST API endpoint: display all available registered routes
 @app.route(url_prefix + "/")
@@ -91,12 +97,14 @@ def users():
 @app.route(url_prefix + "/authenticate", methods=['POST'])
 def authenticate():
     print(request.json)
+
     username = request.json['username']
     password = request.json['password']
-    cursor = mysql.connect().cursor()
-    sql = "SELECT * FROM utilisateurs WHERE username = '" + username + "' AND password = '" + password + "'"
+
+    sql = "SELECT * FROM utilisateurs WHERE username = '{}' AND password = '{}';".format(username, password)
     print(sql)
-    cursor.execute("SELECT * FROM utilisateurs WHERE username = '" + username + "' AND password = '" + password + "'")
+
+    cursor.execute(sql)
     data = cursor.fetchone()
     if data is None:
         return jsonify({'data':{'authenticated': False}})

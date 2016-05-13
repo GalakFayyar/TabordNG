@@ -7,6 +7,7 @@
 	DashboardController.$inject = ['$scope', 'HelperService'];
 	function DashboardController ($scope, HelperService) {
 		$.AdminLTE.layout.activate();
+		console.log("AdminLTE loaded");
 	}
 
 	// boRubriqueEditorControllers.controller('DashboardController', [ '$scope', '$rootScope', '$filter', '$state', '$modal', '$timeout', 'ngProgress', 'uiGridConstants', 'uiGridEditConstants', 'boRubriqueEditorConfig', 'BoErStatusConfService', 'BoErRubriqueService', 'BoErSettingsService', 'HelperService', 

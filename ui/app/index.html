@@ -60,10 +60,8 @@
 		<script src="js/animations/main.js"></script>
 
 		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css"> 
-
-		<!--<script src="js/controllers/DashboardController.js"></script>-->
 	</head>
-	<body class="fixed" ng-class="{'sidebar-collapse': toggleLeftSidebar, 'sidebar-open': toggleLeftSidebar}" ng-cloak>
+	<body class="fixed" ng-class="{'sidebar-collapse': toggleLeftSidebar, 'sidebar-open': toggleLeftSidebar}" >
 		<div class="view-container">
 			<div class="alert-box">
   				<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>

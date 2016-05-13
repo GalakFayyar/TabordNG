@@ -50,6 +50,9 @@
 	text-align: right !important;
 	padding-top: 15px !important;
 }
+.login-box .login-failed{
+	margin: 15px 0;
+}
 ul.sidebar-menu li.activated a{
 	font-weight: bold;
 	color: #00a65a;

@@ -46,7 +46,7 @@
 			})
 			/******************************************************************/
 			.state('dashboard', {
-				url: '/dashboard',
+				url: 'dashboard',
 				views: {
 					'content': {
 						//templateUrl: 'app_edito_rubriques/views/dashboard/dashboard.tpl.html',
@@ -57,7 +57,7 @@
 				parent: 'app'
 			})
 			.state('pharmacie', {
-				url: '/pharmacie',
+				url: 'pharmacie',
 				views: {
 					'content': {
 						templateUrl: 'views/dashboard/pharmacie.html',
@@ -67,7 +67,7 @@
 				parent: 'app'
 			})
 			.state('pharmacie_chiffres', {
-				url: '/pharmacie/chiffres',
+				url: 'pharmacie/chiffres',
 				views: {
 					'content': {
 						templateUrl: 'views/dashboard/pharmacie_chiffres.html',
@@ -192,15 +192,15 @@
 			$state.go(env);
 		};
 
-		// Try getting valid user from cookie or go to login page
-		var originalPath = $location.path();
-		var user = $cookieStore.get('tabordngUser');
-		if (angular.isDefined(user)) {
-			$rootScope.user = user;
-		}
+		// // Try getting valid user from cookie or go to login page
+		// var originalPath = $location.path();
+		// var user = $cookieStore.get('tabordngUser');
+		// if (angular.isDefined(user)) {
+		// 	$rootScope.user = user;
+		// }
 
-		$rootScope.redirect('login');
+		// $rootScope.redirect('login');
 
-		$rootScope.initialized = true;
+		// $rootScope.initialized = true;
 	}
 })();

@@ -34,10 +34,9 @@
 		$scope.password = '';
 		
 		$scope.login = function() {
-			$state.go('dashboard');
+			//$state.go('dashboard');
 
 			// BOUCHON DEV
-			/*
 			UserService.authenticate({}, {username: $scope.username, password: $scope.password}, function (authenticatedUser) {
 				console.log(authenticatedUser);
 				if (authenticatedUser.data && authenticatedUser.data.authenticated) {
@@ -48,14 +47,17 @@
 						$cookieStore.put('tabordngUser', $rootScope.user);
 					}
 
-					$state.go('app');
+					$state.go('dashboard');
 				} else {
 					console.log('authentication failed');
+					$scope.authentication = {
+						status: 'failed',
+						message: 'Echec de l\'authentification avec ce username'
+					};
 				}
 			}, function (toto) {
 				console.log(toto);
 			});
-			*/
 
 			/*
 			UserService.authenticate($.param({username : $scope.username, password : $scope.password}), function(authenticatedUser) {
@@ -82,12 +84,12 @@
 			*/
 		};
 
-		$scope.authenticate_anonymous = function () {
-			$rootScope.user = {
-				username: 'anonymous'
-			};
-			$state.go('app');
-		};
+		// $scope.authenticate_anonymous = function () {
+		// 	$rootScope.user = {
+		// 		username: 'anonymous'
+		// 	};
+		// 	$state.go('app');
+		// };
 
 		$rootScope.checkUserGranted = function (action_to_check) {
 			/*if ($rootScope.user && $rootScope.user.actions && $rootScope.user.actions.indexOf($rootScope.permissions[action_to_check]) != -1) {
