@@ -1,7 +1,7 @@
 <section class="content-header">
 	<h1>
-		Gestion de la pharmacie
-		<small>Création</small>
+		Gestion des pharmacies
+		<small>Consultation</small>
 	</h1>
 	<ol class="breadcrumb">
 		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -17,35 +17,132 @@
 		</div>
 		<!-- /.box-header -->
 		<!-- form start -->
-
 		<form role="form">
 			<div class="box-body">
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<div class="form-group">
-							<label for="denom">Denomination</label>
-							<input type="email" class="form-control" id="denom" placeholder="Entrer la dénomination de la pharmacie">
+							<ui-select  
+									ng-model="pharmacie.selected" 
+									theme="select2" 
+									class="select-pharmacie"
+									search-enabled="true"
+									title="Sélectionner une pharmacie">
+								<ui-select-match placeholder="Sélectionner une pharmacie">{{$select.selected.denomination}}</ui-select-match>
+								<ui-select-choices 
+										repeat="pharmacie in pharmacies.list | filter: {denomination: $select.search}">
+									<div ng-bind-html="pharmacie.denomination | highlight: $select.search"></div>
+								</ui-select-choices>
+							</ui-select>
 						</div>
 						<div class="form-group">
-							<label for="denom">Tel.</label>
-							<input type="phone" class="form-control" id="tel" placeholder="Entrer le numéro">
+							<label for="denom">Dénomination</label>
+							<input  type="text" 
+									class="form-control" 
+									id="denom" 
+									placeholder="Dénomination de la pharmacie"
+									ng-change="checkFiledsCreation()" 
+									ng-model="pharmacie.selected.denomination">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputPassword1">Password</label>
-							<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+							<label for="num_voie">Adresse</label>
+							<div class="row">
+								<div class="col-xs-3">
+									<input type="text" class="form-control" id="num_voie" placeholder="N° voie" ng-model="pharmacie.selected.adresse.num">
+								</div>
+								<div class="col-xs-9">
+									<input type="text" class="form-control" id="libelle_voie" placeholder="Libellé voie" ng-model="pharmacie.selected.adresse.libelle">
+								</div>
+							</div>
 						</div>
-						<div class="checkbox">
-							<label>
-								<input type="checkbox"> Check me out
-							</label>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-xs-4">
+									<input type="text" class="form-control" id="code_postal" placeholder="Code Postal" ng-model="pharmacie.selected.adresse.cp">
+								</div>
+								<div class="col-xs-8">
+									<input type="text" class="form-control" id="ville" placeholder="Ville" ng-model="pharmacie.selected.adresse.ville">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="email">Email</label>
+							<input  type="email" 
+									class="form-control" 
+									id="email" 
+									placeholder="Email de la pharmacie" 
+									ng-model="pharmacie.selected.email">
+						</div>
+						<div class="form-group">
+							<label for="tel_fixe">Téléphone</label>
+							<div class="row">
+								<div class="col-xs-6">
+									<input  type="phone" 
+											class="form-control" 
+											id="tel_fixe" 
+											placeholder="N° fixe" 
+											ng-model="pharmacie.selected.telephone.fixe">
+								</div>
+								<div class="col-xs-6">
+									<input  type="phone" 
+											class="form-control" 
+											id="tel_portable" 
+											placeholder="N° portable" 
+											ng-model="pharmacie.selected.telephone.portable">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="fax">Email</label>
+							<input  type="phone" 
+									class="form-control" 
+									id="fax" 
+									placeholder="Fax de la pharmacie" 
+									ng-model="pharmacie.selected.fax">
+						</div>
+						<div class="form-group">
+							<label for="date_install">Date Installation</label>
+							<input  type="date" 
+									class="form-control" 
+									id="date_install" 
+									placeholder="Date installation pharmacie" 
+									ng-model="pharmacie.selected.date_installation">
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-xs-4">
+									<label for="nb_assoc">Nombre d'associés</label>
+									<input  type="number" 
+											class="form-control" 
+											id="nb_assoc" 
+											placeholder="Nb associés" 
+											ng-model="pharmacie.selected.nb_associes">
+								</div>
+								<div class="col-xs-4">
+									<label for="num_tva_intercom">N° TVA intercommunautaire</label>
+									<input  type="number" 
+											class="form-control" 
+											id="num_tva_intercom" 
+											placeholder="N° TVA" 
+											ng-model="pharmacie.selected.num_tva_intercom">
+								</div>
+								<div class="col-xs-4">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" ng-model="pharmacie.selected.soumis_is"> Soumis à l'IS
+										</label>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- /.box-body -->
-
 			<div class="box-footer">
-				<button type="submit" class="btn btn-primary">Submit</button>
+				<button type="button" class="btn btn-primary btn-flat" ng-disabled="btnCreate.disabled" ng-click="btnAction('create')">Nouvelle Pharmacie</button>
+				<button type="button" class="btn btn-success btn-flat" ng-disabled="!pharmacie.selected" ng-click="btnAction('save')">Enregistrer</button>
+				<button type="button" class="btn btn-danger btn-flat" ng-disabled="!pharmacie.selected"  ng-click="btnAction('delete')">Supprimer</button>
+				<button type="button" class="btn btn-warning btn-flat" ng-click="btnAction('cancel')">Annuler</button>
 			</div>
 		</form>
 	</div>

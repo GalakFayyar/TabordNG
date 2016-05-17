@@ -3,6 +3,7 @@
 
 	/* Services */
 	angular.module('tabordNG').factory('UserService', UserService);
+	angular.module('tabordNG').factory('PharmacieService', PharmacieService);
 	angular.module('tabordNG').factory('TestService', TestService);
 
 	UserService.$inject = ['$resource', 'tabordngConfig'];
@@ -18,6 +19,33 @@
 				method : 'POST',
 				params : {
 					'action' : 'logout'
+				}
+			}
+		});
+	};
+
+	PharmacieService.$inject = ['$resource', 'tabordngConfig'];
+	function PharmacieService ($resource, tabordngConfig) {
+		return $resource(tabordngConfig.api.url + ':resource/:action/:subresource/:subaction', {}, {
+			get_all : {
+				method : 'GET',
+				params : {
+					'resource': 'pharmacie',
+					'action' : 'get_all'
+				}
+			},
+			update : {
+				method : 'POST',
+				params : {
+					'resource': 'pharmacie',
+					'action': 'update'
+				}
+			},
+			create : {
+				method : 'POST',
+				params : {
+					'resource': 'pharmacie',
+					'action': 'create'
 				}
 			}
 		});

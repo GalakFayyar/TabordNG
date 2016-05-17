@@ -67,6 +67,10 @@ ul.sidebar-menu li.activated a{
 	color: #333 !important;
 }
 
+.select-pharmacie {
+	width: 100%;
+}
+
 /*
  *	Tool classes
  */

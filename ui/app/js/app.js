@@ -31,7 +31,7 @@
 	tabordngConfiguration.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', 'tabordngConfig'];
 	function tabordngConfiguration ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, tabordngConfig) {
 		// MVC routing patterns
-		$urlRouterProvider.otherwise('/app');	// default route
+		$urlRouterProvider.otherwise('/login');	// default route
 		$stateProvider
 			.state('login', {
 				url: '/login',

@@ -62,6 +62,36 @@ VALUES (
 	NULL
 );
 
+INSERT INTO pharmacie
+VALUES (
+	1,
+	'{
+		"denomination": "pharmacie postgresql 2",
+		"telephone": {
+			"fixe": "0102030405",
+			"portable": "0607080910"
+		},
+		"fax": "0203040506",
+		"email": "deglingo@fou.bar",
+		"adresse": {
+			"num": "124",
+			"libelle": "avenue de la route",
+			"cp": "45000",
+			"ville": "BRENOUX"
+		},
+		"date_installation": "20-05-2016",
+		"nb_associes": 15,
+		"num_tva_intercom": 41,
+		"soumis_is": true
+	}',
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+);
+
 
 ------------------------------------------------------------
 -- Table: personnel

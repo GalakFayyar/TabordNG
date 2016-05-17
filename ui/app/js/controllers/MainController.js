@@ -11,7 +11,7 @@
 	MainController.$inject = ['$scope', 'TestService'];
 	function MainController ($scope, TestService) {
 		$scope.toto = "test";
-		var codes = TestService.get_codes_tva({}, function(values) {
+		var codes = TestService.get_codes_tva({}, function (values) {
 			console.log(values.data);
 		}, function (){
 			console.log('ERROR');
@@ -33,7 +33,7 @@
 		// générés eux par angularjs ...
 		setTimeout(function() {
 			$.AdminLTE.tree('.sidebar-menu');
-		}, 10);
+		}, 500);
 
 		$scope.current_pharmacie = {
 			periode: {
