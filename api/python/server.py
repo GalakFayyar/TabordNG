@@ -2,6 +2,8 @@ from flask import Flask, jsonify, request
 from flask.ext.cors import CORS
 from logger import logger, configure
 
+from resources.pharmacie import *
+
 import json
 import psycopg2
 from psycopg2.extras import RealDictCursor
@@ -27,7 +29,6 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 url_prefix = conf['url_prefix']
 
-
 ### PostgreSQL configuration
 app.config['DATABASE_USER'] = 'tom'
 app.config['DATABASE_PASSWORD'] = 'tom'
@@ -35,13 +36,20 @@ app.config['DATABASE_DB'] = 'tabordng_dev'
 app.config['DATABASE_HOST'] = 'localhost'
 
 try:
+    # Connection loading
     conn = psycopg2.connect("dbname='%s' user='%s' host='%s' password='%s'" %( app.config['DATABASE_DB'], 
                                                                                 app.config['DATABASE_USER'],
                                                                                 app.config['DATABASE_HOST'],
                                                                                 app.config['DATABASE_PASSWORD']))
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
 except:
-    print "I am unable to connect to the database"
+    print "ERREUR INITIALISATION ACCES DATABASE"
+
+try:
+    # Resources loading
+    pharmacie_resource = Pharmacie(app, conn, cursor)
+except:
+    print "ERREUR INITIALISATION ACCES RESOURCES"
 
 ### Root REST API endpoint: display all available registered routes
 @app.route(url_prefix + "/")
@@ -116,60 +124,29 @@ def authenticate():
 #TODO : export in class
 @app.route(url_prefix + "/pharmacie/get_all", methods=['GET'])
 def get_all_pharmacies():
-    print('Liste des pharmacies ...')
-    sql = "SELECT id, data FROM pharmacie;"
-    
-    cur = conn.cursor(cursor_factory=RealDictCursor)
-
-    cur.execute(sql)
-    data = cur.fetchall()
-
-    print(format_simple_psql_result(data))
-
-    return jsonify({'data':format_simple_psql_result(data)})
+    pharmacies = pharmacie_resource.get_all()
+    return jsonify(pharmacies)
 
 #TODO : export in class
 @app.route(url_prefix + "/pharmacie/update", methods=['POST'])
 def update_pharmacie():
-    print('Mise a jour des pharmacies ...')
-
-    for data in request.json['pharmacies']:
-        _id = data['id']
-        del data['id']
-        _data = data
-
-        sql = "UPDATE pharmacie SET data = '%s' WHERE id = %s;" %(json.dumps(_data), _id)
-
-        cursor.execute(sql)
-
-    conn.commit()
-
-    return jsonify({'status': 'success', 'code': 200})
+    result = pharmacie_resource.update(request.json)
+    return jsonify(result)
 
 #TODO : export in class
 @app.route(url_prefix + "/pharmacie/create", methods=['POST'])
 def create_pharmacie():
-    print('Creation nouvelle pharmacie ...')
+    result = pharmacie_resource.create(request.json)
+    return jsonify(result)
 
-    sql = "INSERT INTO pharmacie VALUES data = '%s';" %(json.dumps(request.json['pharmacie']))
-
-    cursor.execute(sql)
-
-    conn.commit()
-
-    return jsonify({'status': 'success', 'code': 200})
+#TODO : export in class
+@app.route(url_prefix + "/pharmacie/delete", methods=['POST'])
+def delete_pharmacie():
+    result = pharmacie_resource.delete(request.json)
+    return jsonify(result)
 
 
-# TODO : Export this to tool class
-def format_simple_psql_result(psql_result):
-    # return [{'id': elt['id'], 'data': json.loads(elt['data'])} for elt in psql_result]
-    _results = []
-    for elt in psql_result:
-        _temp_elt = json.loads(elt['data'])
-        _temp_elt['id'] = elt['id']
-        _results.append(_temp_elt)
 
-    return _results
 
 if __name__ == "__main__":
     app.run(debug=True)
