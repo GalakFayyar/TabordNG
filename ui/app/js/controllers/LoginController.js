@@ -3,8 +3,8 @@
 
 	angular.module('tabordNG').controller('LoginController', LoginController);
 
-	LoginController.$inject = ['$scope', '$rootScope', '$location', '$cookieStore', 'UserService', 'ConfigService', '$state'];
-	function LoginController ($scope, $rootScope, $location, $cookieStore, UserService, ConfigService, $state) {	
+	LoginController.$inject = ['$scope', '$rootScope', '$location', '$cookieStore', 'UserService', 'PharmacieService', 'ConfigService', '$state'];
+	function LoginController ($scope, $rootScope, $location, $cookieStore, UserService, PharmacieService, ConfigService, $state) {	
 		/*$scope.apiConfig = ConfigService.getConfig({}, function(apiConfig, getResponseHeaders) {
 				$rootScope.permissions = apiConfig.permissions;
 				$scope.features = apiConfig.features;
@@ -32,6 +32,10 @@
 		// initialisation des variables locales
 		$scope.username = '';
 		$scope.password = '';
+
+		$rootScope.currentPharmacie = {
+			selected : null
+		};
 		
 		$scope.login = function() {
 			//$state.go('dashboard');
@@ -99,5 +103,20 @@
 			}*/
 			return ($rootScope.user && $rootScope.user.actions && $rootScope.user.actions.indexOf($rootScope.permissions[action_to_check]) != -1);
 		};
+
+		var getPharmacies = function () {
+			PharmacieService.get_all({}, function (results) {
+				//$scope.listPharmaciesGrid.data = results.data;
+				$scope.pharmacies = {
+					list: results.data
+				};
+				console.log($scope.pharmacies.list);
+				$rootScope.currentPharmacie.selected = $scope.pharmacies.list[0];
+			}, function (error) {
+				console.log('Erreur get_all_pharmacie(): ', error);
+			});
+		};
+
+		getPharmacies();
 	}
 })();
