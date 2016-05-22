@@ -10,5 +10,4 @@ npm install
 ## Configuration
 
 ## Usage
-start apache
-go to your host and enjoy!
+start python server (in python2.7 : python -m SimpleHTTPServer 8080)
