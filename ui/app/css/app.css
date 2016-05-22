@@ -77,3 +77,6 @@ ul.sidebar-menu li.activated a{
 .color-red {
 	color: #dd4b39;
 }
+.custom-footer-style {
+    line-height: 35px;
+}

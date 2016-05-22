@@ -6,7 +6,7 @@
 
 	DashboardController.$inject = ['$scope', 'HelperService'];
 	function DashboardController ($scope, HelperService) {
-		$.AdminLTE.layout.activate();
+		setTimeout(function() {$.AdminLTE.layout.activate();}, 500);
 		console.log("AdminLTE loaded");
 	}
 

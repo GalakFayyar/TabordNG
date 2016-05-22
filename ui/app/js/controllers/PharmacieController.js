@@ -75,9 +75,23 @@
 			PharmacieService.create({}, {'pharmacie': [$scope.pharmacie.selected]}, function (result) {
 				ngProgress.complete();
 				console.log(result);
+				getPharmacies();
 			}, function (error) {
 				ngProgress.reset();
 				console.log('Erreur de création de la pharmacie: ', $scope.pharmacie.selected);
+			});
+		};
+
+		var deleteCurrentPharmacie = function () {
+			ngProgress.start();
+			PharmacieService.delete({}, {'pharmacie': [$scope.pharmacie.selected]}, function (result) {
+				ngProgress.complete();
+				console.log(result);
+				getPharmacies();
+				$scope.pharmacie.selected = null;
+			}, function (error) {
+				ngProgress.reset();
+				console.log('Erreur de suppression de la pharmacie: ', $scope.pharmacie.selected);
 			});
 		};
 
@@ -108,18 +122,23 @@
 					createCurrentPharmacie();
 					break;
 				case 'save':
-					console.log('Sauvegarde des modifications ....');
+					console.log('Sauvegarde des modifications ...');
 					updateCurrentPharmacie();
+					break;
+				case 'delete':
+					console.log('Suppression de pharmacie ...');
+					deleteCurrentPharmacie();
 					break;
 				case 'cancel':
 					$state.go('dashboard');
 					break;
-				case 'delete':
-					console.log('Suppression de la pharmacie ');
-					break;
 				default:
 					break;
 			}
+		};
+
+		$scope.emptyPharmacieFields = function () {
+			$scope.pharmacie.selected = null;
 		};
 
 		getPharmacies();

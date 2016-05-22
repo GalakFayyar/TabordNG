@@ -47,6 +47,13 @@
 					'resource': 'pharmacie',
 					'action': 'create'
 				}
+			},
+			delete : {
+				method : 'POST',
+				params : {
+					'resource': 'pharmacie',
+					'action': 'delete'
+				}
 			}
 		});
 	};
