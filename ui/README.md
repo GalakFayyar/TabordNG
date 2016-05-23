@@ -1,6 +1,6 @@
 Tabord NG &copy; GUI project
 ===================
-----------
+
 ## Context
 GUI for Tabord NG project. Provides the Controller/View model for the project. Contains all dependencies for the project, including elements
 
