@@ -1,6 +1,5 @@
 Tabord NG &copy;
 ===================
-----------
 Project Tabord New Generation.
 ----------
 Property of Leader Santé Group.
