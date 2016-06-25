@@ -75,8 +75,18 @@
 					}
 				},
 				parent: 'app'
-			});
+			})
 		/******************************************************************/
+			.state('merchandising_forms', {
+				url: 'merchandising/forms',
+				views: {
+					'content': {
+						templateUrl: 'views/merchandising/forms.html',
+						controller: 'MerchandisingFormsController'
+					}
+				},
+				parent: 'app'
+			});
 		$locationProvider.hashPrefix('!');
 
 		// Register error provider that shows message on failed requests or redirects to login page on unauthenticated requests
