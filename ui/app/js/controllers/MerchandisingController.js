@@ -34,7 +34,8 @@
 				envMedicalGeneraliste: null,
 				envMedicalSpecialiste: null,
 				envCentresMedicaux: null,
-				envMedicalHospitalier: null
+				envMedicalHospitalier: null,
+				concurrents: []
 			}
 		}
 	}
