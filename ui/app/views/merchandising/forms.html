@@ -6,6 +6,7 @@
 	<ol class="breadcrumb">
 		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 		<li><a href="#">Merchandising</a></li>
+		<li><a href="#">Pharmacie Sélectionnée</a></li>
 		<li class="active">Forms</li>
 	</ol>
 </section>
@@ -13,8 +14,7 @@
 <section class="content">
 	<tabset justified="true">
 		<tab heading="Contexte Environnemental" active="tab.contexte_environnemental.active" ng-click="tabHeadingClick('contexte_environnemental')">
-			<!-- Ajouter directive ui-grid-cellNav pour édition dans cellule au clic focus -->
-			contenu 1
+			<div ng-include="'views/merchandising/form-context-environnemental.html'"></div>
 		</tab>
 		<tab heading="Contexte Interne" active="tab.contexte_interne.active" ng-click="tabHeadingClick('contexte_interne')">
 			contenu 2
