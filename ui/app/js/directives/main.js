@@ -6,6 +6,7 @@
 	angular.module('tabordNG').directive('directiveEvalCodeAngularJs', directiveEvalCodeAngularJs);
 	angular.module('tabordNG').directive('uiSelectWrap', uiSelectWrap);
 	angular.module('tabordNG').directive('ngReallyClick', reallyClick);
+	angular.module('tabordNG').directive('resizeForm', resizeForm);
 	// angular.module('tabordNG').directive('resize', resize);
 
 	function directiveEvalCodeAngularJs ($compile, $parse) {
@@ -32,6 +33,42 @@
 					}
 				}
 			}
+		}
+	}
+
+	resizeForm.$inject = ['$window'];
+	function resizeForm ($window) {
+		return function (scope, element) {
+			var w = angular.element($window);
+			scope.getWindowDimensions = function () {
+				return {
+					'h': w.height(),
+					'w': w.width()
+				};
+			};
+			scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+				scope.windowHeight = newValue.h;
+				scope.windowWidth = newValue.w;
+
+				var elt0 = $('.main-header').outerHeight(true),
+					elt2 = $('.content-header').outerHeight(true),
+					elt4 = $('.nav-tabs').outerHeight(true),
+					elt5 = $('.main-footer').outerHeight(true);
+
+				// calcul dynamique de la hauteur des grid en fonction des constituants de la page (info: outerHeight(true) = prise en compte margin)
+				var elements_height = elt0 + elt2 + elt4 + elt5 + 30;
+				$(".tab-content").css('max-height', newValue.h - elements_height);
+				$(".tab-content").css('overflow-y', 'auto');
+				$(".tab-content").css('overflow-x', 'hidden');
+
+				// calcul dynamique de la hauteur du contenu des tab en fonction des constituants de la page
+				var border = $('.main-header').outerHeight() + $('.navbar').outerHeight() + $('.content-header').outerHeight(true) + $('.nav-tabs').outerHeight() + $('.edit-page-button').outerHeight() + $('.main-footer').outerHeight();
+				$(".content-tab").css('height', newValue.h - border);
+			}, true);
+
+			w.bind('resizeForm', function () {
+				scope.$apply();
+			});
 		}
 	}
 
