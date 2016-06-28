@@ -13,6 +13,13 @@
 					'resource': 'merchandising',
 					'action' : 'get_data'
 				}
+			},
+			save_data : {
+				method : 'POST',
+				params : {
+					'resource': 'merchandising',
+					'action': 'save_data'
+				}
 			}
 		});
 	};

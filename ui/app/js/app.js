@@ -164,9 +164,12 @@
 		});*/
 	}
 
-	tabordngRun.$inject = ['$rootScope', '$location', '$cookieStore', '$state', '$injector'];
-	function tabordngRun ($rootScope, $location, $cookieStore, $state, $injector) {
+	tabordngRun.$inject = ['$rootScope', '$location', '$cookieStore', '$state', '$injector', 'ngProgress'];
+	function tabordngRun ($rootScope, $location, $cookieStore, $state, $injector, ngProgress) {
 		$rootScope.alerts = [];
+
+		ngProgress.color('#000');
+		ngProgress.height('3px');
 
 		$rootScope.redirectLogin = function () {
 			delete $rootScope.user;
@@ -196,11 +199,16 @@
 
 		$rootScope.redirect = function (env) {
 			// reset chargement en cours
-			var ngProgress = $injector.get('ngProgress');
+			//var ngProgress = $injector.get('ngProgress');
 			ngProgress.reset();
 			
 			$state.go(env);
 		};
+
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){ 
+			//$rootScope.showLoader = true;
+			ngProgress.start();
+		})
 
 		// // Try getting valid user from cookie or go to login page
 		// var originalPath = $location.path();

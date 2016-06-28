@@ -4,10 +4,14 @@
 
 	angular.module('tabordNG').controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['$scope', 'HelperService'];
-	function DashboardController ($scope, HelperService) {
+	DashboardController.$inject = ['$scope', '$rootScope', '$timeout', 'HelperService', 'ngProgress'];
+	function DashboardController ($scope, $rootScope, $timeout, HelperService, ngProgress) {
 		setTimeout(function() {$.AdminLTE.layout.activate();}, 500);
 		console.log("AdminLTE loaded");
+
+		$timeout(function(){
+			ngProgress.complete();
+		}, 500);
 	}
 
 	// boRubriqueEditorControllers.controller('DashboardController', [ '$scope', '$rootScope', '$filter', '$state', '$modal', '$timeout', 'ngProgress', 'uiGridConstants', 'uiGridEditConstants', 'boRubriqueEditorConfig', 'BoErStatusConfService', 'BoErRubriqueService', 'BoErSettingsService', 'HelperService', 

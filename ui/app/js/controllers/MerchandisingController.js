@@ -5,16 +5,9 @@
 
 	angular.module('tabordNG').controller('MerchandisingFormsController', MerchandisingFormsController);
 
-	MerchandisingFormsController.$inject = ['$scope', '$state', 'HelperService', 'MerchandisingService', 'uiGridConstants', 'ngProgress'];
-	function MerchandisingFormsController ($scope, $state, HelperService, MerchandisingService, uiGridConstants, ngProgress) {
+	MerchandisingFormsController.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'HelperService', 'MerchandisingService', 'uiGridConstants', 'ngProgress'];
+	function MerchandisingFormsController ($scope, $rootScope, $state, $timeout, HelperService, MerchandisingService, uiGridConstants, ngProgress) {
 		$.AdminLTE.layout.activate();
-
-		ngProgress.color('#FFF');
-
-		setTimeout(function() {
-			$(":checkbox").labelauty();
-			$(":radio").labelauty();
-		});
 		
 		// Merchandising Form Values
 		$scope.form = {
@@ -38,5 +31,15 @@
 				concurrents: []
 			}
 		}
+
+		$scope.saveForm = function () {
+			console.log($scope.form);
+		};
+
+		$timeout(function(){
+			$(":checkbox").labelauty();
+			$(":radio").labelauty();
+			ngProgress.complete();
+		}, 500);
 	}
 })();

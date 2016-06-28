@@ -52,11 +52,12 @@
 
 				var elt0 = $('.main-header').outerHeight(true),
 					elt2 = $('.content-header').outerHeight(true),
+					elt3 = $('.btn-forms').outerHeight(true),
 					elt4 = $('.nav-tabs').outerHeight(true),
 					elt5 = $('.main-footer').outerHeight(true);
 
 				// calcul dynamique de la hauteur des grid en fonction des constituants de la page (info: outerHeight(true) = prise en compte margin)
-				var elements_height = elt0 + elt2 + elt4 + elt5 + 30;
+				var elements_height = elt0 + elt2 + elt3 + elt4 + elt5 + 30; // 30 = padding du content
 				$(".tab-content").css('max-height', newValue.h - elements_height);
 				$(".tab-content").css('overflow-y', 'auto');
 				$(".tab-content").css('overflow-x', 'hidden');

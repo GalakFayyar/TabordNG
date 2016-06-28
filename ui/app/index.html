@@ -66,7 +66,7 @@
 
 		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css"> 
 	</head>
-	<body class="fixed" ng-class="{'sidebar-collapse': toggleLeftSidebar, 'sidebar-open': toggleLeftSidebar}" >
+	<body class="fixed" ng-cloak ng-class="{'sidebar-collapse': toggleLeftSidebar, 'sidebar-open': toggleLeftSidebar}" >
 		<div class="view-container">
 			<div class="alert-box">
   				<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
