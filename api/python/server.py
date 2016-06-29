@@ -3,6 +3,7 @@ from flask.ext.cors import CORS
 from logger import logger, configure
 
 from resources.pharmacie import *
+from resources.merchandising import *
 
 import json
 import psycopg2
@@ -48,6 +49,7 @@ except:
 try:
     # Resources loading
     pharmacie_resource = Pharmacie(app, conn, cursor)
+    merchandising_resource = Merchandising(app, conn, cursor)
 except:
     print "ERREUR INITIALISATION ACCES RESOURCES"
 
@@ -146,7 +148,17 @@ def delete_pharmacie():
     return jsonify(result)
 
 
+#TODO : export in class
+@app.route(url_prefix + "/merchandising/get_data", methods=['GET'])
+def get_merchandising():
+    merchandising = merchandising_resource.get_data_pharmacie()
+    return jsonify(merchandising)
 
+#TODO : export in class
+@app.route(url_prefix + "/merchandising/save_data", methods=['POST'])
+def save_merchandising():
+    result = merchandising_resource.upsert(request.json)
+    return jsonify(result)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -10,30 +10,55 @@
 		$.AdminLTE.layout.activate();
 		
 		// Merchandising Form Values
-		$scope.form = {
+		// $scope.form = {
+		// 	pharmacie: {
+		// 		code: null
+		// 	},
+		// 	contexteEnvironnemental: {
+		// 		implantationVente: null,
+		// 		visibiliteLocal: null,
+		// 		accessibilite: null,
+		// 		commoditeStationnement: null,
+		// 		environnementCommercial: null,
+		// 		fluxPietonnier: null,
+		// 		fluxAutomobile: null,
+		// 		longeurVitrine: null,
+		// 		surface: null,
+		// 		envMedicalGeneraliste: null,
+		// 		envMedicalSpecialiste: null,
+		// 		envCentresMedicaux: null,
+		// 		envMedicalHospitalier: null,
+		// 		concurrents: []
+		// 	}
+		// }
+
+		$scope.data = {
 			pharmacie: {
 				code: null
 			},
-			contexteEnvironnemental: {
-				implantationVente: null,
-				visibiliteLocal: null,
-				accessibilite: null,
-				commoditeStationnement: null,
-				environnementCommercial: null,
-				fluxPietonnier: null,
-				fluxAutomobile: null,
-				longeurVitrine: null,
-				surface: null,
-				envMedicalGeneraliste: null,
-				envMedicalSpecialiste: null,
-				envCentresMedicaux: null,
-				envMedicalHospitalier: null,
-				concurrents: []
+			forms: {
+				contexteEnvironnemental: {
+					implantationVente: null,
+					visibiliteLocal: null,
+					accessibilite: null,
+					commoditeStationnement: null,
+					environnementCommercial: null,
+					fluxPietonnier: null,
+					fluxAutomobile: null,
+					longeurVitrine: null,
+					surface: null,
+					envMedicalGeneraliste: null,
+					envMedicalSpecialiste: null,
+					envCentresMedicaux: null,
+					envMedicalHospitalier: null,
+					concurrents: []
+				}
 			}
 		}
 
 		$scope.saveForm = function () {
-			console.log($scope.form);
+			console.log($scope.data);
+			MerchandisingService
 		};
 
 		$timeout(function(){

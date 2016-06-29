@@ -51,19 +51,20 @@
 				scope.windowWidth = newValue.w;
 
 				var elt0 = $('.main-header').outerHeight(true),
+					elt1 = $('.navbar').outerHeight(true),
 					elt2 = $('.content-header').outerHeight(true),
 					elt3 = $('.btn-forms').outerHeight(true),
 					elt4 = $('.nav-tabs').outerHeight(true),
 					elt5 = $('.main-footer').outerHeight(true);
 
 				// calcul dynamique de la hauteur des grid en fonction des constituants de la page (info: outerHeight(true) = prise en compte margin)
-				var elements_height = elt0 + elt2 + elt3 + elt4 + elt5 + 30; // 30 = padding du content
+				var elements_height = elt0 + elt1 + elt2 + elt3 + elt4 + elt5 + 50; // 30 = padding du content
 				$(".tab-content").css('max-height', newValue.h - elements_height);
 				$(".tab-content").css('overflow-y', 'auto');
 				$(".tab-content").css('overflow-x', 'hidden');
 
 				// calcul dynamique de la hauteur du contenu des tab en fonction des constituants de la page
-				var border = $('.main-header').outerHeight() + $('.navbar').outerHeight() + $('.content-header').outerHeight(true) + $('.nav-tabs').outerHeight() + $('.edit-page-button').outerHeight() + $('.main-footer').outerHeight();
+				var border = $('.main-header').outerHeight() + $('.navbar').outerHeight() + $('.content-header').outerHeight(true) + $('.nav-tabs').outerHeight() + $('.btn-forms').outerHeight() + $('.main-footer').outerHeight();
 				$(".content-tab").css('height', newValue.h - border);
 			}, true);
 

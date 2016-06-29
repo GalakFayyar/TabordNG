@@ -12,6 +12,27 @@
 </section>
 
 <section resize-form class="content">
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="rows" style="margin-top:8px">
+				<div class="col-md-2" style="margin-top:7px">Sélectionner un rapport à afficher:</div>
+				<div class="col-md-5">
+					<ui-select ng-model="field_mass_edit.selected" required="true" ng-change="massEdit.newValue = null">
+						<ui-select-match placeholder="Rapports enregistrés pour cette pharamcie...">{{$select.selected.libelle}}</ui-select-match>
+						<ui-select-choices repeat="champ in fields_list | filter: $select.search">
+							<span ng-bind-html="champ.libelle | highlight: $select.search"></span>
+						</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="col-md-5" style="text-align:right">
+					<button type="button" class="btn btn-primary btn-flat" ng-click="createNewForm()"><i class="fa fa-pencil"></i> Créer</button>
+					<button type="button" class="btn btn-success btn-flat" ng-click="saveForm()"><i class="fa fa-save"></i> Enregistrer</button>
+					<button type="button" class="btn btn-danger btn-flat" ng-click="deleteForm()"><i class="fa fa-remove"></i> Supprimer</button>
+				</div>
+			</div>
+		</div>
+	</nav>
+
 	<tabset justified="true">
 		<tab heading="Contexte Environnemental" active="tab.contexte_environnemental.active" ng-click="tabHeadingClick('contexte_environnemental')">
 			<div ng-include="'views/merchandising/form-context-environnemental.html'"></div>
@@ -32,9 +53,4 @@
 			contenu 6
 		</tab>
 	</tabset>
-	<div class="btn-forms row" style="margin-top:10px;">
-		<div class="col-md-1">
-			<button type="button" style="width:100% !important;" class="btn btn-success btn-flat" ng-click="saveForm()">Enregistrer</button>
-		</div>
-	</div>
 </section>
