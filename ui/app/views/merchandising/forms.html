@@ -17,10 +17,10 @@
 			<div class="rows" style="margin-top:8px">
 				<div class="col-md-2" style="margin-top:7px">Sélectionner un rapport à afficher:</div>
 				<div class="col-md-5">
-					<ui-select ng-model="field_mass_edit.selected" required="true" ng-change="massEdit.newValue = null">
+					<ui-select ng-model="form.selected" required="true">
 						<ui-select-match placeholder="Rapports enregistrés pour cette pharamcie...">{{$select.selected.libelle}}</ui-select-match>
-						<ui-select-choices repeat="champ in fields_list | filter: $select.search">
-							<span ng-bind-html="champ.libelle | highlight: $select.search"></span>
+						<ui-select-choices repeat="form in forms_list | filter: $select.search">
+							<span ng-bind-html="form.libelle | highlight: $select.search"></span>
 						</ui-select-choices>
 					</ui-select>
 				</div>
@@ -33,7 +33,7 @@
 		</div>
 	</nav>
 
-	<tabset justified="true">
+	<tabset justified="true" ng-show="displayForms">
 		<tab heading="Contexte Environnemental" active="tab.contexte_environnemental.active" ng-click="tabHeadingClick('contexte_environnemental')">
 			<div ng-include="'views/merchandising/form-context-environnemental.html'"></div>
 		</tab>
