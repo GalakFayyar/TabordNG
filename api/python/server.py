@@ -154,12 +154,12 @@ def delete_pharmacie():
 #   MERCHANDISING ROUTES
 ################################################################################
 @app.route(url_prefix + "/merchandising/get_forms/pharmacie/<pharmacie_id>", methods=['GET'])
-def get_forms_merchandising():
+def get_forms_merchandising(pharmacie_id):
     forms_merchandising = merchandising_resource.get_all_forms_pharmacie(pharmacie_id)
     return jsonify(forms_merchandising)
 
 @app.route(url_prefix + "/merchandising/get_form/<form_id>", methods=['GET'])
-def get_form_merchandising():
+def get_form_merchandising(form_id):
     form_merchandising = merchandising_resource.get_form(form_id)
     return jsonify(form_merchandising)
 
@@ -174,7 +174,7 @@ def update_form_merchandising():
     return jsonify(result)
 
 @app.route(url_prefix + "/merchandising/delete_form/<form_id>", methods=['GET'])
-def delete_form_merchandising():
+def delete_form_merchandising(form_id):
     result = merchandising_resource.delete_form(form_id)
     return jsonify(result)
 

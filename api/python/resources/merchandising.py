@@ -12,7 +12,7 @@ class Merchandising():
 
     def get_all(self):
         logger.info('Get data merchandising ...')
-        sql = "SELECT id, data FROM form_merchandising;"
+        sql = "SELECT id, id_pharmacie, libelle, data FROM form_merchandising;"
 
         self.cursor.execute(sql)
         data = self.cursor.fetchall()
@@ -21,12 +21,12 @@ class Merchandising():
 
     def get_all_forms_pharmacie(self, pharmacie_id):
         logger.info('Get data merchandising ...')
-        sql = "SELECT id, data FROM form_merchandising WHERE id_pharmacie = '%s';" %(pharmacie_id)
+        sql = "SELECT id, id_pharmacie, libelle, data FROM form_merchandising WHERE id_pharmacie = %s;" %(pharmacie_id)
 
         self.cursor.execute(sql)
         data = self.cursor.fetchall()
 
-        return {'data':self.tools.format_simple_psql_result(data)}
+        return {'data':self.tools.format_complex_psql_result(data, ['id', 'id_pharmacie', 'libelle'], 'forms')}
 
     def get_form(self, form_id):
         logger.info('Get data merchandising ...')
@@ -39,10 +39,10 @@ class Merchandising():
 
     def create_form(self, data):
         print('Creation du merchandising ...')
-        pharmacie_id = data['pharmacie']['code']
+        pharmacie_id = data['form']['pharmacie']['code']
         print('Pharmacie code %s' %(pharmacie_id))
 
-        sql = "INSERT INTO form_merchandising (pharmacie_id, libelle, data) VALUES (%s, %s, %s);" %(pharmacie_id, data['libelle'], json.dumps(data['forms']).strip())
+        sql = "INSERT INTO form_merchandising (id_pharmacie, libelle, data) VALUES (%s, '%s', '%s');" %(pharmacie_id, data['form']['libelle'], json.dumps(data['form']['data']).strip())
 
         self.cursor.execute(sql)
         self.connector.commit()
@@ -52,7 +52,7 @@ class Merchandising():
     def update_form(self, data):
         print('Mise a jour du merchandising ...')
         
-        sql = "UPDATE form_merchandising SET data = '%s' WHERE id = %s;" %(json.dumps(data['forms']).strip(), data['id'])
+        sql = "UPDATE form_merchandising SET data = '%s' WHERE id = %s;" %(json.dumps(data['form']['forms']).strip(), data['form']['id'])
 
         self.cursor.execute(sql)
         self.connector.commit()

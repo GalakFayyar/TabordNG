@@ -167,6 +167,7 @@
 	tabordngRun.$inject = ['$rootScope', '$location', '$cookieStore', '$state', '$injector', 'ngProgress'];
 	function tabordngRun ($rootScope, $location, $cookieStore, $state, $injector, ngProgress) {
 		$rootScope.alerts = [];
+		$rootScope.user = null;
 
 		ngProgress.color('#000');
 		ngProgress.height('3px');

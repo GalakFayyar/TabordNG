@@ -351,6 +351,7 @@ VALUES (
 CREATE TABLE form_merchandising(
 	id SERIAL NOT NULL,
 	id_pharmacie INT,
+	libelle VARCHAR(500),
 	data json,
 	CONSTRAINT prk_constraint_form_merchandising PRIMARY KEY (id)
 )WITHOUT OIDS;

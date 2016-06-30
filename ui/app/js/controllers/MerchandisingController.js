@@ -11,12 +11,11 @@
 
 		// Manage form display if action is triggered by user (create/update)
 		$scope.displayForms = false;
-		$scope.formData.list = [];
-		$scope.form = { seleted: null };
+		$scope.survey = { list: [], selected: null };
 		
 		// Merchandising Form Values
 		var initNewFormData = function () {
-			var data = {
+			$scope.survey.selected = {
 				id: null,
 				libelle: "test",
 				pharmacie: {
@@ -41,15 +40,14 @@
 					}
 				}
 			};
-			$scope.form.selected = data;
 		};
 
 		// Get All Forms for Current Pharmacy
 		var getData = function () {
 			ngProgress.start();
 			MerchandisingService.get_forms({'subaction': $rootScope.pharmacie.selected.id}, function (results) {
-				$scope.formData.list.push(results.data);
-				console.log($scope.formData.list);
+				$scope.survey.list = results.data;
+				console.log($scope.survey.list);
 				ngProgress.complete();
 			}, function (error) {
 				ngProgress.reset();
@@ -59,23 +57,23 @@
 
 		// Save or Update Current Form
 		$scope.saveForm = function () {
-			if ($scope.form.selected != undefined && $scope.form.selected.id != null) {
+			if ($scope.survey.selected != undefined && $scope.survey.selected.id != null) {
 				// Case Update existing form
-				MerchandisingService.update_form({'subresource': $scope.form.selected.id}, {'form': $scope.form.selected}, function (result) {
+				MerchandisingService.update_form({}, {'form': $scope.survey.selected}, function (result) {
 					ngProgress.complete();
 					console.log(result);
 				}, function (error) {
 					ngProgress.reset();
-					console.log('Erreur de mise à jour du formulaire: ', $scope.form.selected);
+					console.log('Erreur de mise à jour du formulaire: ', $scope.survey.selected);
 				});
 			} else {
 				// Case Create new form
-				MerchandisingService.create_form({}, {'form': $scope.form.selected}, function (result) {
+				MerchandisingService.create_form({}, {'form': $scope.survey.selected}, function (result) {
 					ngProgress.complete();
 					console.log(result);
 				}, function (error) {
 					ngProgress.reset();
-					console.log('Erreur de création du formulaire: ', $scope.form.selected);
+					console.log('Erreur de création du formulaire: ', $scope.survey.selected);
 				});
 			}
 
@@ -91,14 +89,14 @@
 		// Delete Current Form
 		$scope.deleteForm = function () {
 			$scope.displayForms = false;
-			MerchandisingService.delete_form({'subresource': $scope.form.selected.id}, {}, function (result) {
+			MerchandisingService.delete_form({'subresource': $scope.survey.selected.id}, {}, function (result) {
 				ngProgress.complete();
 				console.log(result);
 				getData();
-				$scope.form.selected = null;
+				$scope.survey.selected = null;
 			}, function (error) {
 				ngProgress.reset();
-				console.log('Erreur de suppression du formulaire: ', $scope.form.selected);
+				console.log('Erreur de suppression du formulaire: ', $scope.survey.selected);
 			});
 		};
 
@@ -107,6 +105,7 @@
 			$(":checkbox").labelauty();
 			$(":radio").labelauty();
 			ngProgress.complete();
+			getData();
 		}, 500);
 	}
 })();

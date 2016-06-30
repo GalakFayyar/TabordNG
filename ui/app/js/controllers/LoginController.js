@@ -33,7 +33,7 @@
 		$scope.username = '';
 		$scope.password = '';
 
-		$rootScope.currentPharmacie = {
+		$rootScope.pharmacie = {
 			selected : null
 		};
 		
@@ -111,7 +111,7 @@
 					list: results.data
 				};
 				console.log($scope.pharmacies.list);
-				$rootScope.currentPharmacie.selected = $scope.pharmacies.list[0];
+				$rootScope.pharmacie.selected = $scope.pharmacies.list[0];
 			}, function (error) {
 				console.log('Erreur get_all_pharmacie(): ', error);
 			});

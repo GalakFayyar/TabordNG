@@ -14,3 +14,13 @@ class Tools():
             _results.append(_temp_elt)
 
         return _results
+
+    def format_complex_psql_result(self, psql_result, fields_array, json_field):
+        _results = []
+        for elt in psql_result:
+            _temp_elt = {json_field: json.loads(elt['data'])}
+            for field in fields_array:
+                _temp_elt[field] = elt[field]
+            _results.append(_temp_elt)
+
+        return _results
