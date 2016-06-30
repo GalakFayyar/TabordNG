@@ -18,7 +18,8 @@
 				method : 'GET',
 				params : {
 					'resource': 'merchandising',
-					'action' : 'get_forms'
+					'action' : 'get_forms',
+					'subresource': 'pharmacie'
 				}
 			},
 			create_form : {
@@ -36,7 +37,7 @@
 				}
 			},
 			delete_form : {
-				method : 'POST',
+				method : 'GET',
 				params : {
 					'resource': 'merchandising',
 					'action': 'delete_form'

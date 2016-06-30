@@ -78,12 +78,14 @@ def index():
 
     return jsonify({"routes" : routes})
 
-### heartbeat status
+
+################################################################################
+#   TECHNICAL ROUTES
+################################################################################
 @app.route(url_prefix + "/heartbeat")
 def hello():
     return "bim boum"
 
-### retrieve api config
 @app.route(url_prefix + "/conf")
 def api_conf():
     return jsonify(app.config['CONF'])
@@ -123,42 +125,59 @@ def authenticate():
     else:
         return jsonify({'data':{'authenticated': True, 'username': username}})
 
-#TODO : export in class
+
+################################################################################
+#   PHARMACIE ROUTES
+################################################################################
 @app.route(url_prefix + "/pharmacie/get_all", methods=['GET'])
 def get_all_pharmacies():
     pharmacies = pharmacie_resource.get_all()
     return jsonify(pharmacies)
 
-#TODO : export in class
 @app.route(url_prefix + "/pharmacie/update", methods=['POST'])
 def update_pharmacie():
     result = pharmacie_resource.update(request.json)
     return jsonify(result)
 
-#TODO : export in class
 @app.route(url_prefix + "/pharmacie/create", methods=['POST'])
 def create_pharmacie():
     result = pharmacie_resource.create(request.json)
     return jsonify(result)
 
-#TODO : export in class
 @app.route(url_prefix + "/pharmacie/delete", methods=['POST'])
 def delete_pharmacie():
     result = pharmacie_resource.delete(request.json)
     return jsonify(result)
 
 
-#TODO : export in class
-@app.route(url_prefix + "/merchandising/get_data", methods=['GET'])
-def get_merchandising():
-    merchandising = merchandising_resource.get_data_pharmacie()
-    return jsonify(merchandising)
+################################################################################
+#   MERCHANDISING ROUTES
+################################################################################
+@app.route(url_prefix + "/merchandising/get_forms/pharmacie/<pharmacie_id>", methods=['GET'])
+def get_forms_merchandising():
+    forms_merchandising = merchandising_resource.get_all_forms_pharmacie(pharmacie_id)
+    return jsonify(forms_merchandising)
 
-#TODO : export in class
-@app.route(url_prefix + "/merchandising/save_data", methods=['POST'])
-def save_merchandising():
-    result = merchandising_resource.upsert(request.json)
+@app.route(url_prefix + "/merchandising/get_form/<form_id>", methods=['GET'])
+def get_form_merchandising():
+    form_merchandising = merchandising_resource.get_form(form_id)
+    return jsonify(form_merchandising)
+
+@app.route(url_prefix + "/merchandising/create_form", methods=['POST'])
+def create_form_merchandising():
+    result = merchandising_resource.create_form(request.json)
     return jsonify(result)
+
+@app.route(url_prefix + "/merchandising/update_form", methods=['POST'])
+def update_form_merchandising():
+    result = merchandising_resource.update_form(request.json)
+    return jsonify(result)
+
+@app.route(url_prefix + "/merchandising/delete_form/<form_id>", methods=['GET'])
+def delete_form_merchandising():
+    result = merchandising_resource.delete_form(form_id)
+    return jsonify(result)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

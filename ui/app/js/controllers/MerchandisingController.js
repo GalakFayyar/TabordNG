@@ -47,7 +47,7 @@
 		// Get All Forms for Current Pharmacy
 		var getData = function () {
 			ngProgress.start();
-			MerchandisingService.get_forms({'subresource': $rootScope.pharmacie.selected.id}, function (results) {
+			MerchandisingService.get_forms({'subaction': $rootScope.pharmacie.selected.id}, function (results) {
 				$scope.formData.list.push(results.data);
 				console.log($scope.formData.list);
 				ngProgress.complete();
