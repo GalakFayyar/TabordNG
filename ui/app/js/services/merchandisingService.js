@@ -7,18 +7,39 @@
 	MerchandisingService.$inject = ['$resource', 'tabordngConfig'];
 	function MerchandisingService ($resource, tabordngConfig) {
 		return $resource(tabordngConfig.api.url + ':resource/:action/:subresource/:subaction', {}, {
-			get_data : {
+			get_form : {
 				method : 'GET',
 				params : {
 					'resource': 'merchandising',
-					'action' : 'get_data'
+					'action' : 'get_form'
 				}
 			},
-			save_data : {
+			get_forms : {
+				method : 'GET',
+				params : {
+					'resource': 'merchandising',
+					'action' : 'get_forms'
+				}
+			},
+			create_form : {
 				method : 'POST',
 				params : {
 					'resource': 'merchandising',
-					'action': 'save_data'
+					'action': 'create_form'
+				}
+			},
+			update_form : {
+				method : 'POST',
+				params : {
+					'resource': 'merchandising',
+					'action': 'update_form'
+				}
+			},
+			delete_form : {
+				method : 'POST',
+				params : {
+					'resource': 'merchandising',
+					'action': 'delete_form'
 				}
 			}
 		});
