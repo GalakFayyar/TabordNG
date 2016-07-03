@@ -37,6 +37,159 @@
 						envCentresMedicaux: null,
 						envMedicalHospitalier: null,
 						concurrents: []
+					},
+					contexteInterne: {
+						signalisation: {
+							nombreDimensionEnseignes: null,
+							visibilitePharmacie: null,
+							panneaux: null,
+							etatGeneral: null,
+							proprete: null
+						},
+						vitrines: {
+							eclairage: null,
+							soin: null,
+							personnalisees: null,
+							thematiques: null,
+							saisonnalisees: null,
+							natureMessageDelivre: null,
+							affichageHoraires: null,
+							affichagePrix: null
+						},
+						eclairage: {
+							repartition: null,
+							puissance: null,
+							mesure: {
+								comptoirs: null,
+								lineairesPara: null,
+								lineairesOTC: null,
+								ambiance: null
+							},
+							etat: null
+						},
+						sonorisation: {
+							niveauSonore: null,
+							natureProgrammeMusical: null
+						},
+						proprete: {
+							sol: null,
+							lineairesProduits: null,
+							tenuesPersonnel: null
+						},
+						affichage: null,
+						signaletique: null,
+						audio: null,
+						oneToOne: null,
+						balisageLineaire: null,
+						gestionFluxCirculation: null,
+						mobilier: null,
+						logiqueImplantation: null,
+						reserve: {
+							surface: null,
+							organisation: null
+						},
+						comptoirs: {
+							nombre: null,
+							nombrePara: null
+						}
+					},
+					profilMarketing: {
+						accueilTel: {
+							formationPersonnel: null,
+							nbSonneries: null,
+							phraseTypeAccueil: null,
+							protocoleMiseAttente: null,
+							decouverteObjetAppel: null,
+							procedureTransmissionMessage: null,
+							procedureConfirmPriseMessage: null,
+							phraseTypeConges: null
+						},
+						accueilClientele: {
+							pecClientEntree: null,
+							phraseTypeAccueil: null,
+							procedureReducDelaiAttente: null,
+							efforAttente: null,
+							exploDemande: null,
+							exploCompl: null,
+							phraseTypeConges: null
+						},
+						structureAssortiment: {
+							dermatologie: null,
+							cosmetique: null,
+							solaires: null,
+							amincissants: null,
+							cremesMain: null,
+							hygieneIntime: null,
+							bebeDermo: null,
+							bebeAccessoires: null,
+							capillaires: null,
+							pieds: null,
+							hbd: null,
+							contactologue: null,
+							premiersSecours: null,
+							complAlimentaires: null,
+							dietMinceur: null,
+							substRepas: null,
+							herboristerie: null,
+							veterinaire: null,
+							douleursFievre: null,
+							rhum: null,
+							gorge: null,
+							digestion: null,
+							homeo: null,
+							sevrageTabac: null,
+							vitamines: null
+						},
+						lineaires: {
+							potExpo: {
+								largeur: null,
+								profondeur: null,
+								nbNiveaux: null,
+								modularite: null
+							},
+							para: {
+								nb: null,
+								mld: null
+							},
+							otc: {
+								nb: null,
+								mld: null
+							},
+							effetMasse: null,
+							logiqueImplantation: null
+						},
+						tdg: {
+							nb: null,
+							effetMasse: null,
+							selectProd: null,
+							balisagePrix: null
+						},
+						comptoirs: {
+							nb: null,
+							nbPara: null,
+							encombrement: null,
+							selectProd: null
+						},
+						balisage: {
+							selectProd: null,
+							carteGraphique: null
+						},
+						polPrix: {
+							para: {
+								gen: null,
+								leader: null
+							},
+							otc: {
+								gen: null,
+								leader: null
+							}
+						},
+						animPdv: {
+							pertinenceTheme: null,
+							clarteOffre: null,
+							agressiviteComm: null,
+							PeriodOperations: null
+						}
 					}
 				}
 			};
