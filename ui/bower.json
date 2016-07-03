@@ -30,7 +30,8 @@
     "async": "1.4.2",
     "angular-toggle-switch": "1.3.0",
     "admin-lte": "~2.3.2",
-    "jquery-labelauty": "1.1.0"
+    "jquery-labelauty": "1.1.0",
+    "nvd3": "1.8.3"
   },
   "resolutions": {
     "angular": "1.2.x"
