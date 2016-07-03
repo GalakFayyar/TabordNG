@@ -90,6 +90,13 @@ ul.sidebar-menu li.activated a{
             animation: fadeout 1s;*/
 }
 
+.custom-header-part-form {
+	padding: 15px;
+}
+.custom-header-part-form .btn {
+	padding: 0 !important;
+}
+
 /*
  *	Tool classes
  */

@@ -42,7 +42,7 @@ class Merchandising():
         pharmacie_id = data['form']['pharmacie']['code']
         print('Pharmacie code %s' %(pharmacie_id))
 
-        sql = "INSERT INTO form_merchandising (id_pharmacie, libelle, data) VALUES (%s, '%s', '%s');" %(pharmacie_id, data['form']['libelle'], json.dumps(data['form']['data']).strip())
+        sql = "INSERT INTO form_merchandising (id_pharmacie, libelle, data) VALUES (%s, '%s', '%s');" %(pharmacie_id, data['form']['libelle'], json.dumps(data['form']['forms']).strip())
 
         self.cursor.execute(sql)
         self.connector.commit()
