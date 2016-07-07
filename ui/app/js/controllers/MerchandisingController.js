@@ -230,6 +230,51 @@
                                 planInteressementExistant: null
                             }
                         }
+                    },
+                    gestionStocks: {
+                        achats: {
+                            poleCompetence: null,
+                            calculPrixVente: null
+                        },
+                        informatique: {
+                            poleCompetence: null,
+                            majFichesProduits: null,
+                            calculPrixVente: null
+                        },
+                        stocks: {
+                            poleCompetenceReceptionCommandes: null,
+                            poleCompetenceVerifFactures: null
+                        },
+                        reapprovisionnementRayons: {
+                            poleCompetence: null,
+                            reapprovisionnementRayons: null,
+                            frequence: null
+                        }
+                    },
+                    divers: {
+                        informatique: {
+                            logicielGestion: null,
+                            nombrePostes: {
+                                comptoirs: null,
+                                para: null,
+                                bo: null,
+                                reserve: null,
+                                administratif: null
+                            },
+                            connectionInternet: {
+                                comptoirs: null,
+                                para: null,
+                                bo: null,
+                                reserve: null,
+                                administratif: null
+                            },
+                            offreLogicielle: {
+                                word: null,
+                                excel: null,
+                                autres: null
+                            },
+                            amplitudeHoraires: null
+                        }
                     }
                 }
             };
