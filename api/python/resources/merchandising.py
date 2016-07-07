@@ -25,7 +25,7 @@ class Merchandising():
 
         self.cursor.execute(sql)
         data = self.cursor.fetchall()
-
+        
         return {'data':self.tools.format_complex_psql_result(data, ['id', 'id_pharmacie', 'libelle'], 'forms')}
 
     def get_form(self, form_id):

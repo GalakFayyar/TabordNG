@@ -7,6 +7,12 @@
 	angular.module('tabordNG').directive('uiSelectWrap', uiSelectWrap);
 	angular.module('tabordNG').directive('ngReallyClick', reallyClick);
 	angular.module('tabordNG').directive('resizeForm', resizeForm);
+	// angular.module('tabordNG').directive('formMerchandisingContextEnvironnemental', formMerchandisingContextEnvironnemental);
+	// angular.module('tabordNG').directive('formMerchandisingContextInterne', formMerchandisingContextInterne);
+	// angular.module('tabordNG').directive('formMerchandisingProfilMarketing', formMerchandisingProfilMarketing);
+	// angular.module('tabordNG').directive('formMerchandisingPolitiquePersonnel', formMerchandisingPolitiquePersonnel);
+	// angular.module('tabordNG').directive('formMerchandisingGestionStock', formMerchandisingGestionStock);
+	// angular.module('tabordNG').directive('formMerchandisingDivers', formMerchandisingDivers);
 	// angular.module('tabordNG').directive('resize', resize);
 
 	function directiveEvalCodeAngularJs ($compile, $parse) {
@@ -155,4 +161,25 @@
 			}
 		}
 	}
+
+	// function formMerchandisingContextEnvironnemental () {
+	// 	console.log("loading views/merchandising/form-context-environnemental.html");
+	// 	return { restrict: 'E', templateUrl: 'views/merchandising/form-context-environnemental.html' };
+	// }
+	// function formMerchandisingContextInterne () {
+	// 	console.log("loading views/merchandising/form-context-interne.html");
+	// 	return { restrict: 'E', templateUrl: 'views/merchandising/form-context-interne.html' };
+	// }
+	// function formMerchandisingProfilMarketing () {
+	// 	return { restrict: 'E', templateUrl: 'views/merchandising/form-profil-marketing.html' };
+	// }
+	// function formMerchandisingPolitiquePersonnel () {
+	// 	return { restrict: 'E', templateUrl: 'views/merchandising/form-politique-personnel.html' };
+	// }
+	// function formMerchandisingGestionStock () {
+	// 	return { restrict: 'E', templateUrl: 'views/merchandising/form-gestion-stock.html' };
+	// }
+	// function formMerchandisingDivers () {
+	// 	return { restrict: 'E', templateUrl: 'views/merchandising/form-divers.html' };
+	// }
 })();

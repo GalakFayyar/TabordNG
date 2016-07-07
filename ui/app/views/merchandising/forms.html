@@ -33,24 +33,30 @@
 		</div>
 	</nav>
 
-	<tabset justified="true" ng-show="survey.selected">
+	<tabset justified="true" class="custom-form-style" ng-show="survey.selected">
 		<tab heading="Contexte Environnemental" active="tab.contexte_environnemental.active" ng-click="tabHeadingClick('contexte_environnemental')">
-			<div ng-include="'views/merchandising/form-context-environnemental.html'"></div>
+			<!-- <form-merchandising-context-environnemental></form-merchandising-context-environnemental> -->
+			<div ng-include="templatesUrl.contexte_environnemental.current"></div>
 		</tab>
 		<tab heading="Contexte Interne" active="tab.contexte_interne.active" ng-click="tabHeadingClick('contexte_interne')">
-			<div ng-include="'views/merchandising/form-context-interne.html'"></div>
+			<!-- <form-merchandising-context-interne></form-merchandising-context-interne> -->
+			<div ng-include="templatesUrl.contexte_interne.current"></div>
 		</tab>
 		<tab heading="Profil Marketing" active="tab.profil_marketing.active" ng-click="tabHeadingClick('profil_marketing')">
-			<div ng-include="'views/merchandising/form-profil-marketing.html'"></div>
+			<!-- <form-merchandising-profil-marketing></form-merchandising-profil-marketing> -->
+			<div ng-include="templatesUrl.profil_marketing.current"></div>
 		</tab>
 		<tab heading="Politique du Personnel" active="tab.politique_personnel.active" ng-click="tabHeadingClick('politique_personnel')">
-			<div ng-include="'views/merchandising/form-politique-personnel.html'"></div>
+			<!-- <form-merchandising-politique-personnel></form-merchandising-politique-personnel> -->
+			<div ng-include="templatesUrl.politique_personnel.current"></div>
 		</tab>
 		<tab heading="Gestion des Stocks" active="tab.gestion_stocks.active" ng-click="tabHeadingClick('gestion_stocks')">
-			contenu 5
+			<!-- <form-merchandising-gestion-stock></form-merchandising-gestion-stock> -->
+			<div ng-include="templatesUrl.gestion_stocks.current"></div>
 		</tab>
 		<tab heading="Divers" active="tab.divers.active" ng-click="tabHeadingClick('divers')">
-			contenu 6
+			<!-- <form-merchandising-divers></form-merchandising-divers> -->
+			<div ng-include="templatesUrl.divers.current"></div>
 		</tab>
 	</tabset>
 </section>

@@ -96,6 +96,12 @@ ul.sidebar-menu li.activated a{
 .custom-header-part-form .btn {
 	padding: 0 !important;
 }
+.custom-form-style table{
+	border-collapse: separate !important;
+}
+.custom-form-style .large-width-radio{
+	width: 100%;
+}
 
 /*
  *	Tool classes
