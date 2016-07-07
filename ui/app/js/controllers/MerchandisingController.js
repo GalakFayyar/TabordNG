@@ -195,7 +195,7 @@
                         fonctionnementInterne: {
                             regles: {
                                 identification: null,
-                                formlisation: null,
+                                formalisation: null,
                                 frequenceReajustement: null,
                                 collaborateursAssociesEvolution: null,
                                 controleApplication: null,
