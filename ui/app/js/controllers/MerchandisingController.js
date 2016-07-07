@@ -17,11 +17,11 @@
         // Tab elements
         $scope.tab = {
             contexte_environnemental: { active: true },
-            contexte_interne: { active: true },
-            profil_marketing: { active: true },
-            politique_personnel: { active: true },
-            gestion_stocks: { active: true },
-            divers: { active: true }
+            contexte_interne: { active: null },
+            profil_marketing: { active: null },
+            politique_personnel: { active: null },
+            gestion_stocks: { active: null },
+            divers: { active: null }
         };
 
         // Alimentation des logiciels de gestion courant
@@ -372,14 +372,14 @@
         };
 
         $scope.templatesUrl = {
-            contexte_environnemental: { ref: 'views/merchandising/form-context-environnemental.html', current: null},
+            contexte_environnemental: { ref: 'views/merchandising/form-context-environnemental.html', current: 'views/merchandising/form-context-environnemental.html'},
             contexte_interne: { ref: 'views/merchandising/form-context-interne.html', current: null},
             profil_marketing: { ref: 'views/merchandising/form-profil-marketing.html', current: null},
             politique_personnel: { ref: 'views/merchandising/form-politique-personnel.html', current: null},
             gestion_stocks: { ref: 'views/merchandising/form-gestion-stock.html', current: null},
             divers: { ref: 'views/merchandising/form-divers.html', current: null}
         };
-        
+
         var resetCurrentTemplatesURL = function () {
             $scope.templatesUrl.contexte_environnemental.current = null;
             $scope.templatesUrl.contexte_interne.current = null;
@@ -402,6 +402,8 @@
 
         // UI Init
         $timeout(function(){
+            $(":checkbox").labelauty();
+            $(":radio").labelauty({ minimum_width: "100%" });
             ngProgress.complete();
             getData();
         });
