@@ -204,7 +204,7 @@
                                 tachesConnuesReparties: null,
                                 procedureIntegration: null
                             },
-                            communicationInterne: {
+                            communication: {
                                 projetEntreprise: null,
                                 objectifs: null,
                                 entretiensIndividuels: null,
