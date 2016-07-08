@@ -408,6 +408,7 @@
         $timeout(function(){
             $(":checkbox").labelauty();
             $(":radio").labelauty({ minimum_width: "100%" });
+            $('#datepicker').datepicker({ autoclose: true });
             ngProgress.complete();
             getData();
         });

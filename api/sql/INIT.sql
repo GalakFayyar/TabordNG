@@ -352,36 +352,11 @@ CREATE TABLE form_merchandising(
 	id SERIAL NOT NULL,
 	id_pharmacie INT,
 	libelle VARCHAR(500),
+	operator VARCHAR(255),
+	date_operation DATE,
 	data json,
 	CONSTRAINT prk_constraint_form_merchandising PRIMARY KEY (id)
 )WITHOUT OIDS;
-
--- INSERT INTO form_merchandising
--- VALUES (
--- 	0,
--- 	'{
--- 		"code": "SSII0001",
--- 		"libelle": "SSII pharmaceutique cool",
--- 		"responsable": {
--- 			"nom": "GAUDINO",
--- 			"prenom": "Sergio"
--- 		},
--- 		"adresse":{
--- 			"num": "551",
--- 			"libelle": "Chemin de la Défense",
--- 			"cp": "75000",
--- 			"ville": "PANAM"
--- 		},
--- 		"telephone":{
--- 			"fixe": "0102030405",
--- 			"portable": "0605040302"
--- 		},
--- 		"fax": "711115441",
--- 		"email": "cgi@fou.bar",
--- 		"observations": "SSII cool!"
--- 	}'
--- );
-
 
 ALTER TABLE personnel ADD CONSTRAINT FK_personnel_id_pharmacie FOREIGN KEY (id_pharmacie) REFERENCES pharmacie(id);
 ALTER TABLE form_merchandising ADD CONSTRAINT FK_form_merchandising_id_pharmacie FOREIGN KEY (id_pharmacie) REFERENCES pharmacie(id);
