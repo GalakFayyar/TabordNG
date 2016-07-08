@@ -389,15 +389,19 @@
             $scope.templatesUrl.divers.current = null;
         };
 
+        $scope.selectedFormTab = 'contexte_environnemental';
         $scope.tabHeadingClick = function (tab) {
             ngProgress.start();
             resetCurrentTemplatesURL();
             $scope.templatesUrl[tab].current = $scope.templatesUrl[tab].ref;
             ngProgress.complete();
-            $timeout(function(){
-                $(":checkbox").labelauty();
-                $(":radio").labelauty({ minimum_width: "100%" });
-            });
+            if ($scope.selectedFormTab != tab) {
+                $timeout(function(){
+                    $(":checkbox").labelauty();
+                    $(":radio").labelauty({ minimum_width: "100%" });
+                }, 500);
+                $scope.selectedFormTab = tab;
+            }
         };
 
         // UI Init
