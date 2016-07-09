@@ -15,10 +15,10 @@
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="rows" style="margin-top:8px">
-				<div class="col-md-2" style="margin-top:7px">Sélectionner un rapport à afficher:</div>
-				<div class="col-md-3">
+				<!-- <div class="col-md-2" style="margin-top:7px">Sélectionner un rapport à afficher:</div> -->
+				<div class="col-md-4">
 					<ui-select ng-model="survey.selected" required="true">
-						<ui-select-match placeholder="Rapports enregistrés pour cette pharamcie...">{{$select.selected.libelle}}</ui-select-match>
+						<ui-select-match placeholder="Sélectionner un rapport...">{{$select.selected.libelle}}</ui-select-match>
 						<ui-select-choices repeat="survey in survey.list | filter: $select.search">
 							<span ng-bind-html="survey.libelle | highlight: $select.search"></span>
 						</ui-select-choices>
@@ -29,16 +29,16 @@
 						<div class="input-group-addon">
 							<i class="fa fa-calendar"></i>
 						</div>
-						<input type="text" class="form-control pull-right" id="datepicker">
+						<input type="text" class="form-control pull-right" id="datepicker" ng-model="survey.selected.date">
 					</div>
 				</div>
 				<div class="col-md-2">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-user"></i></span>
-						<input type="text" class="form-control" placeholder="Opérateur">
+						<input type="text" class="form-control" placeholder="Opérateur" ng-model="survey.selected.user">
 					</div>
 				</div>
-				<div class="col-md-3" style="text-align:right">
+				<div class="col-md-4" style="text-align:right">
 					<button type="button" class="btn btn-primary btn-flat" ng-click="createNewForm()"><i class="fa fa-pencil"></i> Créer</button>
 					<button type="button" class="btn btn-success btn-flat" ng-click="saveForm()"><i class="fa fa-save"></i> Enregistrer</button>
 					<button type="button" class="btn btn-danger btn-flat" ng-click="deleteForm()"><i class="fa fa-remove"></i> Supprimer</button>

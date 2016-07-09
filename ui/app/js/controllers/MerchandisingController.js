@@ -51,6 +51,8 @@
             $scope.survey.selected = {
                 id: null,
                 libelle: "test",
+                user: $rootScope.user.data.username,
+                date: HelperService.getCurrentDate(),
                 pharmacie: {
                     code: $rootScope.pharmacie.selected.id
                 },
@@ -408,7 +410,7 @@
         $timeout(function(){
             $(":checkbox").labelauty();
             $(":radio").labelauty({ minimum_width: "100%" });
-            $('#datepicker').datepicker({ autoclose: true });
+            $('#datepicker').datepicker({ autoclose: true, format: 'dd/mm/yyyy', });
             ngProgress.complete();
             getData();
         });
