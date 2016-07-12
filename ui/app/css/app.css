@@ -74,6 +74,7 @@ ul.sidebar-menu li.activated a{
 .form-label {
 	line-height: 35px;
 	vertical-align: middle;
+	overflow: ellipsis;
 }
 
 .loader-div {
