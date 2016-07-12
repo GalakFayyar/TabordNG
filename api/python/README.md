@@ -20,6 +20,9 @@ Postgresql install notes :
 - create new database
 `createdb tabordng`
 
+Install SQL script :
+`psql -U user -d database -a -f INIT.sql`
+
 ## Configuration
 Edit file `conf/api-conf.json` to adapt configuration such as API server link, prefix, port, logging, etc.
 
