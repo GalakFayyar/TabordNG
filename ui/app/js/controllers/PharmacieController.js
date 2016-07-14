@@ -9,8 +9,6 @@
 	function PharmacieController ($scope, $state, HelperService, PharmacieService, uiGridConstants, ngProgress) {
 		$.AdminLTE.layout.activate();
 
-		ngProgress.color('#FFF');
-
 		$scope.pharmacie = {
 			selected: null //TODO : get current pharmacie selected on login
 		};

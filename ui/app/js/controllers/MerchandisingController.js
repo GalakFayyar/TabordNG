@@ -52,7 +52,7 @@
             $scope.survey.selected = {
                 id: null,
                 libelle: "test",
-                operator: $rootScope.user.data.username,
+                operator: ($rootScope.user != null && $rootScope.user.data != null) ? $rootScope.user.data.username : null,
                 date_operation: HelperService.getCurrentDate(),
                 pharmacie: {
                     code: $rootScope.pharmacie.selected.id
@@ -336,7 +336,7 @@
 
         // Save or Update Current Form
         $scope.saveForm = function () {
-            if ($scope.survey.selected != undefined && $scope.survey.selected.id != null) {
+            if ($scope.survey.selected != undefined && $scope.survey.selected.id != null && $scope.survey.selected.id != -1) {
                 // Case Update existing form
                 MerchandisingService.update_form({}, {'form': $scope.survey.selected}, function (result) {
                     ngProgress.complete();
@@ -416,11 +416,47 @@
         $timeout(function(){
             $(":checkbox").labelauty();
             $(":radio").labelauty({ minimum_width: "100%" });
-            // $('#datepicker').datepicker({ autoclose: true, format: 'dd/mm/yyyy', });
-            $('#datepicker').datepicker({ autoclose: true, format: 'yyyy-mm-dd', });
+            $.fn.datepicker.dates['fr'] = {
+                days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+                daysShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+                daysMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+                months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"],
+                monthsShort: ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aou", "Sep", "Oct", "Nov", "Dec"],
+                today: "Aujourd'hui",
+                clear: "Annuler",
+                titleFormat: "MM yyyy" /* Leverages same syntax as 'format' */
+            };
+            $.fn.datepicker.defaults.language = 'fr';
+            $('#datepicker').datepicker({ 
+                autoclose: true, 
+                format: 'yyyy-mm-dd',
+                language: 'fr',
+                weekStart: 1
+            });
             ngProgress.complete();
             getData();
         }, 500);
+
+        $scope.refreshResults = function ($select){
+            var search = $select.search,
+                list = angular.copy($select.items),
+                FLAG = -1;
+            //remove last user input
+            list = list.filter(function(item) { 
+                return item.id !== FLAG; 
+            });
+
+            if (!search) {
+                $select.items = list;
+            } else {
+                var userInputItem = {
+                    id: FLAG, 
+                    libelle: search
+                };
+                $select.items = [userInputItem].concat(list);
+                $select.selected = userInputItem;
+            }
+        }
     }
 
     MerchandisingDashboardController.$inject = ['$scope', '$rootScope', '$timeout', 'HelperService', 'MerchandisingService', 'ngProgress'];

@@ -15,11 +15,10 @@
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="rows" style="margin-top:8px">
-				<!-- <div class="col-md-2" style="margin-top:7px">Sélectionner un rapport à afficher:</div> -->
 				<div class="col-md-4">
-					<ui-select ng-model="survey.selected" required="true">
+					<ui-select style="width:100%" ng-model="survey.selected" required="true" reset-search-input="false">
 						<ui-select-match placeholder="Sélectionner un rapport...">{{$select.selected.libelle}}</ui-select-match>
-						<ui-select-choices repeat="survey in survey.list | filter: $select.search">
+						<ui-select-choices refresh="refreshResults($select)" refresh-delay="0" repeat="survey in survey.list | filter: $select.search">
 							<span ng-bind-html="survey.libelle | highlight: $select.search"></span>
 						</ui-select-choices>
 					</ui-select>
