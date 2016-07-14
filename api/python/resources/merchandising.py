@@ -23,7 +23,7 @@ class Merchandising():
         logger.info('[get_all_forms_pharmacie] Get data merchandising pharmacie_id=%s' %(pharmacie_id))
         fields = ['id', 'id_pharmacie', 'libelle', 'operator', 'date_operation']
 
-        sql = "SELECT data, %s FROM form_merchandising WHERE id_pharmacie = %s;" %(','.join(str(elt) for x in fields), pharmacie_id)
+        sql = "SELECT data, %s FROM form_merchandising WHERE id_pharmacie = %s;" %(','.join(str(elt) for elt in fields), pharmacie_id)
 
         self.cursor.execute(sql)
         data = self.cursor.fetchall()
