@@ -6,7 +6,7 @@
 	<ol class="breadcrumb">
 		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 		<li><a href="#">Merchandising</a></li>
-		<li><a href="#">Pharmacie Sélectionnée</a></li>
+		<li><a href="#">{{$root.pharmacie.selected.denomination}}</a></li>
 		<li class="active">Forms</li>
 	</ol>
 </section>
@@ -47,7 +47,7 @@
 		</div>
 	</nav>
 
-	<tabset justified="true" class="custom-form-style" ng-show="survey.selected">
+	<tabset justified="true" class="custom-form-style" OLDng-show="survey.selected">
 		<tab heading="Contexte Environnemental" active="tab.contexte_environnemental.active" ng-click="tabHeadingClick('contexte_environnemental')">
 			<!-- <form-merchandising-context-environnemental></form-merchandising-context-environnemental> -->
 			<div ng-include="templatesUrl.contexte_environnemental.current"></div>

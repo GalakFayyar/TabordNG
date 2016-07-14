@@ -57,7 +57,6 @@
 
 		var getPharmacies = function () {
 			PharmacieService.get_all({}, function (results) {
-				//$scope.listPharmaciesGrid.data = results.data;
 				$scope.pharmacies = {
 					list: results.data
 				};
@@ -67,7 +66,6 @@
 		};
 
 		$scope.changeSelectedPharmacie = function() {
-			//$scope.apply();
 			$state.reload();
 		};
 

@@ -144,8 +144,8 @@
 			</div>
 			<div class="box-footer">
 				<button type="button" class="btn btn-primary btn-flat" ng-disabled="btnCreate.disabled" ng-click="btnAction('create')">Nouvelle Pharmacie</button>
-				<button type="button" class="btn btn-success btn-flat" ng-disabled="!pharmacie.selected || !pharmacie.selected.id" ng-click="btnAction('save')">Enregistrer</button>
-				<button type="button" class="btn btn-danger btn-flat" ng-disabled="!pharmacie.selected || !pharmacie.selected.id" DEVng-click="btnAction('delete')" ng-really-click="btnAction('delete')" ng-really-message="Voulez-vous vraiment supprimer définitivement cette pharmacie ?">Supprimer</button>
+				<button type="button" class="btn btn-success btn-flat" ng-disabled="pharmacie.selected == null || pharmacie.selected.id == null" ng-click="btnAction('save')">Enregistrer</button>
+				<button type="button" class="btn btn-danger btn-flat" ng-disabled="pharmacie.selected == null || pharmacie.selected.id == null" DEVng-click="btnAction('delete')" ng-really-click="btnAction('delete')" ng-really-message="Voulez-vous vraiment supprimer définitivement cette pharmacie ?">Supprimer</button>
 				<button type="button" class="btn btn-warning btn-flat" ng-click="btnAction('cancel')">Annuler</button>
 			</div>
 		</form>

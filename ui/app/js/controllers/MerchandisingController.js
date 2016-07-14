@@ -423,8 +423,11 @@
         }, 500);
     }
 
-    MerchandisingDashboardController.$inject = ['$scope', '$rootScope', 'HelperService', 'MerchandisingService', 'ngProgress'];
-    function MerchandisingDashboardController ($scope, $rootScope, HelperService, MerchandisingService, ngProgress) {
-
+    MerchandisingDashboardController.$inject = ['$scope', '$rootScope', '$timeout', 'HelperService', 'MerchandisingService', 'ngProgress'];
+    function MerchandisingDashboardController ($scope, $rootScope, $timeout, HelperService, MerchandisingService, ngProgress) {
+        // UI Init
+        $timeout(function(){
+            ngProgress.complete();
+        }, 500);
     }
 })();
