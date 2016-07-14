@@ -19,6 +19,23 @@
 		</div>
 	</form>-->
 
+	<ui-select  ng-model="$root.pharmacie.selected"
+				ng-change="changeSelectedPharmacie()"
+				theme="select2" 
+				class="ui-select-pharmacie"
+				search-enabled="false"
+				title="Sélectionner une pharmacie">
+		<ui-select-match placeholder="Sélectionner une pharmacie">{{$select.selected.denomination}}</ui-select-match>
+		<ui-select-choices 
+				repeat="pharmacie in pharmacies.list track by pharmacie.id | filter: {denomination: $select.search}">
+			<div ng-bind-html="pharmacie.denomination | highlight: $select.search"></div>
+			<small>
+				code: <span ng-bind-html="''+pharmacie.code | highlight: $select.search"></span>
+			</small>
+		</ui-select-choices>
+	</ui-select>
+	<br/><br/>
+
 	<ui-select  ng-model="current_pharmacie.periode.selected" 
 				theme="select2" 
 				class="ui-select-period"
