@@ -53,7 +53,7 @@
                 id: null,
                 libelle: "test",
                 user: $rootScope.user.data.username,
-                date: HelperService.getCurrentDate(),
+                date_operation: HelperService.getCurrentDate(),
                 pharmacie: {
                     code: $rootScope.pharmacie.selected.id
                 },
