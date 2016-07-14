@@ -11,7 +11,7 @@ class Merchandising():
         self.tools = Tools()
 
     def get_all(self):
-        logger.info('Get data merchandising ...')
+        logger.info('[get_all] Get data merchandising ...')
         sql = "SELECT id, id_pharmacie, libelle, operator, date_operation, data FROM form_merchandising;"
 
         self.cursor.execute(sql)
@@ -20,7 +20,7 @@ class Merchandising():
         return {'data':self.tools.format_simple_psql_result(data)}
 
     def get_all_forms_pharmacie(self, pharmacie_id):
-        logger.info('Get data merchandising ...')
+        logger.info('[get_all_forms_pharmacie] Get data merchandising pharmacie_id=%s' %(pharmacie_id))
         sql = "SELECT id, id_pharmacie, libelle, operator, date_operation, data FROM form_merchandising WHERE id_pharmacie = %s;" %(pharmacie_id)
 
         self.cursor.execute(sql)
@@ -29,7 +29,7 @@ class Merchandising():
         return {'data':self.tools.format_complex_psql_result(data, ['id', 'id_pharmacie', 'libelle'], 'forms')}
 
     def get_form(self, form_id):
-        logger.info('Get data merchandising ...')
+        logger.info('[get_form] Get data merchandising form_id=%s' %(form_id))
         sql = "SELECT id, data FROM form_merchandising WHERE id = '%s';" %(form_id)
 
         self.cursor.execute(sql)
@@ -38,9 +38,8 @@ class Merchandising():
         return {'data':self.tools.format_simple_psql_result(data)}
 
     def create_form(self, data):
-        print('Creation du merchandising ...')
+        logger.info('[create_form] Create data merchandising')
         pharmacie_id = data['form']['pharmacie']['code']
-        print('Pharmacie code %s' %(pharmacie_id))
 
         sql = "INSERT INTO form_merchandising (id_pharmacie, libelle, data) VALUES (%s, '%s', '%s');" %(pharmacie_id, data['form']['libelle'], json.dumps(data['form']['forms']).strip())
 
@@ -50,7 +49,7 @@ class Merchandising():
         return {'status': 'success', 'code': 200}
 
     def update_form(self, data):
-        print('Mise a jour du merchandising ...')
+        logger.info('[update_form] Update data merchandising')
         
         sql = "UPDATE form_merchandising SET operator = '%s', date_operation = '%s', data = '%s' WHERE id = %s;" %(data['form']['operator'], data['form']['date_operation'], json.dumps(data['form']['forms']).strip(), data['form']['id'])
 
@@ -60,8 +59,7 @@ class Merchandising():
         return {'status': 'success', 'code': 200}
 
     def delete_form(self, form_id):
-        print('Suppression merchandising ...')
-        print('Suppression formulaire id=%s' %(form_id))
+        logger.info('[delete_form] Update data merchandising id=%s' %(form_id))
         
         sql = "DELETE FROM form_merchandising WHERE id = %s;" %(form_id)
 
