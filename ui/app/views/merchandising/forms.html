@@ -17,7 +17,10 @@
 			<div class="rows" style="margin-top:8px">
 				<div class="col-md-4">
 					<ui-select style="width:100%" ng-model="survey.selected" required="true" reset-search-input="false">
-						<ui-select-match placeholder="Sélectionner un rapport...">{{$select.selected.libelle}}</ui-select-match>
+						<ui-select-match placeholder="Sélectionner un rapport...">
+							<span>{{$select.selected.libelle || $select.search}}</span>
+            				<!-- <a class="btn btn-xs btn-link pull-right" ng-click="clear($event, $select)"><i class="glyphicon glyphicon-remove"></i></a> -->
+            			</ui-select-match>
 						<ui-select-choices refresh="refreshResults($select)" refresh-delay="0" repeat="survey in survey.list | filter: $select.search">
 							<span ng-bind-html="survey.libelle | highlight: $select.search"></span>
 						</ui-select-choices>

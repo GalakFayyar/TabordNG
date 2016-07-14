@@ -12,8 +12,12 @@
 
         // Manage form display if action is triggered by user (create/update)
         $scope.displayForms = false;
-        $scope.survey = { list: [], selected: null };
+        $scope.survey = { list: [], selected: undefined };
         $scope.logicielGestion = { list : [], selected: null };
+        $scope.$select = {
+            selected: undefined,
+            search: undefined
+        };
 
         // Tab elements
         $scope.tab = {
@@ -51,7 +55,7 @@
         var initNewFormData = function () {
             $scope.survey.selected = {
                 id: null,
-                libelle: "test",
+                libelle: null,
                 operator: ($rootScope.user != null && $rootScope.user.data != null) ? $rootScope.user.data.username : null,
                 date_operation: HelperService.getCurrentDate(),
                 pharmacie: {
@@ -413,7 +417,7 @@
         };
 
         // UI Init
-        $timeout(function(){
+        $timeout(function () {
             $(":checkbox").labelauty();
             $(":radio").labelauty({ minimum_width: "100%" });
             $.fn.datepicker.dates['fr'] = {
@@ -437,26 +441,39 @@
             getData();
         }, 500);
 
-        $scope.refreshResults = function ($select){
+        $scope.refreshResults = function ($select) {
             var search = $select.search,
                 list = angular.copy($select.items),
                 FLAG = -1;
             //remove last user input
-            list = list.filter(function(item) { 
+            list = list.filter(function (item) { 
                 return item.id !== FLAG; 
             });
-
             if (!search) {
                 $select.items = list;
             } else {
-                var userInputItem = {
-                    id: FLAG, 
-                    libelle: search
-                };
-                $select.items = [userInputItem].concat(list);
-                $select.selected = userInputItem;
+                initNewFormData();
+                $scope.survey.selected.id = FLAG;
+                $scope.survey.selected.libelle = search;
+                $select.items = [$scope.survey.selected].concat(list);
+                // var userInputItem = {
+                //     id: FLAG, 
+                //     libelle: search
+                // };
+                // $select.items = [userInputItem].concat(list);
+                // $select.selected = userInputItem;
             }
-        }
+        };
+
+        // $scope.clear = function ($event, $select){
+        //     $event.stopPropagation(); 
+        //     //to allow empty field, in order to force a selection remove the following line
+        //     $select.selected = undefined;
+        //     //reset search query
+        //     $select.search = undefined;
+        //     //focus and open dropdown
+        //     $select.activate();
+        // };
     }
 
     MerchandisingDashboardController.$inject = ['$scope', '$rootScope', '$timeout', 'HelperService', 'MerchandisingService', 'ngProgress'];
