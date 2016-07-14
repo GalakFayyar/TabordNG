@@ -2,7 +2,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 # Logger de l'application
-logger = logging.getLogger('api-bo-edito-filtres')
+logger = logging.getLogger('api-tabord-ng')
 logger.compteur = 0
 
 # Configuration du logger

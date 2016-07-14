@@ -12,7 +12,7 @@ class Merchandising():
 
     def get_all(self):
         logger.info('Get data merchandising ...')
-        sql = "SELECT id, id_pharmacie, libelle, data FROM form_merchandising;"
+        sql = "SELECT id, id_pharmacie, libelle, operator, date_operation, data FROM form_merchandising;"
 
         self.cursor.execute(sql)
         data = self.cursor.fetchall()
