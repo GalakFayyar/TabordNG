@@ -20,7 +20,7 @@ class Tools():
         for elt in psql_result:
             _temp_elt = {json_field: json.loads(elt['data'])}
             for field in fields_array:
-                _temp_elt[field] = elt[field]
+                _temp_elt[field] = str(elt[field])
             _results.append(_temp_elt)
 
         return _results
