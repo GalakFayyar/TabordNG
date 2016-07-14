@@ -59,9 +59,13 @@ ul.sidebar-menu li.activated a{
 	border-left-color: #00a65a;
 	background: #DDD;
 }
+.ui-select-pharmacie {
+	width: 92%;
+	margin: 4% 4% 0 4% !important;
+}
 .ui-select-period {
 	width: 92%;
-	margin: 4% !important;
+	margin: 0 4% 2% 4% !important;
 }
 .ui-select-period a.ui-select-match {
 	color: #333 !important;

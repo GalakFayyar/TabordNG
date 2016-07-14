@@ -76,7 +76,17 @@
 				},
 				parent: 'app'
 			})
-		/******************************************************************/
+			/******************************************************************/
+			.state('merchandising_dashboard', {
+				url: 'merchandising/dashboard',
+				views: {
+					'content': {
+						templateUrl: 'views/merchandising/dashboard.html',
+						controller: 'MerchandisingDashboardController'
+					}
+				},
+				parent: 'app'
+			})
 			.state('merchandising_forms', {
 				url: 'merchandising/forms',
 				views: {

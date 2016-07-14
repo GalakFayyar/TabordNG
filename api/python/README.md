@@ -12,6 +12,16 @@ All dependencies included in the requirements.txt file.
 ## Installation
 Install dependencies with pip :
 `pip install -r /path/to/requirements.txt`
+Postgresql install notes :
+- use postgres user to create new role (tabord_user for instance)
+`sudo -i -u postgres`
+- create new role 
+`createuser --interactive`
+- create new database
+`createdb tabordng`
+
+Install SQL script :
+`psql -U user -d database -a -f INIT.sql`
 
 ## Configuration
 Edit file `conf/api-conf.json` to adapt configuration such as API server link, prefix, port, logging, etc.

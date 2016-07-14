@@ -23,8 +23,8 @@
 		$scope.toto = "test";
 	}
 
-	LeftSideBarController.$inject = ['$scope'];
-	function LeftSideBarController ($scope) {
+	LeftSideBarController.$inject = ['$scope', '$rootScope', '$state', 'PharmacieService'];
+	function LeftSideBarController ($scope, $rootScope, $state, PharmacieService) {
 
 		// TODO : optimiser
 		// Corrige le pb de synchro des chargements entre
@@ -54,6 +54,24 @@
 				selected: null
 			}
 		};
+
+		var getPharmacies = function () {
+			PharmacieService.get_all({}, function (results) {
+				//$scope.listPharmaciesGrid.data = results.data;
+				$scope.pharmacies = {
+					list: results.data
+				};
+			}, function (error) {
+				console.log('Erreur get_all_pharmacie(): ', error);
+			});
+		};
+
+		$scope.changeSelectedPharmacie = function() {
+			//$scope.apply();
+			$state.reload();
+		};
+
+		getPharmacies();
 	}
 
 	FooterController.$inject = ['$scope', 'tabordngConfig'];

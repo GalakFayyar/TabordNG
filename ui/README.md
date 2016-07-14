@@ -8,6 +8,11 @@ GUI for Tabord NG project. Provides the Controller/View model for the project. C
 NodeJS or Bower (dependencies manager)
 
 ## Installation
+- Install npm:
+`sudo apt-get install npm`
+- Install node legacy
+`sudo apt-get install nodejs-legacy`
+- Install dependencies: 
 `npm install` or `bower install`
 
 ## Configuration

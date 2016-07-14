@@ -4,9 +4,10 @@
     /* Controllers */
 
     angular.module('tabordNG').controller('MerchandisingFormsController', MerchandisingFormsController);
+    angular.module('tabordNG').controller('MerchandisingDashboardController', MerchandisingDashboardController);
 
-    MerchandisingFormsController.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'HelperService', 'MerchandisingService', 'uiGridConstants', 'ngProgress'];
-    function MerchandisingFormsController ($scope, $rootScope, $state, $timeout, HelperService, MerchandisingService, uiGridConstants, ngProgress) {
+    MerchandisingFormsController.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'HelperService', 'MerchandisingService', 'ngProgress'];
+    function MerchandisingFormsController ($scope, $rootScope, $state, $timeout, HelperService, MerchandisingService, ngProgress) {
         $.AdminLTE.layout.activate();
 
         // Manage form display if action is triggered by user (create/update)
@@ -318,14 +319,19 @@
         // Get All Forms for Current Pharmacy
         var getData = function () {
             ngProgress.start();
-            MerchandisingService.get_forms({'subaction': $rootScope.pharmacie.selected.id}, function (results) {
-                $scope.survey.list = results.data;
-                console.log($scope.survey.list);
-                ngProgress.complete();
-            }, function (error) {
+            if ($rootScope.pharmacie != undefined) {
+                MerchandisingService.get_forms({'subaction': $rootScope.pharmacie.selected.id}, function (results) {
+                    $scope.survey.list = results.data;
+                    console.log($scope.survey.list);
+                    ngProgress.complete();
+                }, function (error) {
+                    ngProgress.reset();
+                    console.log('Erreur getData(): ', error);
+                });
+            } else {
                 ngProgress.reset();
-                console.log('Erreur getData(): ', error);
-            });
+                console.log("Aucune pharmacie sélectionnée...")
+            }
         };
 
         // Save or Update Current Form
@@ -413,6 +419,11 @@
             $('#datepicker').datepicker({ autoclose: true, format: 'dd/mm/yyyy', });
             ngProgress.complete();
             getData();
-        });
+        }, 500);
+    }
+
+    MerchandisingDashboardController.$inject = ['$scope', '$rootScope', 'HelperService', 'MerchandisingService', 'ngProgress'];
+    function MerchandisingDashboardController ($scope, $rootScope, HelperService, MerchandisingService, ngProgress) {
+
     }
 })();
