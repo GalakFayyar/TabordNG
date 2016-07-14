@@ -52,7 +52,7 @@ class Merchandising():
     def update_form(self, data):
         print('Mise a jour du merchandising ...')
         
-        sql = "UPDATE form_merchandising SET data = '%s' WHERE id = %s;" %(json.dumps(data['form']['forms']).strip(), data['form']['id'])
+        sql = "UPDATE form_merchandising SET user = '%s', date_operation = '%s', data = '%s' WHERE id = %s;" %(data['form']['user'], data['form']['date_operation'], json.dumps(data['form']['forms']).strip(), data['form']['id'])
 
         self.cursor.execute(sql)
         self.connector.commit()
