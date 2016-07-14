@@ -52,7 +52,7 @@
             $scope.survey.selected = {
                 id: null,
                 libelle: "test",
-                user: $rootScope.user.data.username,
+                operator: $rootScope.user.data.username,
                 date_operation: HelperService.getCurrentDate(),
                 pharmacie: {
                     code: $rootScope.pharmacie.selected.id

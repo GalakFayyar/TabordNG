@@ -21,7 +21,7 @@ class Merchandising():
 
     def get_all_forms_pharmacie(self, pharmacie_id):
         logger.info('Get data merchandising ...')
-        sql = "SELECT id, id_pharmacie, libelle, user, date_operation, data FROM form_merchandising WHERE id_pharmacie = %s;" %(pharmacie_id)
+        sql = "SELECT id, id_pharmacie, libelle, operator, date_operation, data FROM form_merchandising WHERE id_pharmacie = %s;" %(pharmacie_id)
 
         self.cursor.execute(sql)
         data = self.cursor.fetchall()
@@ -52,7 +52,7 @@ class Merchandising():
     def update_form(self, data):
         print('Mise a jour du merchandising ...')
         
-        sql = "UPDATE form_merchandising SET user = '%s', date_operation = '%s', data = '%s' WHERE id = %s;" %(data['form']['user'], data['form']['date_operation'], json.dumps(data['form']['forms']).strip(), data['form']['id'])
+        sql = "UPDATE form_merchandising SET operator = '%s', date_operation = '%s', data = '%s' WHERE id = %s;" %(data['form']['operator'], data['form']['date_operation'], json.dumps(data['form']['forms']).strip(), data['form']['id'])
 
         self.cursor.execute(sql)
         self.connector.commit()
