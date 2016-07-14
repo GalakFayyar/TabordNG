@@ -40,7 +40,7 @@
 				</div>
 				<div class="col-md-4" style="text-align:right">
 					<button type="button" class="btn btn-primary btn-flat" ng-click="createNewForm()"><i class="fa fa-pencil"></i> Créer</button>
-					<button type="button" class="btn btn-success btn-flat" ng-click="saveForm()"><i class="fa fa-save"></i> Enregistrer</button>
+					<button type="button" class="btn btn-success btn-flat" ng-click="saveForm()" ng-disabled="survey.selected.libelle==null || survey.selected.date_operation==null || survey.selected.operator==null"><i class="fa fa-save"></i> Enregistrer</button>
 					<button type="button" class="btn btn-danger btn-flat" ng-click="deleteForm()"><i class="fa fa-remove"></i> Supprimer</button>
 				</div>
 			</div>

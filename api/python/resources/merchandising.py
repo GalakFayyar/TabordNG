@@ -12,7 +12,7 @@ class Merchandising():
 
     def get_all(self):
         logger.info('[get_all] Get data merchandising ...')
-        sql = "SELECT id, id_pharmacie, libelle, operator, date_operation, data FROM form_merchandising;"
+        sql = "SELECT id, data FROM form_merchandising;"
 
         self.cursor.execute(sql)
         data = self.cursor.fetchall()
@@ -21,12 +21,14 @@ class Merchandising():
 
     def get_all_forms_pharmacie(self, pharmacie_id):
         logger.info('[get_all_forms_pharmacie] Get data merchandising pharmacie_id=%s' %(pharmacie_id))
-        sql = "SELECT id, id_pharmacie, libelle, operator, date_operation, data FROM form_merchandising WHERE id_pharmacie = %s;" %(pharmacie_id)
+        fields = ['id', 'id_pharmacie', 'libelle', 'operator', 'date_operation']
+
+        sql = "SELECT data, %s FROM form_merchandising WHERE id_pharmacie = %s;" %(','.join(str(elt) for x in fields), pharmacie_id)
 
         self.cursor.execute(sql)
         data = self.cursor.fetchall()
         
-        return {'data':self.tools.format_complex_psql_result(data, ['id', 'id_pharmacie', 'libelle'], 'forms')}
+        return {'data':self.tools.format_complex_psql_result(data, fields, 'forms')}
 
     def get_form(self, form_id):
         logger.info('[get_form] Get data merchandising form_id=%s' %(form_id))
