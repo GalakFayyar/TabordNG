@@ -21,7 +21,7 @@ class Merchandising():
 
     def get_all_forms_pharmacie(self, pharmacie_id):
         logger.info('Get data merchandising ...')
-        sql = "SELECT id, id_pharmacie, libelle, user, date, data FROM form_merchandising WHERE id_pharmacie = %s;" %(pharmacie_id)
+        sql = "SELECT id, id_pharmacie, libelle, user, date_operation, data FROM form_merchandising WHERE id_pharmacie = %s;" %(pharmacie_id)
 
         self.cursor.execute(sql)
         data = self.cursor.fetchall()
