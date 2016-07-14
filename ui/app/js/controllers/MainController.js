@@ -31,9 +31,9 @@
 		// les lib jquery et angularjs :
 		// jquery semble chargé avant les éléments du dom
 		// générés eux par angularjs ...
-		setTimeout(function() {
-			$.AdminLTE.tree('.sidebar-menu');
-		}, 500);
+		// setTimeout(function() {
+		// 	$.AdminLTE.tree('.sidebar-menu');
+		// }, 500);
 
 		$scope.current_pharmacie = {
 			periode: {

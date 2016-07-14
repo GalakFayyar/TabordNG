@@ -30,7 +30,7 @@
 				repeat="pharmacie in pharmacies.list track by pharmacie.id | filter: {denomination: $select.search}">
 			<div ng-bind-html="pharmacie.denomination | highlight: $select.search"></div>
 			<small>
-				code: <span ng-bind-html="''+pharmacie.code | highlight: $select.search"></span>
+				code: <span ng-bind-html="''+pharmacie.id | highlight: $select.search"></span>
 			</small>
 		</ui-select-choices>
 	</ui-select>
