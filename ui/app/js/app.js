@@ -23,7 +23,8 @@
 		'ui.grid.pinning',
 		'ui.select',
 		'ngProgress',
-		'toggle-switch'
+		'toggle-switch',
+		'nvd3'
 	]);
 	angular.module('tabordNG').config(tabordngConfiguration);
 	angular.module('tabordNG').run(tabordngRun);

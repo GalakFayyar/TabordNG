@@ -43,7 +43,7 @@ class Merchandising():
         logger.info('[create_form] Create data merchandising')
         pharmacie_id = data['form']['pharmacie']['code']
 
-        sql = "INSERT INTO form_merchandising (id_pharmacie, libelle, data) VALUES (%s, '%s', '%s');" %(pharmacie_id, data['form']['libelle'], json.dumps(data['form']['forms']).strip())
+        sql = "INSERT INTO form_merchandising (id_pharmacie, libelle, date_operation, operator, data) VALUES (%s, '%s', '%s', '%s', '%s');" %(pharmacie_id, data['form']['date_operation'], data['form']['operator'], data['form']['libelle'], json.dumps(data['form']['forms']).strip())
 
         self.cursor.execute(sql)
         self.connector.commit()

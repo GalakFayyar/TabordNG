@@ -21,7 +21,8 @@
 
         // Tab elements
         $scope.tab = {
-            contexte_environnemental: { active: true },
+            indicateurs: { active: true },
+            contexte_environnemental: { active: null },
             contexte_interne: { active: null },
             profil_marketing: { active: null },
             politique_personnel: { active: null },
@@ -384,7 +385,8 @@
         };
 
         $scope.templatesUrl = {
-            contexte_environnemental: { ref: 'views/merchandising/form-context-environnemental.html', current: 'views/merchandising/form-context-environnemental.html'},
+            indicateurs: { ref: 'views/merchandising/form-indicateurs.html', current: 'views/merchandising/form-indicateurs.html'},
+            contexte_environnemental: { ref: 'views/merchandising/form-context-environnemental.html', current: null},
             contexte_interne: { ref: 'views/merchandising/form-context-interne.html', current: null},
             profil_marketing: { ref: 'views/merchandising/form-profil-marketing.html', current: null},
             politique_personnel: { ref: 'views/merchandising/form-politique-personnel.html', current: null},
@@ -393,6 +395,7 @@
         };
 
         var resetCurrentTemplatesURL = function () {
+            $scope.templatesUrl.indicateurs.current = null;
             $scope.templatesUrl.contexte_environnemental.current = null;
             $scope.templatesUrl.contexte_interne.current = null;
             $scope.templatesUrl.profil_marketing.current = null;
@@ -474,6 +477,134 @@
         //     //focus and open dropdown
         //     $select.activate();
         // };
+
+        // Indicateurs
+        $scope.grid = {
+            structureCA: {
+                enableSelectAll: false,
+                enableColumnMenus: false,
+                minRowsToShow: 4,
+                enableGridMenu: false,
+                enableFiltering: false,
+                useExternalFiltering: false,
+                exporterMenuPdf: false,
+                rowSelection: true,
+                enableRowHeaderSelection: false,
+                multiSelect: false,
+
+                columnDefs: [
+                    {
+                        name: 'title',
+                        displayName: 'Taux TVA',
+                        pinnedLeft: true,
+                        enableFiltering: false,
+                        enableSorting: false,
+                        type: 'string',
+                        enableHiding: false,
+                        width: 150,
+                        cellTemplate: '<div class="ui-grid-cell-contents"><b>{{row.entity[col.field]}}</b></div>'
+                        //sort: { direction: uiGridConstants.ASC, priority: 1 } 
+                    },{
+                        name: 'a2014',
+                        displayName: '2014',
+                        pinnedLeft: true,
+                        enableFiltering: true, 
+                        enableSorting: true,
+                        type: 'number'
+                    },{
+                        name: 'a2015',
+                        displayName: '2015',
+                        pinnedLeft: true,
+                        enableFiltering: true, 
+                        enableSorting: true,
+                        type: 'number'
+                    },{
+                        name: 'evolR1',
+                        displayName: 'évol./A-1',
+                        pinnedLeft: true,
+                        enableFiltering: true, 
+                        enableSorting: true,
+                        type: 'number'
+                    },{
+                        name: 'a2016',
+                        displayName: '2016',
+                        pinnedLeft: true,
+                        enableFiltering: true, 
+                        enableSorting: true,
+                        type: 'number'
+                    },{
+                        name: 'evolR2',
+                        displayName: 'évol./A+1',
+                        pinnedLeft: true,
+                        enableFiltering: true, 
+                        enableSorting: true,
+                        type: 'number'
+                    }
+                ],
+                onRegisterApi: function (gridApi) {
+                    $scope.tngStructureCAGrid = gridApi;
+                }
+            }
+        };
+
+        var data = [
+            {
+                title: "Chiffre d'affaire H.T.",
+                a2014: "1111",
+                a2015: "2222",
+                a2016: "1643",
+                evolR1: "1,65",
+                evolR2: "2,87",
+                disabled: true // For angular-nvd3 : do not show this serie
+            },{
+                title: "TVA 2,10%",
+                a2014: "1111",
+                a2015: "2222",
+                a2016: "3017",
+                evolR1: "1,65",
+                evolR2: "2,87"
+            },{
+                title: "TVA 5,50%",
+                a2014: "1111",
+                a2015: "2222",
+                a2016: "1941",
+                evolR1: "1,65",
+                evolR2: "2,87"
+            },{
+                title: "TVA 20%",
+                a2014: "1111",
+                a2015: "2222",
+                a2016: "776",
+                evolR1: "1,65",
+                evolR2: "2,87"
+            }
+        ];
+
+        $scope.grid.structureCA.data = data;
+
+        $scope.optionsStructureCAPieChart = {
+            chart: {
+                type: 'pieChart',
+                height: 150,
+                x: function(d){return d.title;},
+                y: function(d){return d.a2016;},
+                showLabels: false,
+                duration: 500,
+                //donutLabelsOutside: true,
+                //labelThreshold: 0.01,
+                //labelSunbeamLayout: false,
+                legend: {
+                    margin: {
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: 0
+                    }
+                },
+                legendPosition: 'right'
+            },
+            data: data
+        };
     }
 
     MerchandisingDashboardController.$inject = ['$scope', '$rootScope', '$timeout', 'HelperService', 'MerchandisingService', 'ngProgress'];

@@ -50,6 +50,10 @@
 	</nav>
 
 	<tabset justified="true" class="custom-form-style" OLDng-show="survey.selected">
+		<tab heading="Indicateurs" active="tab.indicateurs.active" ng-click="tabHeadingClick('indicateurs')">
+			<!-- <form-merchandising-context-environnemental></form-merchandising-context-environnemental> -->
+			<div ng-include="templatesUrl.indicateurs.current"></div>
+		</tab>
 		<tab heading="Contexte Environnemental" active="tab.contexte_environnemental.active" ng-click="tabHeadingClick('contexte_environnemental')">
 			<!-- <form-merchandising-context-environnemental></form-merchandising-context-environnemental> -->
 			<div ng-include="templatesUrl.contexte_environnemental.current"></div>

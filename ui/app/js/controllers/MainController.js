@@ -10,12 +10,12 @@
 
 	MainController.$inject = ['$scope', 'TestService'];
 	function MainController ($scope, TestService) {
-		$scope.toto = "test";
-		var codes = TestService.get_codes_tva({}, function (values) {
-			console.log(values.data);
-		}, function (){
-			console.log('ERROR');
-		});
+		// $scope.toto = "test";
+		// var codes = TestService.get_codes_tva({}, function (values) {
+		// 	console.log(values.data);
+		// }, function (){
+		// 	console.log('ERROR');
+		// });
 	}
 
 	HeaderController.$inject = ['$scope'];
