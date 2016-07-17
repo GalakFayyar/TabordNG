@@ -12,6 +12,8 @@
 			<div style="width:55%;display:inline-block;"
 				ui-grid="grid.structureCA" 
 				class="" 
+				ui-grid-edit 
+				ui-grid-row-edit 
 				ui-grid-exporter 
 				ui-grid-auto-resize 
 				ui-grid-resize-columns 
@@ -35,7 +37,12 @@
 	<!-- form start -->
 	<form role="form">
 		<div class="box-body">
-			
+			<div class="row">
+                <div class="col-md-3">Marge globale</div>
+                <div class="col-md-3"><input ng-model="survey.selected.forms.indicateurs.marge.globale" type="text" placeholder=""/></div>
+            	<div class="col-md-3">Marge exprimée en %</div>
+                <div class="col-md-3"><input ng-model="survey.selected.forms.indicateurs.marge.prc" type="text" placeholder=""/></div>
+            </div>
 		</div>
 	</form>
 </div>
@@ -51,7 +58,19 @@
 	<!-- form start -->
 	<form role="form">
 		<div class="box-body">
-			
+			<div style="width:55%;display:inline-block;"
+				ui-grid="grid.stocks" 
+				class="" 
+				ui-grid-edit 
+				ui-grid-row-edit 
+				ui-grid-exporter 
+				ui-grid-auto-resize 
+				ui-grid-resize-columns 
+				ui-grid-selection>
+			</div>
+			<div style="width:44%;display:inline-block;">
+				<nvd3 options="optionsStocksPieChart" data="optionsStocksPieChart.data"></nvd3>
+			</div>
 		</div>
 	</form>
 </div>
@@ -67,7 +86,14 @@
 	<!-- form start -->
 	<form role="form">
 		<div class="box-body">
-			
+			<div class="row">
+                <div class="col-md-3">Nombre client/jour</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.frequentation.clientJour" type="number" style="width:100%" placeholder=""/></div>
+            	<div class="col-md-3">Panier moyen</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.frequentation.panierMoyen" type="text" style="width:100%" placeholder=""/></div>
+            	<div class="col-md-3">Panier hors ordonnances</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.frequentation.panierHorsOrdo" type="text" style="width:100%" placeholder=""/></div>
+            </div>
 		</div>
 	</form>
 </div>
@@ -83,7 +109,26 @@
 	<!-- form start -->
 	<form role="form">
 		<div class="box-body">
-			
+			<div class="row">
+                <div class="col-md-3">Surface totale <small>(en m²)</small></div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.capaciteAccueil.surfaceTotale" type="number" style="width:100%" placeholder=""/></div>
+            	<div class="col-md-3">Surface de vente</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.capaciteAccueil.surfaceVente" type="text" style="width:100%" placeholder=""/></div>
+            	<div class="col-md-3">Surface réserve</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.capaciteAccueil.surfaceReserve" type="text" style="width:100%" placeholder=""/></div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">Nombre de postes de vente ordonnance</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.capaciteAccueil.nbPostesOrdonnance" type="number" style="width:100%" placeholder=""/></div>
+            	<div class="col-md-5">Nombre de postes de vente sans ordonnance</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.capaciteAccueil.nbPostesSansOrdonnance" type="number" style="width:100%" placeholder=""/></div>
+           	</div>
+            <div class="row">
+            	<div class="col-md-5">Nombre de postes de vente parapharmacie</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.capaciteAccueil.nbPostesPara" type="number" style="width:100%" placeholder=""/></div>
+                <div class="col-md-5">Amplitude horaire</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.capaciteAccueil.amplitudeHoraire" type="number" style="width:100%" placeholder=""/></div>
+            </div>
 		</div>
 	</form>
 </div>
@@ -99,7 +144,18 @@
 	<!-- form start -->
 	<form role="form">
 		<div class="box-body">
-			
+			<div class="row">
+                <div class="col-md-3">Nombre de salariés</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.ressourcesHumaines.nbSalaries" type="number" style="width:100%" placeholder=""/></div>
+            	<div class="col-md-3">Nombre de personnes en ETP</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.ressourcesHumaines.nbETP" type="number" style="width:100%" placeholder=""/></div>
+            	<div class="col-md-3">Poids masse salariale <small>(en %)</small></div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.ressourcesHumaines.poidsMS" type="text" style="width:100%" placeholder=""/></div>
+            </div>
+            <div class="row">
+				<div class="col-md-3">Ratio CA/personne</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.ressourcesHumaines.ratioMS" type="text" style="width:100%" placeholder=""/></div>
+            </div>
 		</div>
 	</form>
 </div>
@@ -115,7 +171,26 @@
 	<!-- form start -->
 	<form role="form">
 		<div class="box-body">
-			
+			<div class="row">
+                <div class="col-md-2">Titulaires</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.structurePersonnel.nbTitulaires" type="number" style="width:100%" placeholder=""/></div>
+            	<div class="col-md-2">Pharmaciens diplômés</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.structurePersonnel.nbPharmDiplo" type="number" style="width:100%" placeholder=""/></div>
+            	<div class="col-md-2">Préparateurs</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.structurePersonnel.nbPreparateurs" type="number" style="width:100%" placeholder=""/></div>
+    	     	<div class="col-md-2">Esthéticiennes</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.structurePersonnel.nbEstheticiennes" type="number" style="width:100%" placeholder=""/></div>
+            </div>
+            <div class="row">
+				<div class="col-md-2">Stagiaires</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.ressourcesHumaines.nbStagiaires" type="number" style="width:100%" placeholder=""/></div>
+				<div class="col-md-2">Stockistes</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.ressourcesHumaines.nbStockistes" type="number" style="width:100%" placeholder=""/></div>
+				<div class="col-md-2">Personnel Administratif</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.ressourcesHumaines.nbPersoAdmin" type="number" style="width:100%" placeholder=""/></div>
+				<div class="col-md-2">Femme de ménage</div>
+                <div class="col-md-1"><input ng-model="survey.selected.forms.indicateurs.ressourcesHumaines.nbFemmeMenage" type="number" style="width:100%" placeholder=""/></div>
+            </div>
 		</div>
 	</form>
 </div>

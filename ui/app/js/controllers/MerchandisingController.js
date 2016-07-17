@@ -60,9 +60,109 @@
                 operator: ($rootScope.user != null && $rootScope.user.data != null) ? $rootScope.user.data.username : null,
                 date_operation: HelperService.getCurrentDate(),
                 pharmacie: {
-                    code: $rootScope.pharmacie.selected.id
+                    code: ($rootScope.pharmacie != undefined && $rootScope.pharmacie.selected != undefined) ? $rootScope.pharmacie.selected.id : null
                 },
                 forms: {
+                    indicateurs: {
+                        structureCA: {
+                            data: [
+                                {
+                                    title: "Chiffre d'affaire H.T.",
+                                    a2014: null,
+                                    a2015: null,
+                                    a2016: null,
+                                    evolR1: null,
+                                    evolR2: null,
+                                    disabled: true // For angular-nvd3 : do not show this serie
+                                },{
+                                    title: "TVA 2,10%",
+                                    a2014: null,
+                                    a2015: null,
+                                    a2016: null,
+                                    evolR1: null,
+                                    evolR2: null
+                                },{
+                                    title: "TVA 5,50%",
+                                    a2014: null,
+                                    a2015: null,
+                                    a2016: null,
+                                    evolR1: null,
+                                    evolR2: null
+                                },{
+                                    title: "TVA 20%",
+                                    a2014: null,
+                                    a2015: null,
+                                    a2016: null,
+                                    evolR1: null,
+                                    evolR2: null
+                                }
+                            ]
+                        },
+                        marge: {
+                            globale: null,
+                            prc: null
+                        },
+                        stocks: {
+                            data: [
+                                {
+                                    title: "Stocks 2,10%",
+                                    valeur: null,
+                                    poidsCA: null,
+                                    poidsStock: null,
+                                    rationRotation: null
+                                },{
+                                    title: "Stocks 5,50%",
+                                    valeur: null,
+                                    poidsCA: null,
+                                    poidsStock: null,
+                                    rationRotation: null
+                                },{
+                                    title: "Stocks 20%",
+                                    valeur: null,
+                                    poidsCA: null,
+                                    poidsStock: null,
+                                    rationRotation: null
+                                },{
+                                    title: "Stocks Total",
+                                    valeur: null,
+                                    poidsCA: null,
+                                    poidsStock: null,
+                                    rationRotation: null,
+                                    disabled: true // For angular-nvd3 : do not show this serie
+                                }
+                            ]
+                        },
+                        frequentation: {
+                            clientJour: null,
+                            panierMoyen: null,
+                            panierHorsOrdon: null
+                        },
+                        capaciteAccueil: {
+                            surfaceTotale: null,
+                            surfaceVente: null,
+                            surfaceReserve: null,
+                            nbPostesOrdonnance: null,
+                            nbPostesSansOrdonnance: null,
+                            nbPostesPara: null,
+                            amplitudeHoraire: null
+                        },
+                        ressourcesHumaines: {
+                            nbSalaries: null,
+                            nbETP: null,
+                            poidsMS: null,
+                            ratioMS: null
+                        },
+                        structurePersonnel: {
+                            nbTitulaires: null,
+                            nbPharmDiplo: null,
+                            nbPreparateurs: null,
+                            nbEstheticiennes: null,
+                            nbStagiaires: null,
+                            nbStockistes: null,
+                            nbPersoAdmin: null,
+                            nbFemmeMenage: null
+                        }
+                    },
                     contexteEnvironnemental: {
                         implantationVente: null,
                         visibiliteLocal: null,
@@ -491,6 +591,9 @@
                 rowSelection: true,
                 enableRowHeaderSelection: false,
                 multiSelect: false,
+                enableCellEdit: true,
+                enableCellEditOnFocus: true,
+                rowEditWaitInterval: -1,
 
                 columnDefs: [
                     {
@@ -510,77 +613,173 @@
                         pinnedLeft: true,
                         enableFiltering: true, 
                         enableSorting: true,
-                        type: 'number'
+                        type: 'string'
                     },{
                         name: 'a2015',
                         displayName: '2015',
                         pinnedLeft: true,
                         enableFiltering: true, 
                         enableSorting: true,
-                        type: 'number'
+                        type: 'string'
                     },{
                         name: 'evolR1',
                         displayName: 'évol./A-1',
                         pinnedLeft: true,
                         enableFiltering: true, 
                         enableSorting: true,
-                        type: 'number'
+                        type: 'string'
                     },{
                         name: 'a2016',
                         displayName: '2016',
                         pinnedLeft: true,
                         enableFiltering: true, 
                         enableSorting: true,
-                        type: 'number'
+                        type: 'string'
                     },{
                         name: 'evolR2',
                         displayName: 'évol./A+1',
                         pinnedLeft: true,
                         enableFiltering: true, 
                         enableSorting: true,
-                        type: 'number'
+                        type: 'string'
                     }
                 ],
                 onRegisterApi: function (gridApi) {
-                    $scope.tngStructureCAGrid = gridApi;
+                    $scope.tngStructureCAGridApi = gridApi;
+                }
+            },
+            stocks: {
+                enableSelectAll: false,
+                enableColumnMenus: false,
+                minRowsToShow: 4,
+                enableGridMenu: false,
+                enableFiltering: false,
+                useExternalFiltering: false,
+                exporterMenuPdf: false,
+                rowSelection: true,
+                enableRowHeaderSelection: false,
+                multiSelect: false,
+                enableCellEdit: true,
+                enableCellEditOnFocus: true,
+                rowEditWaitInterval: -1,
+
+                columnDefs: [
+                    {
+                        name: 'title',
+                        displayName: 'Stocks / Taux TVA',
+                        pinnedLeft: true,
+                        enableFiltering: false,
+                        enableSorting: false,
+                        type: 'string',
+                        enableHiding: false,
+                        width: 150,
+                        cellTemplate: '<div class="ui-grid-cell-contents"><b>{{row.entity[col.field]}}</b></div>'
+                        //sort: { direction: uiGridConstants.ASC, priority: 1 } 
+                    },{
+                        name: 'valeur',
+                        displayName: 'valeur',
+                        pinnedLeft: true,
+                        enableFiltering: true, 
+                        enableSorting: true,
+                        type: 'string'
+                    },{
+                        name: 'poidsCA',
+                        displayName: 'Poids CA',
+                        pinnedLeft: true,
+                        enableFiltering: true, 
+                        enableSorting: true,
+                        type: 'string'
+                    },{
+                        name: 'poidsStock',
+                        displayName: 'Poids stock',
+                        pinnedLeft: true,
+                        enableFiltering: true, 
+                        enableSorting: true,
+                        type: 'string'
+                    },{
+                        name: 'rationRotation',
+                        displayName: 'Ratio rotation stock',
+                        pinnedLeft: true,
+                        enableFiltering: true, 
+                        enableSorting: true,
+                        type: 'string'
+                    }
+                ],
+                onRegisterApi: function (gridApi) {
+                    $scope.tngStockGridApi = gridApi;
                 }
             }
         };
 
-        var data = [
-            {
-                title: "Chiffre d'affaire H.T.",
-                a2014: "1111",
-                a2015: "2222",
-                a2016: "1643",
-                evolR1: "1,65",
-                evolR2: "2,87",
-                disabled: true // For angular-nvd3 : do not show this serie
-            },{
-                title: "TVA 2,10%",
-                a2014: "1111",
-                a2015: "2222",
-                a2016: "3017",
-                evolR1: "1,65",
-                evolR2: "2,87"
-            },{
-                title: "TVA 5,50%",
-                a2014: "1111",
-                a2015: "2222",
-                a2016: "1941",
-                evolR1: "1,65",
-                evolR2: "2,87"
-            },{
-                title: "TVA 20%",
-                a2014: "1111",
-                a2015: "2222",
-                a2016: "776",
-                evolR1: "1,65",
-                evolR2: "2,87"
-            }
-        ];
+        // var dataCA = [
+        //     {
+        //         title: "Chiffre d'affaire H.T.",
+        //         a2014: "1111",
+        //         a2015: "2222",
+        //         a2016: "1643",
+        //         evolR1: "1,65",
+        //         evolR2: "2,87",
+        //         disabled: true // For angular-nvd3 : do not show this serie
+        //     },{
+        //         title: "TVA 2,10%",
+        //         a2014: "1111",
+        //         a2015: "2222",
+        //         a2016: "3017",
+        //         evolR1: "1,65",
+        //         evolR2: "2,87"
+        //     },{
+        //         title: "TVA 5,50%",
+        //         a2014: "1111",
+        //         a2015: "2222",
+        //         a2016: "1941",
+        //         evolR1: "1,65",
+        //         evolR2: "2,87"
+        //     },{
+        //         title: "TVA 20%",
+        //         a2014: "1111",
+        //         a2015: "2222",
+        //         a2016: "776",
+        //         evolR1: "1,65",
+        //         evolR2: "2,87"
+        //     }
+        // ];
 
-        $scope.grid.structureCA.data = data;
+        // var dataStocks = [
+        //     {
+        //         title: "Stocks 2,10%",
+        //         valeur: "1111",
+        //         poidsCA: "2222",
+        //         poidsStock: "1643",
+        //         rationRotation: "1,65"
+        //     },{
+        //         title: "Stocks 5,50%",
+        //         valeur: "1111",
+        //         poidsCA: "2222",
+        //         poidsStock: "1643",
+        //         rationRotation: "1,65"
+        //     },{
+        //         title: "Stocks 20%",
+        //         valeur: "1111",
+        //         poidsCA: "2222",
+        //         poidsStock: "1643",
+        //         rationRotation: "1,65"
+        //     },{
+        //         title: "Stocks Total",
+        //         valeur: "1111",
+        //         poidsCA: "2222",
+        //         poidsStock: "",
+        //         rationRotation: "",
+        //         disabled: true // For angular-nvd3 : do not show this serie
+        //     }
+        // ];
+
+        // $scope.grid.structureCA.data = dataCA;
+        // $scope.grid.stocks.data = dataStocks;
+
+        initNewFormData();
+
+        $scope.grid.structureCA.data = $scope.survey.selected.forms.indicateurs.structureCA.data;
+        $scope.grid.stocks.data = $scope.survey.selected.forms.indicateurs.stocks.data;
 
         $scope.optionsStructureCAPieChart = {
             chart: {
@@ -603,7 +802,33 @@
                 },
                 legendPosition: 'right'
             },
-            data: data
+            //data: dataCA
+            data: $scope.survey.selected.forms.indicateurs.structureCA.data
+        };
+
+        $scope.optionsStocksPieChart = {
+            chart: {
+                type: 'pieChart',
+                height: 150,
+                x: function(d){return d.title;},
+                y: function(d){return d.valeur;},
+                showLabels: false,
+                duration: 500,
+                //donutLabelsOutside: true,
+                //labelThreshold: 0.01,
+                //labelSunbeamLayout: false,
+                legend: {
+                    margin: {
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: 0
+                    }
+                },
+                legendPosition: 'right'
+            },
+            // data: dataStocks
+            data: $scope.survey.selected.forms.indicateurs.stocks.data
         };
     }
 
