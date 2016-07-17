@@ -54,9 +54,10 @@ class Merchandising():
     def update_form(self, data):
         logger.info('[update_form] Update data merchandising')
         
-        sql = "UPDATE form_merchandising SET operator = '%s', date_operation = '%s', data = '%s' WHERE id = %s;" %(data['form']['operator'], data['form']['date_operation'], json.dumps(data['form']['forms']).strip(), data['form']['id'])
-
-        self.cursor.execute(sql)
+        sql = "UPDATE form_merchandising SET operator = %s, date_operation = %s, data = %s WHERE id = %s;"
+        args = (data['form']['operator'], data['form']['date_operation'], json.dumps(data['form']['forms']).strip(), data['form']['id'])
+        
+        self.cursor.execute(sql, args)
         self.connector.commit()
 
         return {'status': 'success', 'code': 200}
