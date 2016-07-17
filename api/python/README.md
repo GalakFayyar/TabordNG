@@ -29,3 +29,5 @@ Edit file `conf/api-conf.json` to adapt configuration such as API server link, p
 ## Usage
 Simply start python API server :
 `python server.py`
+Or use behin gunicorn:
+`gunicorn -w 1 -b 0.0.0.0:8077 server:app --reload`
