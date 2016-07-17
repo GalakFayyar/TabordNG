@@ -504,7 +504,7 @@
             $scope.templatesUrl.divers.current = null;
         };
 
-        $scope.selectedFormTab = 'contexte_environnemental';
+        $scope.selectedFormTab = 'indicateurs';
         $scope.tabHeadingClick = function (tab) {
             ngProgress.start();
             resetCurrentTemplatesURL();
@@ -578,6 +578,8 @@
         //     $select.activate();
         // };
 
+        initNewFormData();
+
         // Indicateurs
         $scope.grid = {
             structureCA: {
@@ -609,6 +611,7 @@
                         //sort: { direction: uiGridConstants.ASC, priority: 1 } 
                     },{
                         name: 'a2014',
+                        field: 'a2014',
                         displayName: '2014',
                         pinnedLeft: true,
                         enableFiltering: true, 
@@ -776,10 +779,8 @@
         // $scope.grid.structureCA.data = dataCA;
         // $scope.grid.stocks.data = dataStocks;
 
-        initNewFormData();
-
-        $scope.grid.structureCA.data = $scope.survey.selected.forms.indicateurs.structureCA.data;
-        $scope.grid.stocks.data = $scope.survey.selected.forms.indicateurs.stocks.data;
+        $scope.grid.structureCA.data = 'survey.selected.forms.indicateurs.structureCA.data';
+        $scope.grid.stocks.data = 'survey.selected.forms.indicateurs.stocks.data';
 
         $scope.optionsStructureCAPieChart = {
             chart: {
@@ -803,7 +804,7 @@
                 legendPosition: 'right'
             },
             //data: dataCA
-            data: $scope.survey.selected.forms.indicateurs.structureCA.data
+            //data: $scope.survey.selected.forms.indicateurs.structureCA.data
         };
 
         $scope.optionsStocksPieChart = {
@@ -828,7 +829,7 @@
                 legendPosition: 'right'
             },
             // data: dataStocks
-            data: $scope.survey.selected.forms.indicateurs.stocks.data
+            //data: $scope.survey.selected.forms.indicateurs.stocks.data
         };
     }
 
