@@ -21,3 +21,6 @@ No special configuration needed. Edit file `app/js/conf/conf.json` to adapt conf
 ## Usage
 start python server
 (in python2.7 : `python -m SimpleHTTPServer 8080`)
+
+To launch background from remote server (without interruption by exiting) :
+`nohup python -m SimpleHTTPServer 8080`
