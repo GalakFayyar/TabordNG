@@ -5,8 +5,8 @@
 
 	angular.module('tabordNG').controller('PharmacieController', PharmacieController);
 
-	PharmacieController.$inject = ['$scope', '$state', 'HelperService', 'PharmacieService', 'uiGridConstants', 'ngProgress'];
-	function PharmacieController ($scope, $state, HelperService, PharmacieService, uiGridConstants, ngProgress) {
+	PharmacieController.$inject = ['$scope', '$state', '$timeout', 'HelperService', 'PharmacieService', 'uiGridConstants', 'ngProgress'];
+	function PharmacieController ($scope, $state, $timeout, HelperService, PharmacieService, uiGridConstants, ngProgress) {
 		$.AdminLTE.layout.activate();
 
 		$scope.pharmacie = {
@@ -138,6 +138,26 @@
 		$scope.emptyPharmacieFields = function () {
 			$scope.pharmacie.selected = null;
 		};
+
+		$timeout(function() {
+            $.fn.datepicker.dates['fr'] = {
+                days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+                daysShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+                daysMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+                months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"],
+                monthsShort: ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aou", "Sep", "Oct", "Nov", "Dec"],
+                today: "Aujourd'hui",
+                clear: "Annuler",
+                titleFormat: "MM yyyy" /* Leverages same syntax as 'format' */
+            };
+            $.fn.datepicker.defaults.language = 'fr';
+            $('#dateInstall').datepicker({ 
+                autoclose: true, 
+                format: 'yyyy-mm-dd',
+                language: 'fr',
+                weekStart: 1
+            });
+		}, 10);
 
 		getPharmacies();
 	}
