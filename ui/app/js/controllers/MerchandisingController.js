@@ -12,12 +12,8 @@
 
         // Manage form display if action is triggered by user (create/update)
         $scope.displayForms = false;
-        $scope.survey = { list: [], selected: undefined };
+        $scope.survey = { list: [], selected: undefined, search: undefined };
         $scope.logicielGestion = { list : [], selected: null };
-        $scope.$select = {
-            selected: undefined,
-            search: undefined
-        };
 
         // Tab elements
         $scope.tab = {
@@ -172,7 +168,12 @@
                         fluxPietonnier: null,
                         fluxAutomobile: null,
                         longeurVitrine: null,
-                        surface: null,
+                        surface: {
+                            totale: null,
+                            clientele: null,
+                            bo: null,
+                            reserve: null
+                        },
                         envMedicalGeneraliste: null,
                         envMedicalSpecialiste: null,
                         envCentresMedicaux: null,
@@ -467,6 +468,9 @@
         // Create New Form
         $scope.createNewForm = function () {
             initNewFormData();
+            $scope.survey.selected = undefined;
+            $scope.survey.search = undefined;
+            $scope.survey.activate();
             $scope.displayForms = true;
         };
 

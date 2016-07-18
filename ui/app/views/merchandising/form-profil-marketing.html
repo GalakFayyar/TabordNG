@@ -290,7 +290,7 @@
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.structureAssortiment.premiersSecours" value="0" data-labelauty="Inadapté" type="radio"/></div>
 			</div>
 			<div class="row">
-				<div class="col-md-2 form-label">Compléments Alimentaires</div>
+				<div class="col-md-2 form-label">Compléments Alim.</div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.structureAssortiment.complAlimentaires" value="5" data-labelauty="Premium" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.structureAssortiment.complAlimentaires" value="4" data-labelauty="Large" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.structureAssortiment.complAlimentaires" value="2" data-labelauty="Basique" type="radio"/></div>
@@ -407,20 +407,32 @@
 				<div class="col-md-12 form-label">Potentiel d'exposition</div>
 			</div>
 			<div class="row">
-				<div class="col-md-3"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.potExpo.largeur" placeholder="Largeur linéaires" type="text"/></div>
-				<div class="col-md-3"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.potExpo.profondeur" placeholder="Profondeur" type="text"/></div>
-				<div class="col-md-3"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.potExpo.nbNiveaux" placeholder="Nb moy. niv./linéaires" type="text"/></div>
-				<div class="col-md-3"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.potExpo.modularite" placeholder="Modularité" type="text"/></div>
+				<div class="col-md-2">Largeur</div>
+				<div class="col-md-1"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.potExpo.largeur" style="width:100%" type="text"/></div>
+				<div class="col-md-2">Profondeur</div>
+				<div class="col-md-1"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.potExpo.profondeur" style="width:100%" type="text"/></div>
+				<div class="col-md-2">Nombre de niveaux</div>
+				<div class="col-md-1"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.potExpo.nbNiveaux" style="width:100%" type="text"/></div>
+				<div class="col-md-2">Modularité</div>
+				<div class="col-md-1"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.potExpo.modularite" style="width:100%" type="text"/></div>
 			</div>
 			<div class="row">
-				<div class="col-md-2 form-label">Linéaires para</div>
-				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.para.nb" placeholder="Nombre" type="number"/></div>
-				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.para.mld" placeholder="Mètres Linéaires développés" type="text"/></div>
+				<div class="col-md-12 form-label">Linéaires para</div>
 			</div>
 			<div class="row">
-				<div class="col-md-2 form-label">Linéaires OTC</div>
-				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.otc.nb" placeholder="Nombre" type="number"/></div>
-				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.otc.mld" placeholder="Mètres Linéaires développés" type="text"/></div>
+				<div class="col-md-2">Nombre</div>
+				<div class="col-md-1"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.para.nb" style="width:100%" type="number"/></div>
+				<div class="col-md-3">Mètre Linéaire Développé</div>
+				<div class="col-md-1"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.para.mld" style="width:100%" type="text"/></div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 form-label">Linéaires OTC</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2">Nombre</div>
+				<div class="col-md-1"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.otc.nb" style="width:100%" type="number"/></div>
+				<div class="col-md-3">Mètre Linéaire Développé</div>
+				<div class="col-md-1"><input ng-model="survey.selected.forms.profilMarketing.merchandising.lineaires.otc.mld" style="width:100%" type="text"/></div>
 			</div>
 			<div class="row">
 				<div class="col-md-2 form-label">Effet de masse</div>
@@ -473,19 +485,19 @@
 	<form role="form">
 		<div class="box-body">
 			<div class="row">
-				<div class="col-md-2 form-label">Nombre de points de vente</div>
-				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.comptoirs.nb" placeholder="Nombre" type="number"/></div>
-				<div class="col-md-2 form-label">Postes de vente para</div>
-				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.comptoirs.nbPara" placeholder="Nombre" type="number"/></div>
+				<div class="col-md-3 form-label">Nombre points de vente</div>
+				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.comptoirs.nb" style="width:100%" placeholder="Nombre" type="number"/></div>
+				<div class="col-md-3 form-label">Postes de vente para</div>
+				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.comptoirs.nbPara" style="width:100%" placeholder="Nombre" type="number"/></div>
 			</div>
 			<div class="row">
-				<div class="col-md-2 form-label">Encombrement des comptoirs</div>
+				<div class="col-md-3 form-label">Encombrement des comptoirs</div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.comptoirs.encombrement" value="5" data-labelauty="Adapté" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.comptoirs.encombrement" value="2" data-labelauty="Pléthorique" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.comptoirs.encombrement" value="0" data-labelauty="Insuffisant" type="radio"/></div>
 			</div>
 			<div class="row">
-				<div class="col-md-2 form-label">Sélection des produits</div>
+				<div class="col-md-3 form-label">Sélection des produits</div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.comptoirs.selectProd" value="5" data-labelauty="Bon" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.comptoirs.selectProd" value="2" data-labelauty="Insuffisant" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.comptoirs.selectProd" value="0" data-labelauty="Inadapté" type="radio"/></div>
@@ -499,13 +511,13 @@
 	<form role="form">
 		<div class="box-body">
 			<div class="row">
-				<div class="col-md-2 form-label">Sélection des produits balisés</div>
+				<div class="col-md-3 form-label">Sélection des produits balisés</div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.balisage.selectProd" value="5" data-labelauty="Bonne" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.balisage.selectProd" value="2" data-labelauty="Insuffisante" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.balisage.selectProd" value="0" data-labelauty="Inadaptée" type="radio"/></div>
 			</div>
 			<div class="row">
-				<div class="col-md-2 form-label">Charte graphique balisage</div>
+				<div class="col-md-3 form-label">Charte graphique balisage</div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.balisage.charteGraphique" value="5" data-labelauty="Elaborée" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.balisage.charteGraphique" value="2" data-labelauty="Manuelle" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.merchandising.balisage.charteGraphique" value="0" data-labelauty="Inexistante" type="radio"/></div>
@@ -591,25 +603,25 @@
 	<form role="form">
 		<div class="box-body">
 			<div class="row">
-				<div class="col-md-2 form-label">Pertinence du thème</div>
+				<div class="col-md-3 form-label">Pertinence du thème</div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.polCom.animPdv.pertinenceTheme" value="5" data-labelauty="Bonne" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.polCom.animPdv.pertinenceTheme" value="3" data-labelauty="Insuffisante" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.polCom.animPdv.pertinenceTheme" value="2" data-labelauty="Inadaptée" type="radio"/></div>
 			</div>
 			<div class="row">
-				<div class="col-md-2 form-label">Clarté de l'offre</div>
+				<div class="col-md-3 form-label">Clarté de l'offre</div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.polCom.animPdv.clarteOffre" value="5" data-labelauty="Bonne" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.polCom.animPdv.clarteOffre" value="3" data-labelauty="Insuffisante" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.polCom.animPdv.clarteOffre" value="2" data-labelauty="Inadaptée" type="radio"/></div>
 			</div>
 			<div class="row">
-				<div class="col-md-2 form-label">Agressivité commerciale</div>
+				<div class="col-md-3 form-label">Agressivité commerciale</div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.polCom.animPdv.agressiviteComm" value="5" data-labelauty="Bonne" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.polCom.animPdv.agressiviteComm" value="3" data-labelauty="Insuffisante" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.polCom.animPdv.agressiviteComm" value="2" data-labelauty="Inadaptée" type="radio"/></div>
 			</div>
 			<div class="row">
-				<div class="col-md-2 form-label">Périodicité des opérations</div>
+				<div class="col-md-3 form-label">Périodicité des opérations</div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.polCom.animPdv.PeriodOperations" value="5" data-labelauty="Bonne" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.polCom.animPdv.PeriodOperations" value="3" data-labelauty="Insuffisante" type="radio"/></div>
 				<div class="col-md-2"><input ng-model="survey.selected.forms.profilMarketing.polCom.animPdv.PeriodOperations" value="2" data-labelauty="Inadaptée" type="radio"/></div>

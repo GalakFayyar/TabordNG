@@ -79,6 +79,7 @@ ul.sidebar-menu li.activated a{
 	line-height: 35px;
 	vertical-align: middle;
 	overflow: ellipsis;
+	font-weight: bold;
 }
 
 .loader-div {
