@@ -49,7 +49,7 @@ class Merchandising():
         self.cursor.execute(sql, args)
         self.connector.commit()
 
-        self.cursor.execute("SELECT MAX(id) FROM form_merchandising WHERE id_pharmacie = %s", (pharmacie_id))
+        self.cursor.execute("SELECT MAX(id) FROM form_merchandising WHERE id_pharmacie = %s", [pharmacie_id])
         _id = self.cursor.fetchone()
 
         return {'status': 'success', 'id': _id, 'code': 200}
