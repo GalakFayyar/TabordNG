@@ -49,10 +49,10 @@ class Merchandising():
         self.cursor.execute(sql, args)
         self.connector.commit()
 
-        self.cursor.execute("SELECT MAX(id) FROM form_merchandising WHERE id_pharmacie = %s", [pharmacie_id])
-        _id = self.cursor.fetchone()
+        self.cursor.execute("SELECT MAX(id) AS id FROM form_merchandising WHERE id_pharmacie = %s", [pharmacie_id])
+        data = self.cursor.fetchone()
 
-        return {'status': 'success', 'id': _id, 'code': 200}
+        return {'status': 'success', 'id': data['id'], 'code': 200}
 
     def update_form(self, data):
         logger.info('[update_form] Update data merchandising')
