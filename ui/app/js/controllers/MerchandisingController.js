@@ -454,6 +454,8 @@
             } else {
                 // Case Create new form
                 MerchandisingService.create_form({}, {'form': $scope.survey.selected}, function (result) {
+                    // Get new id generated
+                    $scope.survey.selected.id = result.id;
                     ngProgress.complete();
                     console.log(result);
                 }, function (error) {
