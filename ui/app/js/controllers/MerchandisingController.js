@@ -472,7 +472,7 @@
             initNewFormData();
             $scope.survey.selected = undefined;
             $scope.survey.search = undefined;
-            $scope.survey.activate();
+            //$scope.survey.activate();
             $scope.displayForms = true;
         };
 
@@ -529,23 +529,7 @@
         $timeout(function () {
             $(":checkbox").labelauty();
             $(":radio").labelauty({ minimum_width: "100%" });
-            $.fn.datepicker.dates['fr'] = {
-                days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-                daysShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-                daysMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-                months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"],
-                monthsShort: ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aou", "Sep", "Oct", "Nov", "Dec"],
-                today: "Aujourd'hui",
-                clear: "Annuler",
-                titleFormat: "MM yyyy" /* Leverages same syntax as 'format' */
-            };
-            $.fn.datepicker.defaults.language = 'fr';
-            $('#datepicker').datepicker({ 
-                autoclose: true, 
-                format: 'yyyy-mm-dd',
-                language: 'fr',
-                weekStart: 1
-            });
+            HelperService.initDatePicker('#dateForm');
             ngProgress.complete();
             getData();
         }, 500);
@@ -720,71 +704,6 @@
             }
         };
 
-        // var dataCA = [
-        //     {
-        //         title: "Chiffre d'affaire H.T.",
-        //         a2014: "1111",
-        //         a2015: "2222",
-        //         a2016: "1643",
-        //         evolR1: "1,65",
-        //         evolR2: "2,87",
-        //         disabled: true // For angular-nvd3 : do not show this serie
-        //     },{
-        //         title: "TVA 2,10%",
-        //         a2014: "1111",
-        //         a2015: "2222",
-        //         a2016: "3017",
-        //         evolR1: "1,65",
-        //         evolR2: "2,87"
-        //     },{
-        //         title: "TVA 5,50%",
-        //         a2014: "1111",
-        //         a2015: "2222",
-        //         a2016: "1941",
-        //         evolR1: "1,65",
-        //         evolR2: "2,87"
-        //     },{
-        //         title: "TVA 20%",
-        //         a2014: "1111",
-        //         a2015: "2222",
-        //         a2016: "776",
-        //         evolR1: "1,65",
-        //         evolR2: "2,87"
-        //     }
-        // ];
-
-        // var dataStocks = [
-        //     {
-        //         title: "Stocks 2,10%",
-        //         valeur: "1111",
-        //         poidsCA: "2222",
-        //         poidsStock: "1643",
-        //         rationRotation: "1,65"
-        //     },{
-        //         title: "Stocks 5,50%",
-        //         valeur: "1111",
-        //         poidsCA: "2222",
-        //         poidsStock: "1643",
-        //         rationRotation: "1,65"
-        //     },{
-        //         title: "Stocks 20%",
-        //         valeur: "1111",
-        //         poidsCA: "2222",
-        //         poidsStock: "1643",
-        //         rationRotation: "1,65"
-        //     },{
-        //         title: "Stocks Total",
-        //         valeur: "1111",
-        //         poidsCA: "2222",
-        //         poidsStock: "",
-        //         rationRotation: "",
-        //         disabled: true // For angular-nvd3 : do not show this serie
-        //     }
-        // ];
-
-        // $scope.grid.structureCA.data = dataCA;
-        // $scope.grid.stocks.data = dataStocks;
-
         $scope.grid.structureCA.data = 'survey.selected.forms.indicateurs.structureCA.data';
         $scope.grid.stocks.data = 'survey.selected.forms.indicateurs.stocks.data';
 
@@ -808,9 +727,7 @@
                     }
                 },
                 legendPosition: 'right'
-            },
-            //data: dataCA
-            //data: $scope.survey.selected.forms.indicateurs.structureCA.data
+            }
         };
 
         $scope.optionsStocksPieChart = {
@@ -833,9 +750,7 @@
                     }
                 },
                 legendPosition: 'right'
-            },
-            // data: dataStocks
-            //data: $scope.survey.selected.forms.indicateurs.stocks.data
+            }
         };
     }
 

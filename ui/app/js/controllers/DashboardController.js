@@ -9,9 +9,158 @@
 		setTimeout(function() {$.AdminLTE.layout.activate();}, 500);
 		console.log("AdminLTE loaded");
 
+		var getSalesData = function () {
+        	return [{
+                values: [
+                	{month:1, value:4}, 
+                	{month:2, value:7}, 
+                	{month:3, value:10}, 
+                	{month:4, value:5}, 
+                	{month:5, value:14},
+                	{month:6, value:8},
+                	{month:7, value:12},
+                	{month:8, value:13},
+                	{month:9, value:15},
+                	{month:10, value:11},
+                	{month:11, value:10},
+                	{month:12, value:9}
+                ],      	//values - represents the array of {x,y} data points
+                key: '2016', 		//key  - the name of the series.
+                color: '#3c8dbc',  	//color - optional: choose your own line color.
+                strokeWidth: 2
+                //classed: 'dashed'
+            },{
+                values: [
+                	{month:1, value:7}, 
+                	{month:2, value:10}, 
+                	{month:3, value:13}, 
+                	{month:4, value:15}, 
+                	{month:5, value:2},
+                	{month:6, value:10},
+                	{month:7, value:8},
+                	{month:8, value:5},
+                	{month:9, value:13},
+                	{month:10, value:11},
+                	{month:11, value:12},
+                	{month:12, value:9}
+                ],      	//values - represents the array of {x,y} data points
+                key: '2015', 		//key  - the name of the series.
+                color: '#d2d6de',  	//color - optional: choose your own line color.
+                strokeWidth: 2
+                //classed: 'dashed'
+            }];
+        };
+
+        var getProductsData = function () {
+        	return [
+        		{id:0, libelle:"BOIRON", value:31},
+        		{id:1, libelle:"FURTERER", value:53},
+        		{id:2, libelle:"AVENE", value:21},
+        		{id:3, libelle:"URIAGE", value:5},
+        		{id:4, libelle:"LA ROCHE POSAY", value:27},
+        		{id:5, libelle:"WELEDA", value:24},
+        		{id:6, libelle:"UPSA", value:14},
+        		{id:6, libelle:"BAYER", value:12}
+        	];
+        };
+
 		$timeout(function(){
 			ngProgress.complete();
 		});
+
+		var months = ['Jan', 'Fev', 'Mars', 'Avr', 'Mai', 'Juin', 'Juil', 'Aout', 'Sept', 'Oct', 'Nov', 'Dec'];
+
+		$scope.chart = {
+			sales:{
+				options: {
+		            chart: {
+		                type: 'lineChart',
+		                height: 200,
+		                margin : {
+		                    top: 20,
+		                    right: 20,
+		                    bottom: 40,
+		                    left: 55
+		                },
+		                x: function(d){ return d.month; },
+		                y: function(d){ return d.value; },
+		                useInteractiveGuideline: true,
+		                dispatch: {
+		                    stateChange: function(e){ console.log("stateChange"); },
+		                    changeState: function(e){ console.log("changeState"); },
+		                    tooltipShow: function(e){ console.log("tooltipShow"); },
+		                    tooltipHide: function(e){ console.log("tooltipHide"); }
+		                },
+		                isArea: false,
+		                clipEdge: false,
+		                xAxis: {
+		                    axisLabel: 'Mois',
+		                    tickFormat: function(d){
+		                        return months[d - 1]
+		                    }
+		                },
+		                yAxis: {
+		                    axisLabel: 'nombre de produits',
+		                    tickFormat: function(d){
+		                        //return d3.format('.02f')(d);
+		                        return d3.format('d')(d);
+		                    },
+		                    axisLabelDistance: -10
+		                },
+		                callback: function(chart){
+		                    console.log("!!! lineChart callback !!!");
+		                }
+		            }
+		            // title: {
+		            //     enable: true,
+		            //     text: 'Ventes'
+		            // }
+		            // subtitle: {
+		            //     enable: true,
+		            //     text: 'Subtitle for simple line chart. Lorem ipsum dolor sit amet, at eam blandit sadipscing, vim adhuc sanctus disputando ex, cu usu affert alienum urbanitas.',
+		            //     css: {
+		            //         'text-align': 'center',
+		            //         'margin': '10px 13px 0px 7px'
+		            //     }
+		            // },
+		            // caption: {
+		            //     enable: true,
+		            //     html: '<b>Figure 1.</b> Lorem ipsum dolor sit amet, at eam blandit sadipscing, <span style="text-decoration: underline;">vim adhuc sanctus disputando ex</span>, cu usu affert alienum urbanitas. <i>Cum in purto erat, mea ne nominavi persecuti reformidans.</i> Docendi blandit abhorreant ea has, minim tantas alterum pro eu. <span style="color: darkred;">Exerci graeci ad vix, elit tacimates ea duo</span>. Id mel eruditi fuisset. Stet vidit patrioque in pro, eum ex veri verterem abhorreant, id unum oportere intellegam nec<sup>[1, <a href="https://github.com/krispo/angular-nvd3" target="_blank">2</a>, 3]</sup>.',
+		            //     css: {
+		            //         'text-align': 'justify',
+		            //         'margin': '10px 13px 0px 7px'
+		            //     }
+		            // }
+		        },
+		        data: getSalesData()
+     		},
+     		products: {
+     			options: {
+     				chart: {
+     					type: 'pieChart',
+		                height: 200,
+		                x: function(d){return d.libelle;},
+		                y: function(d){return d.value;},
+		                showLabels: false,
+		                pieLabelsOutside: true,
+		                showLabels: true,
+		                labelType: "percent",
+		                duration: 500,
+		                legend: {
+		                    margin: {
+		                        top: 0,
+		                        right: 0,
+		                        bottom: 0,
+		                        left: 0
+		                    }
+		                },
+		                legendPosition: 'right',
+		                noData: "Aucune donnée à afficher"
+		            }  
+            	},
+            	data: getProductsData()
+     		}
+        };
 	}
 
 	// boRubriqueEditorControllers.controller('DashboardController', [ '$scope', '$rootScope', '$filter', '$state', '$modal', '$timeout', 'ngProgress', 'uiGridConstants', 'uiGridEditConstants', 'boRubriqueEditorConfig', 'BoErStatusConfService', 'BoErRubriqueService', 'BoErSettingsService', 'HelperService', 
