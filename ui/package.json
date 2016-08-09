@@ -12,5 +12,7 @@
     "prestart": "npm install",
     "start": "node server.js"
   },
-  "dependencies": {}
+  "dependencies": {
+    "express": "4.14.0"
+  }
 }
