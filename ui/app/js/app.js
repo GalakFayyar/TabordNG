@@ -97,6 +97,17 @@
 					}
 				},
 				parent: 'app'
+			})
+			/******************************************************************/
+			.state('personnel_salaires', {
+				url: 'personnel/salaires',
+				views: {
+					'content': {
+						templateUrl: 'views/personnel/salaires.html',
+						controller: 'PersonnelSalairesController'
+					}
+				},
+				parent: 'app'
 			});
 		$locationProvider.hashPrefix('!');
 
