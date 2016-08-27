@@ -5,10 +5,8 @@ from logger import logger, configure
 from resources.pharmacie import *
 from resources.merchandising import *
 
-import json
-import psycopg2
+import json, psycopg2, hashlib
 from psycopg2.extras import RealDictCursor
-import json, hashlib
 
 ### Init controller routes manager
 app = Flask(__name__)

@@ -140,7 +140,7 @@
 		};
 
 		$timeout(function() {
-            HelperService.initDatePicker('#dateInstall');
+			HelperService.initDatePicker('#dateInstall');
 		}, 10);
 
 		getPharmacies();

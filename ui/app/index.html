@@ -3,14 +3,14 @@
 	<head>
 		<meta charset="utf-8">
 		<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-		
+
 		<title>Tabord NG</title>
 
 		<!-- <link rel="shortcut icon" href="img/favicon.ico" />
 		<link rel="icon" href="img/favicon.ico" />
 		<link rel="icon" type="image/png" href="img/favicon.png" />
 		<link rel="shortcut icon" href="img/favicon.ico"> -->
-			
+
 		<!-- CSS: Third-party 'bower-managed' dependencies -->
 		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css" />
@@ -24,7 +24,7 @@
 		<link rel="stylesheet" href="bower_components/admin-lte/dist/css/skins/_all-skins.min.css" />
 		<link rel="stylesheet" href="bower_components/jquery-labelauty/source/jquery-labelauty.css" />
 		<link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.min.css" >
-		
+
 		<link rel="stylesheet" href="css/app.css" />
 
 		<!-- JS Dependencies: Third-party 'bower-managed' dependencies -->
@@ -38,7 +38,7 @@
 		<script src="bower_components/angular-resource/angular-resource.min.js"></script>
 		<script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
 		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-	    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+		<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 		<script src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
 		<script src="bower_components/angular-ui-select/dist/select.min.js"></script>
 		<script src="bower_components/ngprogress/build/ngProgress.min.js"></script>
@@ -72,12 +72,12 @@
 		<script src="js/animations/main.js"></script>
 		<script src="js/directives/main.js"></script>
 
-		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css"> 
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
 	</head>
 	<body class="fixed" ng-cloak ng-class="{'sidebar-collapse': toggleLeftSidebar, 'sidebar-open': toggleLeftSidebar}" >
 		<div class="view-container">
 			<div class="alert-box">
-  				<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+					<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 			</div>
 			<div ui-view></div>
 		</div>
