@@ -18,22 +18,15 @@
 		// });
 	}
 
-	HeaderController.$inject = ['$scope'];
-	function HeaderController ($scope) {
-		$scope.toto = "test";
-	}
-
-	LeftSideBarController.$inject = ['$scope', '$rootScope', '$state', 'PharmacieService'];
-	function LeftSideBarController ($scope, $rootScope, $state, PharmacieService) {
-
-		// TODO : optimiser
-		// Corrige le pb de synchro des chargements entre
-		// les lib jquery et angularjs :
-		// jquery semble chargé avant les éléments du dom
-		// générés eux par angularjs ...
-		// setTimeout(function() {
-		// 	$.AdminLTE.tree('.sidebar-menu');
-		// }, 500);
+	HeaderController.$inject = ['$scope', '$state', '$timeout','PharmacieService'];
+	function HeaderController ($scope, $state, $timeout, PharmacieService) {
+		
+		$timeout(function() {
+			// Protection fermeture menu
+			$('.dropdown-menu').click(function (event){
+				event.stopPropagation();
+			});
+		}, 500);
 
 		$scope.current_pharmacie = {
 			periode: {
@@ -70,6 +63,18 @@
 		};
 
 		getPharmacies();
+	}
+
+	LeftSideBarController.$inject = ['$scope', '$rootScope'];
+	function LeftSideBarController ($scope, $rootScope) {
+		// TODO : optimiser
+		// Corrige le pb de synchro des chargements entre
+		// les lib jquery et angularjs :
+		// jquery semble chargé avant les éléments du dom
+		// générés eux par angularjs ...
+		// setTimeout(function() {
+		// 	$.AdminLTE.tree('.sidebar-menu');
+		// }, 500);
 	}
 
 	FooterController.$inject = ['$scope', 'tabordngConfig'];

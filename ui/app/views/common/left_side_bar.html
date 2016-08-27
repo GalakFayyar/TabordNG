@@ -19,37 +19,6 @@
 		</div>
 	</form>-->
 
-	<ui-select  ng-model="$root.pharmacie.selected"
-				ng-change="changeSelectedPharmacie()"
-				theme="select2" 
-				class="ui-select-pharmacie"
-				search-enabled="false"
-				title="Sélectionner une pharmacie">
-		<ui-select-match placeholder="Sélectionner une pharmacie">{{$select.selected.denomination}}</ui-select-match>
-		<ui-select-choices 
-				repeat="pharmacie in pharmacies.list track by pharmacie.id | filter: {denomination: $select.search}">
-			<div ng-bind-html="pharmacie.denomination | highlight: $select.search"></div>
-			<small>
-				code: <span ng-bind-html="''+pharmacie.id | highlight: $select.search"></span>
-			</small>
-		</ui-select-choices>
-	</ui-select>
-
-	<ui-select  ng-model="current_pharmacie.periode.selected" 
-				theme="select2" 
-				class="ui-select-period"
-				search-enabled="false"
-				title="Sélectionner une période">
-		<ui-select-match placeholder="Sélectionner une période">Période : {{$select.selected.libelle}}</ui-select-match>
-		<ui-select-choices 
-				repeat="periode in current_pharmacie.periode.available_periods | filter: {libelle: $select.search, num: $select.search}">
-			<div ng-bind-html="periode.libelle | highlight: $select.search"></div>
-			<small>
-				n° période: <span ng-bind-html="''+periode.num | highlight: $select.search"></span>
-			</small>
-		</ui-select-choices>
-	</ui-select>
-
 	<!-- /.search form -->
 	<!-- sidebar menu: : style can be found in sidebar.less -->
 	<ul class="sidebar-menu">
