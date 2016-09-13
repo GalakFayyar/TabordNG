@@ -108,6 +108,17 @@
 					}
 				},
 				parent: 'app'
+			})
+			/******************************************************************/
+			.state('laboratoires_ventes', {
+				url: 'laboratoires/ventes',
+				views: {
+					'content': {
+						templateUrl: 'views/laboratoires/ventes.html',
+						controller: 'LaboratoiresVentesController'
+					}
+				},
+				parent: 'app'
 			});
 		$locationProvider.hashPrefix('!');
 
@@ -190,6 +201,8 @@
 	function tabordngRun ($rootScope, $location, $cookieStore, $state, $injector, ngProgress) {
 		$rootScope.alerts = [];
 		$rootScope.user = null;
+
+		$rootScope.lang = 'fr';
 
 		ngProgress.color('#000');
 		ngProgress.height('3px');
