@@ -5,7 +5,7 @@
     Intègre les données extraites des ventes labo dans une base PostgreSQL
 
     Usage:
-        import_ventes_sql.py --source_file=<path> [--debug]
+        import_ventes_sql.py --source_file=<path> --type_fichier=<type>  [--debug]
 
     Options:
         --help                      Affiche l'aide
@@ -37,9 +37,36 @@ def file_to_postgresql(p_doc, p_conf, p_type, p_date_operation=None):
         p_date_operation    date de l'opération d'import
     """
     
-    sql = "INSERT INTO {table} VALUES ({values});".format(table=p_type, values=','.join(repr(e) for e in p_doc)) 
+    #sql = "INSERT INTO {table} VALUES ({values});".format(table=p_type, values=','.join(repr(e) for e in p_doc)) 
 
-    return [sql]
+    if p_type == 'laboratoires':
+        data = {
+            'code': p_doc[0],
+            'libelle': p_doc[1]
+        }
+
+    if p_type == 'produits':
+        data = {
+            'id': p_doc[0],
+            'code07': p_doc[1],
+            'code13': p_doc[2],
+            'libelle': p_doc[3],
+            'idLaboratoire': p_doc[4],
+            'txTVA': p_doc[5]
+        }
+
+    if p_type == 'ventes':
+        data = {
+            'periode': p_doc[0],
+            'codeCIP': p_doc[1],
+            'idArticle': p_doc[2],
+            'quantite': p_doc[3],
+            'prixAchatHT': p_doc[4],
+            'CAHT': p_doc[5],
+            'CATTC': p_doc[6]
+        }
+
+    return [data]
 
 if __name__ == '__main__':
 
