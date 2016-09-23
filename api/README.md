@@ -6,6 +6,7 @@ Python API for Tabord NG project. Provides the routes for the project. Works wit
 
 ## Requirements
 Python 2.7+ is required.
+PostgreSQL 9.5+ is required.
 `pip` is recommended to manage dependencies over Python.
 All dependencies included in the requirements.txt file.
 

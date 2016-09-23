@@ -1,0 +1,15 @@
+[
+	{
+		periode: 201607,
+		cip_pharmacie: 2040567,
+		pharmacie: 'pharmacie test',
+		code_laboratoire: 401884,
+		laboratoire: 'SANDOZ SAS',
+		code_produit: 312130,
+		libelle_produit: 'MOMETASONE SANDOZ 50MCG/DOSE SUSP PULV NAS 120 DOS',
+		quantite: 15,
+		prix_achat_ht: 58.95,
+		ca_ht: 93.44,
+		ca_ttc: 95.40
+	}
+]
