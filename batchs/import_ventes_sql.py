@@ -88,6 +88,12 @@ if __name__ == '__main__':
     # Paramétrag PostgreSQL
     try:
         # Connection loading
+        logger.debug("dbname='{db}' user='{user}' host='{host}' password='{passw}'".format(
+            db=conf['postgresql']['credentials']['db'],
+            user=conf['postgresql']['credentials']['user'],
+            host=conf['postgresql']['host'],
+            passw=conf['postgresql']['credentials']['password']
+        ))
         connector = psycopg2.connect("dbname='{db}' user='{user}' host='{host}' password='{passw}'".format(
             db=conf['postgresql']['credentials']['db'],
             user=conf['postgresql']['credentials']['user'],
