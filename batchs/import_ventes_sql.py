@@ -97,7 +97,7 @@ if __name__ == '__main__':
         cursor = connector.cursor(cursor_factory=RealDictCursor)
     except:
         logger.error("ERREUR INITIALISATION ACCES DATABASE")
-        break
+        return
 
     # Vidage table SQL
     sql = "TRUNCATE {table};".format(table=type_fichier)
