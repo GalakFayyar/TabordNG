@@ -39,13 +39,13 @@ def file_to_postgresql(p_doc, p_conf, p_type, p_date_operation=None):
     
     #sql = "INSERT INTO {table} VALUES ({values});".format(table=p_type, values=','.join(repr(e) for e in p_doc)) 
 
-    if p_type == 'laboratoires':
+    if p_type == 'batchs_laboratoires':
         data = {
             'code': p_doc[0],
             'libelle': p_doc[1]
         }
 
-    if p_type == 'produits':
+    if p_type == 'batchs_produits':
         data = {
             'id': p_doc[0],
             'code07': p_doc[1],
@@ -55,7 +55,7 @@ def file_to_postgresql(p_doc, p_conf, p_type, p_date_operation=None):
             'txTVA': p_doc[5]
         }
 
-    if p_type == 'ventes':
+    if p_type == 'batchs_ventes':
         data = {
             'periode': p_doc[0],
             'codeCIP': p_doc[1],
