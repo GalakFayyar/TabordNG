@@ -1,18 +1,7 @@
+#!/usr/bin/env python
 # coding: utf-8
 
-from logger import logger, configure
-from docopt import docopt
-import json, psycopg2
-
-from tools.swallow.swallow.inout.CSVio import CSVio
-from tools.swallow.swallow.inout.Postgresqlio import PostgreSqlIo
-from tools.swallow.swallow.Swallow import Swallow
-
-from psycopg2.extras import RealDictCursor
-
-import datetime, pytz
-
-"""
+""" 
     Intègre les données extraites des ventes labo dans une base PostgreSQL
 
     Usage:
@@ -25,6 +14,18 @@ import datetime, pytz
         --type_fichier=<type>       Nom de la table SQL
         --debug                     Joue le script en debug
 """
+
+from logger import logger, configure
+from docopt import docopt
+import json, psycopg2
+
+from tools.swallow.swallow.inout.CSVio import CSVio
+from tools.swallow.swallow.inout.Postgresqlio import PostgreSqlIo
+from tools.swallow.swallow.Swallow import Swallow
+
+from psycopg2.extras import RealDictCursor
+
+import datetime, pytz
 
 def file_to_postgresql(p_doc, p_conf, p_type, p_date_operation=None):
     """

@@ -11,6 +11,15 @@ PostgreSQL 9.5+ is required.
 All dependencies included in the requirements.txt file.
 
 ## Installation
+Install PostgreSQL server :
+`sudo apt-get install postgresql`
+Install prerequired libraries :
+`sudo apt-get install libpq-dev`
+Install python-dev for psycopg2 :
+`sudo apt-get install python-dev` (python 2.7)
+`sudo apt-get install python3.4-dev` (python 3.4)
+Install Psycopg2 python driver :
+`sudo apt-get install python-psycopg2`
 Install dependencies with pip :
 `pip install -r /path/to/requirements.txt`
 Postgresql install notes :
