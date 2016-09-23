@@ -91,7 +91,7 @@ class PostgreSqlIo:
             connection = psycopg2.connect(connection_string)
             cursor = connection.cursor(cursor_factory=RealDictCursor)
         except psycopg2.Error as e:
-            logger.error('Failed to connect to {db}'.format(self.base))
+            logger.error('Failed to connect to {db}'.format(db=self.base))
             logger.error(e)
             sys.exit(EXIT_IO_ERROR)
 
