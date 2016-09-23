@@ -112,7 +112,7 @@ class PostgreSqlIo:
 
                 # Manage SQL parameters
                 sql_fields = "({0})".format(",".join(repr(e) for e in source_doc.keys()))
-                sql_values = "({0})".fomat(",".join(repr(e) for e in source_doc.values()))
+                sql_values = "({0})".format(",".join(repr(e) for e in source_doc.values()))
                 sql_update_fields_values = ",".join(["{field}=EXCLUDED.{field}".format(field=field) for field in source_doc.keys()])
 
                 try:
