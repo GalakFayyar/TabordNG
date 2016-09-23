@@ -88,15 +88,16 @@ if __name__ == '__main__':
     # Paramétrag PostgreSQL
     try:
         # Connection loading
-        connector = psycopg2.connect("dbname='{db}' user='{user}' host='{host}' password='{pass}'".format(
-            conf['postgresql']['credentials']['db'],
-            conf['postgresql']['credentials']['user'],
-            conf['postgresql']['host'],
-            conf['postgresql']['credentials']['password']
+        connector = psycopg2.connect("dbname='{db}' user='{user}' host='{host}' password='{passw}'".format(
+            db=conf['postgresql']['credentials']['db'],
+            user=conf['postgresql']['credentials']['user'],
+            host=conf['postgresql']['host'],
+            passw=conf['postgresql']['credentials']['password']
         ))
         cursor = connector.cursor(cursor_factory=RealDictCursor)
     except:
         logger.error("ERREUR INITIALISATION ACCES DATABASE")
+        break
 
     # Vidage table SQL
     sql = "TRUNCATE {table};".format(table=type_fichier)
