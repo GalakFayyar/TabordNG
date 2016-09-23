@@ -26,7 +26,7 @@
 		<li ui-sref-active="activated"><a href ui-sref="dashboard" ui-sref-opts="{reload: 'dashboard'}"><i class="fa fa-dashboard"></i> Tableau de bord</a></li>
 		
 		<li class="header">LES CHIFFRES</li>
-		<li class="treeview">
+		<!-- <li class="treeview">
 			<a href>
 				<i class="fa fa-hospital-o"></i> <span>Chiffres Pharmacie</span>
 				<i class="fa fa-angle-left pull-right"></i>
@@ -66,7 +66,7 @@
 				</li>
 				<li><a href><i class="fa fa-circle-o"></i> Divers</a></li>
 			</ul>
-		</li>
+		</li> -->
 
 		<li class="treeview">
 			<a href>
@@ -75,10 +75,19 @@
 			</a>
 			<ul class="treeview-menu">
 				<li ui-sref-active="activated"><a href ui-sref="personnel_salaires" ui-sref-opts="{reload: 'personnel_salaires'}"><i class="fa fa-circle-o"></i> Salaires</a></li>
-				<li><a href><i class="fa fa-circle-o"></i> Charges Sociales</a></li>
+				<!-- <li><a href><i class="fa fa-circle-o"></i> Charges Sociales</a></li> -->
 			</ul>
 		</li>
 
+		<li class="treeview">
+			<a href>
+				<i class="fa fa-industry"></i> <span>Chiffres Laboratoires</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+			<ul class="treeview-menu">
+				<li ui-sref-active="activated"><a href ui-sref="laboratoires_ventes" ui-sref-opts="{reload: 'laboratoires_ventes'}"><i class="fa fa-circle-o"></i> Ventes</a></li>
+			</ul>
+		</li>
 
 		<!-- <li ui-sref-active="activated"><a href ui-sref="pharmacie_chiffres" ui-sref-opts="{reload: 'pharmacie_chiffres'}"><i class="fa fa-money"></i> Chiffres Pharmacie</a></li> -->
 		<!-- <li ui-sref-active="activated"><a href ui-sref="pharmacie_personnel" ui-sref-opts="{reload: 'pharmacie_personnel'}"><i class="fa fa-money"></i> Chiffres Personnel</a></li> -->
