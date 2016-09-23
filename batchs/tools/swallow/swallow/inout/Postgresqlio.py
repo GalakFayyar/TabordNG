@@ -129,7 +129,7 @@ class PostgreSqlIo:
                 except psycopg2.Error as e:
                     with self.counters['nb_items_error'].get_lock():
                         self.counters['nb_items_error'].value += 1
-                    logger.error("Document not inserted in PostgreSQL Database %s", source_doc['_id'])
+                    logger.error("Document not inserted in PostgreSQL Database %s", source_doc)
                     logger.error(e)
                 else:
                     with self.counters['nb_items_stored'].get_lock():
