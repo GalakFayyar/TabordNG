@@ -6,8 +6,8 @@
 	    "host": "localhost",
 	    "port": 5432,
 	    "credentials": {
-	    	"user": "tom",
-			"password": "tom",
+	    	"user": "Galak",
+			"password": "Galak",
 			"db": "tabordng_dev"
 	    }
     },
