@@ -149,7 +149,7 @@ class PostgreSqlIo:
                             update_sql=update_sql,
                             insert_sql=insert_sql
                         )
-                    logger.debug(sql)
+                    logger.info(sql)
                     cursor.execute(sql)
                 except psycopg2.Error as e:
                     with self.counters['nb_items_error'].get_lock():
