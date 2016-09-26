@@ -41,7 +41,7 @@ def file_to_postgresql(p_doc, p_conf, p_type, p_date_operation=None):
 
     if p_type == 'batchs_laboratoires':
         data = {
-            'code': p_doc[0],
+            'id': p_doc[0],
             'libelle': p_doc[1]
         }
 
