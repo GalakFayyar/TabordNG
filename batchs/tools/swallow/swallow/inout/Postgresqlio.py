@@ -127,10 +127,10 @@ class PostgreSqlIo:
                                 values=sql_values,
                                 id_field=p_id_field,
                                 update_fields_values=sql_update_fields_values_excluded)
-                    insert_sql = "INSERT INTO {table} {fields} SELECT {id_value}".format(
+                    insert_sql = "INSERT INTO {table} {fields} SELECT {values}".format(
                             table=p_table,
                             fields=sql_fields,
-                            id_value=source_doc[p_id_field].strip().replace("'", "''")
+                            values=sql_values
                         )
                     update_sql = "UPDATE {table} SET {update_fields_values} WHERE {id_field} = {id_value}".format(
                             table=p_table,
@@ -150,11 +150,10 @@ class PostgreSqlIo:
                     #         insert_sql=insert_sql
                     #     )
                     sql = """
-                        WITH upsert AS ({update_sql} RETURNING *) {insert_sql} WHERE NOT EXISTS (SELECT {id_field} FROM upsert);
+                        WITH upsert AS ({update_sql} RETURNING *) {insert_sql} WHERE NOT EXISTS (SELECT * FROM upsert);
                     """.format(
                             update_sql=update_sql,
-                            insert_sql=insert_sql,
-                            id_field=p_id_field
+                            insert_sql=insert_sql
                         )
                     print(sql)
                     cursor.execute(sql)
