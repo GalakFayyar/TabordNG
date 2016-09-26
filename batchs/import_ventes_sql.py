@@ -123,7 +123,7 @@ if __name__ == '__main__':
                           p_user=conf['postgresql']['credentials']['user'],
                           p_password=conf['postgresql']['credentials']['password'])
 
-    swal.set_writer(writer, p_table=type_fichier, p_id_field="code")
+    swal.set_writer(writer, p_table=type_fichier, p_id_field="id")
 
     now = datetime.datetime.now(pytz.timezone('Europe/Paris')).isoformat()
     swal.set_process(file_to_postgresql, p_conf=conf, p_type=type_fichier, p_date_operation=now)
