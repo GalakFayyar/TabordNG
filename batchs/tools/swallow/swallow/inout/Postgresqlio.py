@@ -127,10 +127,10 @@ class PostgreSqlIo:
                                 values=sql_values,
                                 id_field=p_id_field,
                                 update_fields_values=sql_update_fields_values_excluded)
-                    insert_sql = "INSERT INTO {table} {fields} SELECT {values_id}".format(
+                    insert_sql = "INSERT INTO {table} {fields} SELECT {id_value}".format(
                             table=p_table,
                             fields=sql_fields,
-                            value_id=source_doc[p_id_field].strip().replace("'", "''")
+                            id_value=source_doc[p_id_field].strip().replace("'", "''")
                         )
                     update_sql = "UPDATE {table} SET {update_fields_values} WHERE {id_field} = {id_value}".format(
                             table=p_table,
