@@ -180,9 +180,11 @@ class PostgreSqlIo:
                         )
 
                     print(sql)
-                    print([source_doc[key] for key in source_doc.keys()][::-1])
-                    print([source_doc[key] for key in source_doc.keys() if key != p_id_field][::-1])
-                    parameters = [source_doc[key] for key in source_doc.keys()][::-1] + [source_doc[key] for key in source_doc.keys() if key != p_id_field][::-1]
+
+                    print([source_doc[key] for key in source_doc.keys() if key != p_id_field])
+                    print([source_doc[key] for key in source_doc.keys()])
+                    
+                    parameters = [source_doc[key] for key in source_doc.keys() if key != p_id_field] + [source_doc[key] for key in source_doc.keys()]
                     print(parameters)
                     cursor.execute(sql, parameters)
                 except psycopg2.Error as e:
