@@ -117,7 +117,8 @@ class PostgreSqlIo:
 
                 try:
                     cursor = connection.cursor(cursor_factory=RealDictCursor)
-                    sql = """INSERT INTO {table} {fields}
+                    # Only for V. psql > 9.5
+                    sql_p95 = """INSERT INTO {table} {fields}
                              VALUES {values}
                              ON CONFLICT ({id_field}) DO UPDATE SET {update_fields_values};""".format(
                                 table=p_table,
@@ -125,6 +126,28 @@ class PostgreSqlIo:
                                 values=sql_values,
                                 id_field=p_id_field,
                                 update_fields_values=sql_update_fields_values)
+                    insert_sql = "INSERT INTO {table} {fields} SELECT {values};".format(
+                            table=p_table,
+                            fields=sql_fields,
+                            values=sql_values
+                        )
+                    update_sql = "UPDATE {table} SET {update_fields_values} WHERE {id_field} = {id_value};".format(
+                            table=p_table,
+                            update_fields_values=sql_update_fields_values,
+                            id_field=p_id_field,
+                            id_value=source_doc[p_id_field]
+                        )
+
+                    sql = """
+                        BEGIN;
+                        LOCK TABLE {table} IN SHARE ROW EXCLUSIVE MODE;
+                        WITH upsert AS ({update_sql} RETURNING *) {insert_sql} WHERE NOT EXISTS (SELECT * FROM upsert);
+                        COMMIT;
+                    """.format(
+                            table=p_table,
+                            update_sql=update_sql,
+                            insert_sql=insert_sql
+                        )
                     cursor.execute(sql)
                 except psycopg2.Error as e:
                     with self.counters['nb_items_error'].get_lock():
