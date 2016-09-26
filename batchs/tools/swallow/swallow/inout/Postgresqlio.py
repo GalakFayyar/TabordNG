@@ -139,13 +139,19 @@ class PostgreSqlIo:
                             id_value=source_doc[p_id_field]
                         )
 
+                    # sql = """
+                    #     BEGIN;
+                    #     LOCK TABLE {table} IN SHARE ROW EXCLUSIVE MODE;
+                    #     WITH upsert AS ({update_sql} RETURNING *) {update_sql} WHERE NOT EXISTS (SELECT * FROM upsert);
+                    #     COMMIT;
+                    # """.format(
+                    #         table=p_table,
+                    #         update_sql=update_sql,
+                    #         insert_sql=insert_sql
+                    #     )
                     sql = """
-                        BEGIN;
-                        LOCK TABLE {table} IN SHARE ROW EXCLUSIVE MODE;
-                        WITH upsert AS ({update_sql} RETURNING *) {insert_sql} WHERE NOT EXISTS (SELECT * FROM upsert);
-                        COMMIT;
+                        WITH upsert AS ({update_sql} RETURNING *) {update_sql} WHERE NOT EXISTS (SELECT * FROM upsert);
                     """.format(
-                            table=p_table,
                             update_sql=update_sql,
                             insert_sql=insert_sql
                         )
