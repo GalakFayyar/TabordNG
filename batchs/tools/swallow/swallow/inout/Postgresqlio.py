@@ -113,7 +113,8 @@ class PostgreSqlIo:
                 # Manage SQL parameters
                 sql_fields = "({0})".format(",".join(source_doc.keys()))
                 sql_values = "({0})".format(",".join(repr(e) for e in source_doc.values()))
-                sql_update_fields_values = ",".join(["{field}=EXCLUDED.{field}".format(field=field) for field in source_doc.keys()])
+                sql_update_fields_values_excluded = ",".join(["{field}=EXCLUDED.{field}".format(field=field) for field in source_doc.keys()])
+                sql_update_fields_values = ",".join(["{field}={value}".format(field=field, value=source_doc[field]) for field in source_doc.keys() if field != p_id_field])
 
                 try:
                     cursor = connection.cursor(cursor_factory=RealDictCursor)
@@ -125,7 +126,7 @@ class PostgreSqlIo:
                                 fields=sql_fields,
                                 values=sql_values,
                                 id_field=p_id_field,
-                                update_fields_values=sql_update_fields_values)
+                                update_fields_values=sql_update_fields_values_excluded)
                     insert_sql = "INSERT INTO {table} {fields} SELECT {values};".format(
                             table=p_table,
                             fields=sql_fields,
