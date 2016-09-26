@@ -180,6 +180,8 @@ class PostgreSqlIo:
                         )
 
                     print(sql)
+                    print([value for value in source_doc.values()][::-1])
+                    print([source_doc[key] for key in source_doc.keys() if key != p_id_field][::-1])
                     parameters = [value for value in source_doc.values()][::-1] + [source_doc[key] for key in source_doc.keys() if key != p_id_field][::-1]
                     print(parameters)
                     cursor.execute(sql, parameters)
