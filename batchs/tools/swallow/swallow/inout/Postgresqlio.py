@@ -107,7 +107,7 @@ class PostgreSqlIo:
                 if source_doc is None:
                     poison_pill = True
                     p_queue.task_done()
-                    cursor.commit()
+                    connection.commit()
                     break
 
                 # Manage SQL parameters
