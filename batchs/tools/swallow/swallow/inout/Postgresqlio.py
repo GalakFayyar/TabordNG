@@ -180,7 +180,7 @@ class PostgreSqlIo:
                         )
 
                     print(sql)
-                    parameters = source_doc.values() + [source_doc[key] for key in source_doc.keys() if key != p_id_field]
+                    parameters = [value for value in source_doc.values()] + [source_doc[key] for key in source_doc.keys() if key != p_id_field]
                     cursor.execute(sql, parameters)
                 except psycopg2.Error as e:
                     with self.counters['nb_items_error'].get_lock():
