@@ -114,7 +114,7 @@ class PostgreSqlIo:
                 sql_fields = "({0})".format(",".join(source_doc.keys()))
                 sql_values = "({0})".format(",".join(repr(e.strip().replace("'", "\'")) for e in source_doc.values()))
                 sql_update_fields_values_excluded = ",".join(["{field}=EXCLUDED.{field}".format(field=field) for field in source_doc.keys()])
-                sql_update_fields_values = ",".join(["{field}={value}".format(field=field, value=source_doc[field].strip().replace("'", "\'")) for field in source_doc.keys() if field != p_id_field])
+                sql_update_fields_values = ",".join(["{field}='{value}'".format(field=field, value=source_doc[field].strip().replace("'", "\'")) for field in source_doc.keys() if field != p_id_field])
 
                 try:
                     cursor = connection.cursor(cursor_factory=RealDictCursor)
