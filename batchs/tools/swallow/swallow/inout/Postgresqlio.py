@@ -114,11 +114,11 @@ class PostgreSqlIo:
                 sql_fields = "({0})".format(",".join(source_doc.keys()))
                 # sql_values = "{0}".format(",".join(repr(e).strip().replace("'", "''") for e in source_doc.values()))
                 # sql_update_fields_values_excluded = ",".join(["{field}=EXCLUDED.{field}".format(field=field) for field in source_doc.keys()])
-                # sql_update_fields_values = ",".join(["{field}='{value}'".format(field=field, value=source_doc[field].strip().replace("'", "''")) for field in source_doc.keys() if field != p_id_field])
                 sql_update_fields_values = ",".join(["{field}=%s".format(field=field) for field in source_doc.keys() if field != p_id_field])
 
                 try:
                     cursor = connection.cursor(cursor_factory=RealDictCursor)
+                    
                     # Only for V. psql > 9.5
                     # sql_p95 = """INSERT INTO {table} {fields}
                     #          VALUES ({values})
@@ -129,37 +129,6 @@ class PostgreSqlIo:
                     #             id_field=p_id_field,
                     #             update_fields_values=sql_update_fields_values_excluded)
 
-
-                    # insert_sql = "INSERT INTO {table} {fields} SELECT {values}".format(
-                    #         table=p_table,
-                    #         fields=sql_fields,
-                    #         values=sql_values
-                    #     )
-                    # update_sql = "UPDATE {table} SET {update_fields_values} WHERE {id_field} = {id_value}".format(
-                    #         table=p_table,
-                    #         update_fields_values=sql_update_fields_values,
-                    #         id_field=p_id_field,
-                    #         id_value=source_doc[p_id_field]
-                    #     )
-
-
-
-                    # sql = """
-                    #     BEGIN;
-                    #     LOCK TABLE {table} IN SHARE ROW EXCLUSIVE MODE;
-                    #     WITH upsert AS ({update_sql} RETURNING *) {insert_sql} WHERE NOT EXISTS (SELECT * FROM upsert);
-                    #     COMMIT;
-                    # """.format(
-                    #         table=p_table,
-                    #         update_sql=update_sql,
-                    #         insert_sql=insert_sql
-                    #     )
-
-
-
-
-
-                    # Manage SQL Parameters
                     insert_sql = "INSERT INTO {table} {fields} SELECT {values}".format(
                             table=p_table,
                             fields=sql_fields,
@@ -178,14 +147,8 @@ class PostgreSqlIo:
                             update_sql=update_sql,
                             insert_sql=insert_sql
                         )
-
-                    print(sql)
-
-                    print([source_doc[key] for key in source_doc.keys() if key != p_id_field])
-                    print([source_doc[key] for key in source_doc.keys()])
                     
                     parameters = [source_doc[key] for key in source_doc.keys() if key != p_id_field] + [source_doc[key] for key in source_doc.keys()]
-                    print(parameters)
                     cursor.execute(sql, parameters)
                 except psycopg2.Error as e:
                     with self.counters['nb_items_error'].get_lock():
