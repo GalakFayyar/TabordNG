@@ -142,7 +142,7 @@ class PostgreSqlIo:
                     # sql = """
                     #     BEGIN;
                     #     LOCK TABLE {table} IN SHARE ROW EXCLUSIVE MODE;
-                    #     WITH upsert AS ({update_sql} RETURNING *) {update_sql} WHERE NOT EXISTS (SELECT * FROM upsert);
+                    #     WITH upsert AS ({update_sql} RETURNING *) {insert_sql} WHERE NOT EXISTS (SELECT * FROM upsert);
                     #     COMMIT;
                     # """.format(
                     #         table=p_table,
@@ -150,7 +150,7 @@ class PostgreSqlIo:
                     #         insert_sql=insert_sql
                     #     )
                     sql = """
-                        WITH upsert AS ({update_sql} RETURNING *) {update_sql} WHERE NOT EXISTS (SELECT * FROM upsert);
+                        WITH upsert AS ({update_sql} RETURNING *) {insert_sql} WHERE NOT EXISTS (SELECT * FROM upsert);
                     """.format(
                             update_sql=update_sql,
                             insert_sql=insert_sql
