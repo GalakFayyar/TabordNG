@@ -180,7 +180,9 @@ class PostgreSqlIo:
                         )
 
                     print(sql)
-                    parameters = [value for value in source_doc.values().reverse()] + [source_doc[key] for key in source_doc.keys().reverse() if key != p_id_field].reverse()
+                    param_insert = [value for value in source_doc.values()].reverse()
+                    param_update = [source_doc[key] for key in source_doc.keys() if key != p_id_field].reverse()
+                    parameters = param_insert + param_update
                     print(parameters)
                     cursor.execute(sql, parameters)
                 except psycopg2.Error as e:
