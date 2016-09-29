@@ -15,7 +15,7 @@ CREATE TABLE batchs_produits(
 );
 
 CREATE TABLE batchs_ventes(
-	id SERIAL NOT NULL,
+	id BIGINT NOT NULL,
 	periode VARCHAR(50) NOT NULL,
 	codeCIP VARCHAR(50) NOT NULL,
 	idArticle VARCHAR(50) NOT NULL,
