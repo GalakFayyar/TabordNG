@@ -51,7 +51,7 @@ def file_to_postgresql(p_doc, p_conf, p_type, p_date_operation=None):
             'code07': p_doc[1],
             'code13': p_doc[2],
             'libelle': p_doc[3],
-            'idLaboratoire': p_doc[4],
+            'codeLaboratoire': p_doc[4],
             'txTVA': p_doc[5]
         }
 
