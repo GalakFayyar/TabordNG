@@ -41,13 +41,13 @@ def file_to_postgresql(p_doc, p_conf, p_type, p_date_operation=None):
 
     if p_type == 'batchs_laboratoires':
         data = {
-            'id': p_doc[0],
+            'id': int(p_doc[0]),
             'libelle': p_doc[1]
         }
 
     if p_type == 'batchs_produits':
         data = {
-            'id': p_doc[0],
+            'id': int(p_doc[0]),
             'code07': p_doc[1],
             'code13': p_doc[2],
             'libelle': p_doc[3],
