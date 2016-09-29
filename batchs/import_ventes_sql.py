@@ -56,10 +56,12 @@ def file_to_postgresql(p_doc, p_conf, p_type, p_date_operation=None):
         }
 
     if p_type == 'batchs_ventes':
+        composite_key = p_doc[0] + p_doc[1] + "".join(p_doc[2].split())
         data = {
+            'id': composite_key,
             'periode': p_doc[0],
             'codeCIP': p_doc[1],
-            'idArticle': p_doc[2],
+            'idArticle': "".join(p_doc[2].split()),
             'quantite': p_doc[3],
             'prixAchatHT': p_doc[4],
             'CAHT': p_doc[5],
