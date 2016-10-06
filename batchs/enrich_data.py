@@ -141,7 +141,7 @@ def enrich_data(p_conf, p_type_fichier, p_connector):
     swal.set_writer(writer, p_table=p_type_fichier, p_id_field="id")
 
     now = datetime.datetime.now(pytz.timezone('Europe/Paris')).isoformat()
-    swal.set_process(enrich_data_table, p_conf=p_conf, p_cursor=cursor, p_date_operation=now)
+    swal.set_process(enrich_data_table, p_cursor=cursor, p_date_operation=now)
 
     swal.run(1)
 
