@@ -39,38 +39,36 @@ class PostgreSqlIo:
             dbpass=self.password
         )
         connection = psycopg2.connect(connection_string)
+        cursor = connection.cursor(cursor_factory=RealDictCursor)
 
         try:
             offset = p_start
             stop = False
             # delete ";" if set at the end of the query
             query = p_query
-
             if query.strip().endswith(';'):
                 query = query.strip()[:-1]
-            with connection.cursor(cursor_factory=RealDictCursor) as cursor:
-                print('so far so good')
-                while not stop:
-                    paginated_query = "{0} limit {1},{2}".format(p_query, offset, p_bulksize)
-                    logger.debug("PostgreSqlIo : Start dealing with records from {0} to {1}".format(offset, p_bulksize + offset))
-                    try:
-                        cursor.execute(paginated_query)
-                    except psycopg2.OperationalError as e:
-                        logger.error("PostgreSqlIo : Error while dealing with records from {0} to {1}".format(offset, p_bulksize + offset))
-                        logger.error(e)
-                        raise e
-                    if cursor.rowcount:
-                        for row in cursor:
-                            p_queue.put(row)
-                        offset += p_bulksize
-                    else:
-                        stop = True
-                    logger.debug("PostgreSqlIo : All records from {0} to {1} has been put in the queue".format(offset, p_bulksize + offset))
-                cursor.close()
+            while not stop:
+                paginated_query = "{0} limit {1},{2}".format(p_query, offset, p_bulksize)
+                logger.debug("PostgreSqlIo : Start dealing with records from {0} to {1}".format(offset, p_bulksize + offset))
+                try:
+                    cursor.execute(paginated_query)
+                except psycopg2.OperationalError as e:
+                    logger.error("PostgreSqlIo : Error while dealing with records from {0} to {1}".format(offset, p_bulksize + offset))
+                    logger.error(e)
+                    raise e
+                if cursor.rowcount:
+                    for row in cursor:
+                        p_queue.put(row)
+                    offset += p_bulksize
+                else:
+                    stop = True
+                logger.debug("PostgreSqlIo : All records from {0} to {1} has been put in the queue".format(offset, p_bulksize + offset))
         except Exception as e:
             logger.error("PostgreSqlIo : Stop reading !")
             logger.error(e)
         finally:
+            cursor.close()
             connection.close()
 
     def dequeue_and_store(self, p_queue, p_table, p_id_field="id"):
