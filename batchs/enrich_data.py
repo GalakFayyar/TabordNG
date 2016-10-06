@@ -40,14 +40,12 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
     sql = "SELECT * FROM ventes_pharmacies_periodes WHERE idPharmacie = %s;"
     p_cursor.execute(sql, (p_doc['idpharmacie'],))
     data_sql = p_cursor.fetchone()
-
-    print(data_sql)
     
-    obj_vente_p1 = json.loads(data_sql['ventes_p1']) if (data_sql['ventes_p1']) else {'id': None, 'libelle': None, 'mois': []}
-    obj_vente_p2 = json.loads(data_sql['ventes_p2']) if (data_sql['ventes_p2']) else {'id': None, 'libelle': None, 'mois': []}
-    obj_vente_p3 = json.loads(data_sql['ventes_p3']) if (data_sql['ventes_p3']) else {'id': None, 'libelle': None, 'mois': []}
-    obj_vente_p4 = json.loads(data_sql['ventes_p4']) if (data_sql['ventes_p4']) else {'id': None, 'libelle': None, 'mois': []}
-    obj_vente_p5 = json.loads(data_sql['ventes_p5']) if (data_sql['ventes_p5']) else {'id': None, 'libelle': None, 'mois': []}
+    obj_vente_p1 = json.loads(data_sql['ventes_p1']) if (data_sql and data_sql['ventes_p1']) else {'id': None, 'libelle': None, 'mois': []}
+    obj_vente_p2 = json.loads(data_sql['ventes_p2']) if (data_sql and data_sql['ventes_p2']) else {'id': None, 'libelle': None, 'mois': []}
+    obj_vente_p3 = json.loads(data_sql['ventes_p3']) if (data_sql and data_sql['ventes_p3']) else {'id': None, 'libelle': None, 'mois': []}
+    obj_vente_p4 = json.loads(data_sql['ventes_p4']) if (data_sql and data_sql['ventes_p4']) else {'id': None, 'libelle': None, 'mois': []}
+    obj_vente_p5 = json.loads(data_sql['ventes_p5']) if (data_sql and data_sql['ventes_p5']) else {'id': None, 'libelle': None, 'mois': []}
 
     vente = {
         'code_laboratoire': p_doc['codelaboratoire'],
