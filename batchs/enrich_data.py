@@ -100,6 +100,7 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
                 period_created = True
 
     result = {
+        'id': 0,
         'idpharmacie': int(p_doc['idpharmacie']),
         'ventes_p1': obj_vente_p1,
         'ventes_p2': obj_vente_p2,
