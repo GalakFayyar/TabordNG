@@ -107,6 +107,7 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
         'ventes_p4': obj_vente_p4,
         'ventes_p5': obj_vente_p5
     }
+    print(result)
 
     return [result]
 
