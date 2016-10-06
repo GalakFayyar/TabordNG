@@ -25,3 +25,14 @@ CREATE TABLE batchs_ventes(
 	CATTC VARCHAR(50) NOT NULL,
 	CONSTRAINT prk_constraint_batchs_ventes PRIMARY KEY (id)
 );
+
+CREATE TABLE ventes_pharmacies_periodes(
+	id SERIAL NOT NULL,
+	idPharmacie INT NOT NULL,
+	ventes_p1 json,
+	ventes_p2 json,
+	ventes_p3 json,
+	ventes_p4 json,
+	ventes_p5 json,
+	CONSTRAINT prk_constraint_ventes_pharmacies_periodes PRIMARY KEY (id)
+)WITHOUT OIDS;

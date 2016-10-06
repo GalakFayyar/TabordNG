@@ -28,7 +28,7 @@ class PostgreSqlIo:
         """Reads docs according to a query and pushes them to the queue
 
             p_queue:         Queue where items are pushed to
-            p_query:        MongoDB query for scanning the collection
+            p_query:         PostgreSQL query for scanning the collection
         """
         logger = get_logger_mp(__name__, self.log_queue, self.log_level, self.formatter)
 
