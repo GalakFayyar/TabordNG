@@ -26,7 +26,7 @@ import datetime, pytz
 
 def convert_months_int_to_name(month_int):
     months = ['JANVIER', 'FEVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUILLET', 'AOUT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DECEMBRE']
-    return months.index(month_int) + 1
+    return months[month_int - 1]
 
 def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
     print(p_doc)
