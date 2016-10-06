@@ -32,7 +32,7 @@ class PostgreSqlIo:
         """
         logger = get_logger_mp(__name__, self.log_queue, self.log_level, self.formatter)
 
-        connection_string = "host='{dbhost}' dbname='{dbname}' user='{dbuser}'' password='{dbpass}'".format(
+        connection_string = "host='{dbhost}' dbname='{dbname}' user='{dbuser}' password='{dbpass}'".format(
             dbhost=self.host,
             dbname=self.base,
             dbuser=self.user,
