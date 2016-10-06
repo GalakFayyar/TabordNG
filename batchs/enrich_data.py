@@ -78,7 +78,7 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
                 # Création d'un nouveau mois pour la période
                 mois.append({
                     'id': idperiode,
-                    'libelle': convert_months_int_to_name(mois),
+                    'libelle': convert_months_int_to_name(int(mois)),
                     'ventes': [vente]
                 })
     
@@ -94,7 +94,7 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
                 period['libelle'] = annee
                 period['mois'].append({
                     'id': idperiode,
-                    'libelle': convert_months_int_to_name(mois),
+                    'libelle': convert_months_int_to_name(int(mois)),
                     'ventes': [vente]
                 })
                 period_created = True
