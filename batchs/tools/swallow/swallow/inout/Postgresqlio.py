@@ -49,7 +49,7 @@ class PostgreSqlIo:
             if query.strip().endswith(';'):
                 query = query.strip()[:-1]
             while not stop:
-                paginated_query = "{0} LIMIT {1} OFFSET {2};".format(p_query, p_bulksize, offset)
+                paginated_query = "{0} LIMIT {1} OFFSET {2};".format(query, p_bulksize, offset)
                 logger.debug("PostgreSqlIo : Start dealing with records from {0} to {1}".format(offset, p_bulksize + offset))
                 try:
                     cursor.execute(paginated_query)
