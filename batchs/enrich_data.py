@@ -100,7 +100,6 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
                 period_created = True
 
     result = {
-        'id': 0,
         'idpharmacie': int(p_doc['idpharmacie']),
         'ventes_p1': json.dumps(obj_vente_p1).strip(),
         'ventes_p2': json.dumps(obj_vente_p2).strip(),
@@ -151,7 +150,7 @@ def enrich_data(p_conf, p_type_fichier, p_connector):
                           p_user=p_conf['postgresql']['credentials']['user'],
                           p_password=p_conf['postgresql']['credentials']['password'])
 
-    swal.set_writer(writer, p_table=p_type_fichier, p_id_field="id")
+    swal.set_writer(writer, p_table=p_type_fichier, p_id_field="idpharmacie")
 
     now = datetime.datetime.now(pytz.timezone('Europe/Paris')).isoformat()
     swal.set_process(enrich_data_table, p_cursor=cursor, p_date_operation=now)
