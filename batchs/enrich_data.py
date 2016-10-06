@@ -29,7 +29,6 @@ def convert_months_int_to_name(month_int):
     return months[month_int - 1]
 
 def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
-    print(p_doc)
     idperiode = p_doc['idperiode']
     if (len(idperiode) == 6):
         annee = idperiode[:4]
@@ -38,6 +37,8 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
         logger.error("Pas de traitement calendaire possible pour la periode {0}".format(idperiode))
 
     sql = "SELECT * FROM ventes_pharmacies_periodes WHERE idPharmacie = %s;"
+    print(p_doc['idpharmacie'])
+    print(sql)
     p_cursor.execute(sql, (p_doc['idpharmacie'],))
     data_sql = p_cursor.fetchone()
     
