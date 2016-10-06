@@ -29,6 +29,7 @@ def convert_months_int_to_name(month_int):
     return months.index(month_int) + 1
 
 def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
+    print(p_doc)
     idperiode = p_doc['idPeriode']
     if (len(idperiode) == 6):
         annee = idperiode[:4]
