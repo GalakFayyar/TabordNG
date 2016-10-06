@@ -30,7 +30,7 @@ def convert_months_int_to_name(month_int):
 
 def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
     print(p_doc)
-    idperiode = p_doc['idPeriode']
+    idperiode = p_doc['idperiode']
     if (len(idperiode) == 6):
         annee = idperiode[:4]
         mois = idperiode[-2:]
@@ -38,7 +38,7 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
         logger.error("Pas de traitement calendaire possible pour la periode {0}".format(idperiode))
 
     sql = "SELECT * FROM ventes_pharmacies_periodes WHERE idPharmacie = %s;"
-    p_cursor.execute(sql, (p_doc['idPharmacie'],))
+    p_cursor.execute(sql, (p_doc['idpharmacie'],))
     data_sql = p_cursor.fetchone()
     
     obj_vente_p1 = json.loads(data_sql['ventes_p1']) if (data_sql['ventes_p1']) else {'id': None, 'libelle': None, 'mois': []}
@@ -48,14 +48,14 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
     obj_vente_p5 = json.loads(data_sql['ventes_p5']) if (data_sql['ventes_p5']) else {'id': None, 'libelle': None, 'mois': []}
 
     vente = {
-        'code_laboratoire': p_doc['codeLaboratoire'],
-        'laboratoire': p_doc['libelleLaboratoire'],
-        'code_produit': p_doc['code07Produit'],
-        'libelle_produit': p_doc['libelleProduit'],
+        'code_laboratoire': p_doc['codelaboratoire'],
+        'laboratoire': p_doc['libellelaboratoire'],
+        'code_produit': p_doc['code07produit'],
+        'libelle_produit': p_doc['libelleproduit'],
         'quantite': p_doc['quantite'],
-        'prix_achat_ht': p_doc['prixAchatHT'],
-        'ca_ht': p_doc['caHT'],
-        'ca_ttc': p_doc['caTTC']
+        'prix_achat_ht': p_doc['prixachatht'],
+        'ca_ht': p_doc['caht'],
+        'ca_ttc': p_doc['cattc']
     }
 
     # Flags
@@ -100,7 +100,7 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
                 period_created = True
 
     result = {
-        'idPharmacie': int(p_doc['idPharmacie']),
+        'idPharmacie': int(p_doc['idpharmacie']),
         'ventes_p1': obj_vente_p1,
         'ventes_p2': obj_vente_p2,
         'ventes_p3': obj_vente_p3,
@@ -114,17 +114,17 @@ def enrich_data(p_conf, p_type_fichier, p_connector):
     # Requete SQL d'agrégation de données (jointure)
     sql = """
         SELECT 
-            v.periode AS idPeriode, 
-            v.codeCIP AS idPharmacie, 
-            l.id AS codeLaboratoire, 
-            l.libelle AS libelleLaboratoire, 
-            p.code07 AS code07Produit, 
-            p.code13 AS code13Produit, 
-            p.libelle AS libelleProduit, 
+            v.periode AS idperiode, 
+            v.codeCIP AS idpharmacie, 
+            l.id AS codelaboratoire, 
+            l.libelle AS libellelaboratoire, 
+            p.code07 AS code07produit, 
+            p.code13 AS code13produit, 
+            p.libelle AS libelleproduit, 
             v.quantite AS quantite, 
-            v.prixAchatHT AS prixAchatHT, 
-            v.CAHT AS caHT, 
-            v.CATTC AS caTTC
+            v.prixAchatHT AS prixachatht, 
+            v.CAHT AS caht, 
+            v.CATTC AS cattc
         FROM batchs_ventes v
         LEFT JOIN batchs_produits p ON v.idarticle = p.id::text
         LEFT JOIN batchs_laboratoires l ON p.codelaboratoire = l.id::text;
