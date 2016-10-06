@@ -47,6 +47,7 @@ class PostgreSqlIo:
             query = p_query
             if query.endswith(';'):
                 query = query[:-1]
+                print(query)
             with connection.cursor(cursor_factory=RealDictCursor) as cursor:
                 while not stop:
                     paginated_query = "{0} limit {1},{2}".format(p_query, offset, p_bulksize)
