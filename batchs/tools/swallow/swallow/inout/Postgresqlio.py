@@ -48,9 +48,9 @@ class PostgreSqlIo:
 
             if query.strip().endswith(';'):
                 query = query.strip()[:-1]
-                print('so far so good')
             with connection.cursor(cursor_factory=RealDictCursor) as cursor:
                 while not stop:
+                    print('so far so good')
                     paginated_query = "{0} limit {1},{2}".format(p_query, offset, p_bulksize)
                     logger.debug("PostgreSqlIo : Start dealing with records from {0} to {1}".format(offset, p_bulksize + offset))
                     try:
