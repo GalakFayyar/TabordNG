@@ -102,11 +102,11 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
     result = {
         'id': 0,
         'idpharmacie': int(p_doc['idpharmacie']),
-        'ventes_p1': obj_vente_p1,
-        'ventes_p2': obj_vente_p2,
-        'ventes_p3': obj_vente_p3,
-        'ventes_p4': obj_vente_p4,
-        'ventes_p5': obj_vente_p5
+        'ventes_p1': json.dumps(obj_vente_p1).strip(),
+        'ventes_p2': json.dumps(obj_vente_p2).strip(),
+        'ventes_p3': json.dumps(obj_vente_p3).strip(),
+        'ventes_p4': json.dumps(obj_vente_p4).strip(),
+        'ventes_p5': json.dumps(obj_vente_p5).strip()
     }
 
     return [result]
