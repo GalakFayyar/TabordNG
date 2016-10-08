@@ -37,9 +37,10 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
         logger.error("Pas de traitement calendaire possible pour la periode {0}".format(idperiode))
 
     sql = "SELECT * FROM ventes_pharmacies_periodes WHERE idPharmacie = '{id}';".format(id=p_doc['idpharmacie'])
-    print(sql)
+
     p_cursor.execute(sql)
     data_sql = p_cursor.fetchone()
+    print(data_sql)
     
     obj_vente_p1 = json.loads(data_sql['ventes_p1']) if (data_sql and data_sql['ventes_p1']) else {'id': None, 'libelle': None, 'mois': []}
     obj_vente_p2 = json.loads(data_sql['ventes_p2']) if (data_sql and data_sql['ventes_p2']) else {'id': None, 'libelle': None, 'mois': []}
