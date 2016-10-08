@@ -152,7 +152,7 @@ def enrich_data(p_conf, p_type_fichier, p_connector):
                           p_user=p_conf['postgresql']['credentials']['user'],
                           p_password=p_conf['postgresql']['credentials']['password'])
 
-    swal.set_writer(writer, p_table=p_type_fichier, p_id_field="idpharmacie")
+    swal.set_writer(writer, p_table=p_type_fichier, p_id_field="idpharmacie", p_commit_on_each_document=True)
 
     now = datetime.datetime.now(pytz.timezone('Europe/Paris')).isoformat()
     swal.set_process(enrich_data_table, p_cursor=cursor, p_date_operation=now)

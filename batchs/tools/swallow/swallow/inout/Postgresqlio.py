@@ -71,7 +71,7 @@ class PostgreSqlIo:
             cursor.close()
             connection.close()
 
-    def dequeue_and_store(self, p_queue, p_table, p_id_field="id"):
+    def dequeue_and_store(self, p_queue, p_table, p_id_field="id", p_commit_on_each_document=False):
         """
             Gets docs from p_queue and stores them in a postgresql database
             Stops dealing with the queue when receiving a "None" item
@@ -150,6 +150,8 @@ class PostgreSqlIo:
                     
                     parameters = [source_doc[key] for key in source_doc.keys() if key != p_id_field] + [source_doc[key] for key in source_doc.keys()]
                     cursor.execute(sql, parameters)
+                    if p_commit_on_each_document:
+                        connection.commit()
                 except psycopg2.Error as e:
                     with self.counters['nb_items_error'].get_lock():
                         self.counters['nb_items_error'].value += 1
