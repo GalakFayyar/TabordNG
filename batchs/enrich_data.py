@@ -41,11 +41,11 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
     p_cursor.execute(sql)
     data_sql = p_cursor.fetchone()
     
-    obj_vente_p1 = json.loads(data_sql['ventes_p1']) if (data_sql and data_sql['ventes_p1']) else {'id': None, 'libelle': None, 'mois': []}
-    obj_vente_p2 = json.loads(data_sql['ventes_p2']) if (data_sql and data_sql['ventes_p2']) else {'id': None, 'libelle': None, 'mois': []}
-    obj_vente_p3 = json.loads(data_sql['ventes_p3']) if (data_sql and data_sql['ventes_p3']) else {'id': None, 'libelle': None, 'mois': []}
-    obj_vente_p4 = json.loads(data_sql['ventes_p4']) if (data_sql and data_sql['ventes_p4']) else {'id': None, 'libelle': None, 'mois': []}
-    obj_vente_p5 = json.loads(data_sql['ventes_p5']) if (data_sql and data_sql['ventes_p5']) else {'id': None, 'libelle': None, 'mois': []}
+    obj_vente_p1 = json.loads(data_sql['ventes_p1']) if (data_sql and 'ventes_p1' in data_sql and data_sql['ventes_p1']) else {'id': None, 'libelle': None, 'mois': []}
+    obj_vente_p2 = json.loads(data_sql['ventes_p2']) if (data_sql and 'ventes_p2' in data_sql and data_sql['ventes_p2']) else {'id': None, 'libelle': None, 'mois': []}
+    obj_vente_p3 = json.loads(data_sql['ventes_p3']) if (data_sql and 'ventes_p3' in data_sql and data_sql['ventes_p3']) else {'id': None, 'libelle': None, 'mois': []}
+    obj_vente_p4 = json.loads(data_sql['ventes_p4']) if (data_sql and 'ventes_p4' in data_sql and data_sql['ventes_p4']) else {'id': None, 'libelle': None, 'mois': []}
+    obj_vente_p5 = json.loads(data_sql['ventes_p5']) if (data_sql and 'ventes_p5' in data_sql and data_sql['ventes_p5']) else {'id': None, 'libelle': None, 'mois': []}
 
     print(obj_vente_p1)
 
@@ -67,7 +67,7 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
     # Parcours des périodes existantes
     for period in [obj_vente_p1, obj_vente_p2, obj_vente_p3, obj_vente_p4, obj_vente_p5]:
         # Test si la période existe déja
-        if period['id'] == annee:
+        if 'id' in period and period['id'] == annee:
             period_exists = True
             # Mise à jour du contenu de la période
             for mois in period['mois']:
@@ -91,7 +91,7 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
         # Création de la période
         for period in [obj_vente_p1, obj_vente_p2, obj_vente_p3, obj_vente_p4, obj_vente_p5]:
             # Ajout de la nouvelle période dans les premières libres
-            if period['id'] == None and not period_created:
+            if ('id' not in period or period['id'] == None) and not period_created:
                 period['id'] = annee
                 period['libelle'] = annee
                 period['mois'].append({
