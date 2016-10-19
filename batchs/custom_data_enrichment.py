@@ -65,6 +65,8 @@ def aggregate_data_pharmacie(p_connection, p_cursor, p_list_pharmacie_id, p_sql_
             p_cursor.execute(p_sql_query, args)
             sql_result_new_ventes = p_cursor.fetchall()
 
+            logger.info(sql_result_new_ventes)
+
             # Récupération des données de ventes actuelles pour la pharamacie
             p_cursor.execute("SELECT * FROM ventes_pharmacies_periodes WHERE idPharmacie = %s;", args)
             sql_result_ventes = p_cursor.fetchone()
