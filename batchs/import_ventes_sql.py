@@ -27,6 +27,7 @@ from psycopg2.extras import RealDictCursor
 
 import datetime, pytz
 
+
 def file_to_postgresql(p_doc, p_type, p_date_operation=None):
     """
         Import du fichier dans table SQL brute
@@ -69,6 +70,7 @@ def file_to_postgresql(p_doc, p_type, p_date_operation=None):
 
     return [data]
 
+
 def import_process(p_conf, p_type_fichier):
     # Objet swallow pour la transformation de données
     swal = Swallow()
@@ -90,6 +92,7 @@ def import_process(p_conf, p_type_fichier):
     swal.set_process(file_to_postgresql, p_type=p_type_fichier, p_date_operation=now)
 
     swal.run(1)
+
 
 if __name__ == '__main__':
 

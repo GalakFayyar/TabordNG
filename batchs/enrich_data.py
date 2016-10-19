@@ -24,13 +24,15 @@ from psycopg2.extras import RealDictCursor
 
 import datetime, pytz
 
+
 def convert_months_int_to_name(month_int):
     months = ['JANVIER', 'FEVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUILLET', 'AOUT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DECEMBRE']
     return months[month_int - 1]
 
-def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
+
+def enrich_data_table(p_doc, p_cursor, p_date_operation = None):
     idperiode = p_doc['idperiode']
-    if (len(idperiode) == 6):
+    if len(idperiode) == 6:
         annee = idperiode[:4]
         mois = idperiode[-2:]
     else:
@@ -46,8 +48,6 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
     obj_vente_p3 = json.loads(data_sql['ventes_p3']) if (data_sql and 'ventes_p3' in data_sql and data_sql['ventes_p3']) else {'id': None, 'libelle': None, 'mois': []}
     obj_vente_p4 = json.loads(data_sql['ventes_p4']) if (data_sql and 'ventes_p4' in data_sql and data_sql['ventes_p4']) else {'id': None, 'libelle': None, 'mois': []}
     obj_vente_p5 = json.loads(data_sql['ventes_p5']) if (data_sql and 'ventes_p5' in data_sql and data_sql['ventes_p5']) else {'id': None, 'libelle': None, 'mois': []}
-
-    print(obj_vente_p1)
 
     vente = {
         'code_laboratoire': p_doc['codelaboratoire'],
@@ -67,7 +67,7 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
     # Parcours des périodes existantes
     for period in [obj_vente_p1, obj_vente_p2, obj_vente_p3, obj_vente_p4, obj_vente_p5]:
         # Test si la période existe déja
-        if 'id' in period and period['id'] == annee:
+        if 'id' in period and period['id'] and period['id'] == annee:
             period_exists = True
             # Mise à jour du contenu de la période
             for mois in period['mois']:
@@ -111,6 +111,7 @@ def enrich_data_table(p_doc, p_cursor, p_date_operation=None):
     }
 
     return [result]
+
 
 def enrich_data(p_conf, p_type_fichier, p_connector):
     # Requete SQL d'agrégation de données (jointure)
