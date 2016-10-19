@@ -55,9 +55,10 @@ def update_document(p_cursor, source_doc, p_id_field, p_table):
 
 
 def aggregate_data_pharmacie(p_connection, p_cursor, p_list_pharmacie_id, p_sql_query):
-
+    logger.info("Lancement de l'aggrégation des ventes.")
     if p_list_pharmacie_id and 'idpharmacie' in p_list_pharmacie_id:
         for idPharmacie in p_list_pharmacie_id['idpharmacie']:
+            logger.info("Traitement des ventes pour la pharmacie {id}.".format(id=idPharmacie))
             # Récupération des nouvelles ventes pour la pharmacie
             args = (idPharmacie,)
             p_cursor.execute(p_sql_query, args)
@@ -146,7 +147,7 @@ def aggregate_data_pharmacie(p_connection, p_cursor, p_list_pharmacie_id, p_sql_
             update_document(p_cursor=p_cursor, source_doc=result, p_id_field='idpharmacie', p_table='ventes_pharmacies_periodes')
 
 
-def enrich_data(p_type_fichier, p_connector):
+def enrich_data(p_connector):
     # Liste des pharamcies à traiter
     sql_pharmacies = "SELECT DISTINCT(codeCIP) as idpharmacie FROM batchs_ventes;"
 
@@ -212,4 +213,4 @@ if __name__ == '__main__':
     except:
         logger.error("ERREUR INITIALISATION ACCES DATABASE")
 
-    enrich_data(p_type_fichier='ventes_pharmacies_periodes', p_connector=connector)
+    enrich_data(p_connector=connector)
