@@ -56,6 +56,7 @@ def update_document(p_cursor, source_doc, p_id_field, p_table):
 
 def aggregate_data_pharmacie(p_connection, p_cursor, p_list_pharmacie_id, p_sql_query):
     logger.info("Lancement de l'aggrégation des ventes.")
+    logger.info(p_list_pharmacie_id)
     if p_list_pharmacie_id and 'idpharmacie' in p_list_pharmacie_id:
         for idPharmacie in p_list_pharmacie_id['idpharmacie']:
             logger.info("Traitement des ventes pour la pharmacie {id}.".format(id=idPharmacie))
