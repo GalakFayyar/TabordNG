@@ -145,9 +145,8 @@ def aggregate_data_pharmacie(p_connection, p_cursor, p_list_pharmacie_id, p_sql_
                 'ventes_p5': json.dumps(obj_vente_p5).strip()
             }
 
-            print(result)
-
             update_document(p_cursor=p_cursor, source_doc=result, p_id_field='idpharmacie', p_table='ventes_pharmacies_periodes')
+            p_connection.commit()
 
 
 def enrich_data(p_connector):
