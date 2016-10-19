@@ -56,96 +56,94 @@ def update_document(p_cursor, source_doc, p_id_field, p_table):
 
 def aggregate_data_pharmacie(p_connection, p_cursor, p_list_pharmacie_id, p_sql_query):
     logger.info("Lancement de l'aggrégation des ventes.")
-    logger.info(p_list_pharmacie_id)
-    if p_list_pharmacie_id and 'idpharmacie' in p_list_pharmacie_id:
-        for idPharmacie in p_list_pharmacie_id['idpharmacie']:
-            logger.info("Traitement des ventes pour la pharmacie {id}.".format(id=idPharmacie))
-            # Récupération des nouvelles ventes pour la pharmacie
-            args = (idPharmacie,)
-            p_cursor.execute(p_sql_query, args)
-            sql_result_new_ventes = p_cursor.fetchall()
+    for idPharmacie in p_list_pharmacie_id['idpharmacie']:
+        logger.info("Traitement des ventes pour la pharmacie {id}.".format(id=idPharmacie))
+        # Récupération des nouvelles ventes pour la pharmacie
+        args = (idPharmacie,)
+        p_cursor.execute(p_sql_query, args)
+        sql_result_new_ventes = p_cursor.fetchall()
 
-            # Récupération des données de ventes actuelles pour la pharamacie
-            p_cursor.execute("SELECT * FROM ventes_pharmacies_periodes WHERE idPharmacie = %s;", args)
-            sql_result_ventes = p_cursor.fetchone()
+        # Récupération des données de ventes actuelles pour la pharamacie
+        p_cursor.execute("SELECT * FROM ventes_pharmacies_periodes WHERE idPharmacie = %s;", args)
+        sql_result_ventes = p_cursor.fetchone()
 
-            obj_vente_p1 = json.loads(sql_result_ventes['ventes_p1']) if (sql_result_ventes and 'ventes_p1' in sql_result_ventes and sql_result_ventes['ventes_p1']) else {'id': None, 'libelle': None, 'mois': []}
-            obj_vente_p2 = json.loads(sql_result_ventes['ventes_p2']) if (sql_result_ventes and 'ventes_p2' in sql_result_ventes and sql_result_ventes['ventes_p2']) else {'id': None, 'libelle': None, 'mois': []}
-            obj_vente_p3 = json.loads(sql_result_ventes['ventes_p3']) if (sql_result_ventes and 'ventes_p3' in sql_result_ventes and sql_result_ventes['ventes_p3']) else {'id': None, 'libelle': None, 'mois': []}
-            obj_vente_p4 = json.loads(sql_result_ventes['ventes_p4']) if (sql_result_ventes and 'ventes_p4' in sql_result_ventes and sql_result_ventes['ventes_p4']) else {'id': None, 'libelle': None, 'mois': []}
-            obj_vente_p5 = json.loads(sql_result_ventes['ventes_p5']) if (sql_result_ventes and 'ventes_p5' in sql_result_ventes and sql_result_ventes['ventes_p5']) else {'id': None, 'libelle': None, 'mois': []}
+        obj_vente_p1 = json.loads(sql_result_ventes['ventes_p1']) if (sql_result_ventes and 'ventes_p1' in sql_result_ventes and sql_result_ventes['ventes_p1']) else {'id': None, 'libelle': None, 'mois': []}
+        obj_vente_p2 = json.loads(sql_result_ventes['ventes_p2']) if (sql_result_ventes and 'ventes_p2' in sql_result_ventes and sql_result_ventes['ventes_p2']) else {'id': None, 'libelle': None, 'mois': []}
+        obj_vente_p3 = json.loads(sql_result_ventes['ventes_p3']) if (sql_result_ventes and 'ventes_p3' in sql_result_ventes and sql_result_ventes['ventes_p3']) else {'id': None, 'libelle': None, 'mois': []}
+        obj_vente_p4 = json.loads(sql_result_ventes['ventes_p4']) if (sql_result_ventes and 'ventes_p4' in sql_result_ventes and sql_result_ventes['ventes_p4']) else {'id': None, 'libelle': None, 'mois': []}
+        obj_vente_p5 = json.loads(sql_result_ventes['ventes_p5']) if (sql_result_ventes and 'ventes_p5' in sql_result_ventes and sql_result_ventes['ventes_p5']) else {'id': None, 'libelle': None, 'mois': []}
 
-            # Parcours des nouvelles ventes
-            for new_vente in sql_result_new_ventes:
-                vente = {
-                    'code_laboratoire': new_vente['codelaboratoire'],
-                    'laboratoire': new_vente['libellelaboratoire'],
-                    'code_produit': new_vente['code07produit'],
-                    'libelle_produit': new_vente['libelleproduit'],
-                    'quantite': new_vente['quantite'],
-                    'prix_achat_ht': new_vente['prixachatht'],
-                    'ca_ht': new_vente['caht'],
-                    'ca_ttc': new_vente['cattc']
-                }
-
-                idperiode = new_vente['idperiode']
-                if len(idperiode) == 6:
-                    annee = idperiode[:4]
-                    mois = idperiode[-2:]
-                else:
-                    logger.error("Pas de traitement calendaire possible pour la periode {0}".format(idperiode))
-
-                # Flags
-                period_exists = False
-                month_exists = False
-                
-                # Parcours des périodes existantes
-                for period in [obj_vente_p1, obj_vente_p2, obj_vente_p3, obj_vente_p4, obj_vente_p5]:
-                    # Test si la période existe déja
-                    if 'id' in period and period['id'] and period['id'] == annee:
-                        period_exists = True
-                        # Mise à jour du contenu de la période
-                        for mois in period['mois']:
-                            # Si le mois existe déja
-                            if mois['id'] == idperiode:
-                                month_exists = True
-                                # Mise à jour du contenu du mois
-                                mois['ventes'].append(vente)
-                        if not month_exists:
-                            # Création d'un nouveau mois pour la période
-                            mois.append({
-                                'id': idperiode,
-                                'libelle': convert_months_int_to_name(int(mois)),
-                                'ventes': [vente]
-                            })
-                
-                if not period_exists:
-                    # Flag de sortie de traitement
-                    period_created = False
-                
-                    # Création de la période
-                    for period in [obj_vente_p1, obj_vente_p2, obj_vente_p3, obj_vente_p4, obj_vente_p5]:
-                        # Ajout de la nouvelle période dans les premières libres
-                        if ('id' not in period or period['id'] == None) and not period_created:
-                            period['id'] = annee
-                            period['libelle'] = annee
-                            period['mois'].append({
-                                'id': idperiode,
-                                'libelle': convert_months_int_to_name(int(mois)),
-                                'ventes': [vente]
-                            })
-                            period_created = True
-
-            result = {
-                'idpharmacie': int(idPharmacie),
-                'ventes_p1': json.dumps(obj_vente_p1).strip(),
-                'ventes_p2': json.dumps(obj_vente_p2).strip(),
-                'ventes_p3': json.dumps(obj_vente_p3).strip(),
-                'ventes_p4': json.dumps(obj_vente_p4).strip(),
-                'ventes_p5': json.dumps(obj_vente_p5).strip()
+        # Parcours des nouvelles ventes
+        for new_vente in sql_result_new_ventes:
+            vente = {
+                'code_laboratoire': new_vente['codelaboratoire'],
+                'laboratoire': new_vente['libellelaboratoire'],
+                'code_produit': new_vente['code07produit'],
+                'libelle_produit': new_vente['libelleproduit'],
+                'quantite': new_vente['quantite'],
+                'prix_achat_ht': new_vente['prixachatht'],
+                'ca_ht': new_vente['caht'],
+                'ca_ttc': new_vente['cattc']
             }
 
-            update_document(p_cursor=p_cursor, source_doc=result, p_id_field='idpharmacie', p_table='ventes_pharmacies_periodes')
+            idperiode = new_vente['idperiode']
+            if len(idperiode) == 6:
+                annee = idperiode[:4]
+                mois = idperiode[-2:]
+            else:
+                logger.error("Pas de traitement calendaire possible pour la periode {0}".format(idperiode))
+
+            # Flags
+            period_exists = False
+            month_exists = False
+            
+            # Parcours des périodes existantes
+            for period in [obj_vente_p1, obj_vente_p2, obj_vente_p3, obj_vente_p4, obj_vente_p5]:
+                # Test si la période existe déja
+                if 'id' in period and period['id'] and period['id'] == annee:
+                    period_exists = True
+                    # Mise à jour du contenu de la période
+                    for mois in period['mois']:
+                        # Si le mois existe déja
+                        if mois['id'] == idperiode:
+                            month_exists = True
+                            # Mise à jour du contenu du mois
+                            mois['ventes'].append(vente)
+                    if not month_exists:
+                        # Création d'un nouveau mois pour la période
+                        mois.append({
+                            'id': idperiode,
+                            'libelle': convert_months_int_to_name(int(mois)),
+                            'ventes': [vente]
+                        })
+            
+            if not period_exists:
+                # Flag de sortie de traitement
+                period_created = False
+            
+                # Création de la période
+                for period in [obj_vente_p1, obj_vente_p2, obj_vente_p3, obj_vente_p4, obj_vente_p5]:
+                    # Ajout de la nouvelle période dans les premières libres
+                    if ('id' not in period or period['id'] == None) and not period_created:
+                        period['id'] = annee
+                        period['libelle'] = annee
+                        period['mois'].append({
+                            'id': idperiode,
+                            'libelle': convert_months_int_to_name(int(mois)),
+                            'ventes': [vente]
+                        })
+                        period_created = True
+
+        result = {
+            'idpharmacie': int(idPharmacie),
+            'ventes_p1': json.dumps(obj_vente_p1).strip(),
+            'ventes_p2': json.dumps(obj_vente_p2).strip(),
+            'ventes_p3': json.dumps(obj_vente_p3).strip(),
+            'ventes_p4': json.dumps(obj_vente_p4).strip(),
+            'ventes_p5': json.dumps(obj_vente_p5).strip()
+        }
+
+        update_document(p_cursor=p_cursor, source_doc=result, p_id_field='idpharmacie', p_table='ventes_pharmacies_periodes')
 
 
 def enrich_data(p_connector):
