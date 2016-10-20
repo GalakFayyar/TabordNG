@@ -1,6 +1,6 @@
 Flask==0.10.1
 flask-cors==1.10.3
-psycopg2==2.4.5
+psycopg2==2.6.2
 requests==2.5.3
 gunicorn==19.3.0
 docopt==0.6.2
