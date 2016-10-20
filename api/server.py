@@ -29,8 +29,8 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 url_prefix = conf['url_prefix']
 
 ### PostgreSQL configuration
-app.config['DATABASE_USER'] = 'tom'
-app.config['DATABASE_PASSWORD'] = 'tom'
+app.config['DATABASE_USER'] = 'Galak'
+app.config['DATABASE_PASSWORD'] = 'Galak'
 app.config['DATABASE_DB'] = 'tabordng_dev'
 app.config['DATABASE_HOST'] = 'localhost'
 
@@ -178,4 +178,4 @@ def delete_form_merchandising(form_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
