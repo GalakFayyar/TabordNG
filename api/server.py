@@ -42,14 +42,14 @@ try:
                                                                                 app.config['DATABASE_PASSWORD']))
     cursor = conn.cursor(cursor_factory=RealDictCursor)
 except:
-    print "ERREUR INITIALISATION ACCES DATABASE"
+    logger.error("ERREUR INITIALISATION ACCES DATABASE")
 
 try:
     # Resources loading
     pharmacie_resource = Pharmacie(app, conn, cursor)
     merchandising_resource = Merchandising(app, conn, cursor)
 except:
-    print "ERREUR INITIALISATION ACCES RESOURCES"
+    logger.error("ERREUR INITIALISATION ACCES RESOURCES")
 
 ### Root REST API endpoint: display all available registered routes
 @app.route(url_prefix + "/")
