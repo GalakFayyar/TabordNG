@@ -119,6 +119,16 @@
 					}
 				},
 				parent: 'app'
+			})
+			.state('laboratoires_ventes_detail', {
+				url: 'laboratoires/ventes/detail',
+				views: {
+					'content': {
+						templateUrl: 'views/laboratoires/detail_ventes.html',
+						controller: 'LaboratoiresDetailVentesController'
+					}
+				},
+				parent: 'app'
 			});
 		$locationProvider.hashPrefix('!');
 

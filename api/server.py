@@ -4,6 +4,7 @@ from logger import logger, configure
 
 from resources.pharmacie import *
 from resources.merchandising import *
+from resources.vente import *
 
 import json, psycopg2, hashlib
 from psycopg2.extras import RealDictCursor
@@ -48,6 +49,7 @@ try:
     # Resources loading
     pharmacie_resource = Pharmacie(app, conn, cursor)
     merchandising_resource = Merchandising(app, conn, cursor)
+    ventes_resource = Vente(app, conn, cursor)
 except:
     logger.error("ERREUR INITIALISATION ACCES RESOURCES")
 
@@ -108,13 +110,10 @@ def users():
 
 @app.route(url_prefix + "/authenticate", methods=['POST'])
 def authenticate():
-    print(request.json)
-
     username = request.json['username']
     password = request.json['password']
 
     sql = "SELECT * FROM utilisateurs WHERE username = '{}' AND password = '{}';".format(username, password)
-    print(sql)
 
     cursor.execute(sql)
     data = cursor.fetchone()
@@ -175,6 +174,15 @@ def update_form_merchandising():
 def delete_form_merchandising(form_id):
     result = merchandising_resource.delete_form(form_id)
     return jsonify(result)
+
+
+################################################################################
+#   MERCHANDISING ROUTES
+################################################################################
+@app.route(url_prefix + "/ventes/get_all", methods=['POST'])
+def get_all_ventes():
+    ventes = ventes_resource.get_all(request)
+    return jsonify(ventes)
 
 
 if __name__ == "__main__":

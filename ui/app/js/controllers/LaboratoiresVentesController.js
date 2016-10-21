@@ -53,7 +53,7 @@
                         enableFiltering: true, 
                         enableSorting: true,
                         aggregationType: uiGridConstants.aggregationTypes.sum,
-                        footerCellTemplate: '<div class="ui-grid-cell-contents" style="background-color:#3c8dbc">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
+                        footerCellTemplate: '<div class="ui-grid-cell-contents custom-bottom-ventes">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
                         type: 'string'
                     },{
                         name: 'generique_tx_1',
@@ -62,7 +62,7 @@
                         enableFiltering: true, 
                         enableSorting: true,
                         aggregationType: uiGridConstants.aggregationTypes.sum,
-                        footerCellTemplate: '<div class="ui-grid-cell-contents" style="background-color:#3c8dbc">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
+                        footerCellTemplate: '<div class="ui-grid-cell-contents custom-bottom-ventes">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
                         type: 'string'
                     },{
                         name: 'tx_3',
@@ -71,7 +71,7 @@
                         enableFiltering: true, 
                         enableSorting: true,
                         aggregationType: uiGridConstants.aggregationTypes.sum,
-                        footerCellTemplate: '<div class="ui-grid-cell-contents" style="background-color:#3c8dbc">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
+                        footerCellTemplate: '<div class="ui-grid-cell-contents custom-bottom-ventes">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
                         type: 'string'
                     },{
                         name: 'tx_4',
@@ -80,7 +80,7 @@
                         enableFiltering: true, 
                         enableSorting: true,
                         aggregationType: uiGridConstants.aggregationTypes.sum,
-                        footerCellTemplate: '<div class="ui-grid-cell-contents" style="background-color:#3c8dbc">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
+                        footerCellTemplate: '<div class="ui-grid-cell-contents custom-bottom-ventes">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
                         type: 'string'
                     },{
                         name: 'total',
@@ -89,7 +89,7 @@
                         enableFiltering: true, 
                         enableSorting: true,
                         aggregationType: uiGridConstants.aggregationTypes.sum,
-                        footerCellTemplate: '<div class="ui-grid-cell-contents" style="background-color:#3c8dbc">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
+                        footerCellTemplate: '<div class="ui-grid-cell-contents custom-bottom-ventes">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
                         type: 'string'
                     }
                 ],
@@ -135,7 +135,7 @@
                         enableFiltering: true, 
                         enableSorting: true,
                         aggregationType: uiGridConstants.aggregationTypes.sum,
-                        footerCellTemplate: '<div class="ui-grid-cell-contents" style="background-color:#00a65a">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
+                        footerCellTemplate: '<div class="ui-grid-cell-contents custom-bottom-marge">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
                         type: 'string'
                     },{
                         name: 'generique_tx_1',
@@ -144,7 +144,7 @@
                         enableFiltering: true, 
                         enableSorting: true,
                         aggregationType: uiGridConstants.aggregationTypes.sum,
-                        footerCellTemplate: '<div class="ui-grid-cell-contents" style="background-color:#00a65a">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
+                        footerCellTemplate: '<div class="ui-grid-cell-contents custom-bottom-marge">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
                         type: 'string'
                     },{
                         name: 'tx_3',
@@ -153,7 +153,7 @@
                         enableFiltering: true, 
                         enableSorting: true,
                         aggregationType: uiGridConstants.aggregationTypes.sum,
-                        footerCellTemplate: '<div class="ui-grid-cell-contents" style="background-color:#00a65a">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
+                        footerCellTemplate: '<div class="ui-grid-cell-contents custom-bottom-marge">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
                         type: 'string'
                     },{
                         name: 'tx_4',
@@ -162,7 +162,7 @@
                         enableFiltering: true, 
                         enableSorting: true,
                         aggregationType: uiGridConstants.aggregationTypes.sum,
-                        footerCellTemplate: '<div class="ui-grid-cell-contents" style="background-color:#00a65a">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
+                        footerCellTemplate: '<div class="ui-grid-cell-contents custom-bottom-marge">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
                         type: 'string'
                     },{
                         name: 'total',
@@ -171,7 +171,7 @@
                         enableFiltering: true, 
                         enableSorting: true,
                         aggregationType: uiGridConstants.aggregationTypes.sum,
-                        footerCellTemplate: '<div class="ui-grid-cell-contents" style="background-color:#00a65a">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
+                        footerCellTemplate: '<div class="ui-grid-cell-contents custom-bottom-marge">{{grid.appScope.formatNumbers(col.getAggregationValue())}}</div>',
                         type: 'string'
                     }
                 ],

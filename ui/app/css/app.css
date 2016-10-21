@@ -109,6 +109,15 @@ ul.sidebar-menu li.activated a{
 	width: 100%;
 }
 
+.custom-bottom-ventes {
+	background-color: #3c8dbc;
+	color: #FFF;
+}
+.custom-bottom-marge {
+	background-color:#00a65a;
+	color: #FFF;
+}
+
 /*.nv-legend{ transform: translate(60px, 100px); }*/
 
 /*
