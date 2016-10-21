@@ -39,7 +39,5 @@ class Vente():
             if len(period) > 0:
                 logger.debug(period)
                 result.append(period['ventes'])
-        
-        logger.debug(result)
 
         return {'data':result}
