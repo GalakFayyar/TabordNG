@@ -24,9 +24,11 @@ class Vente():
             WHERE idpharmacie = %s 
             AND (ventes_p1->>'id' = %s OR ventes_p2->>'id' = %s OR ventes_p3->>'id' = %s OR ventes_p4->>'id' = %s OR ventes_p5->>'id' = %s);
             """
+        logger.debug(sql)
         args = (pharmacie_id, periode, periode, periode, periode, periode)
 
         self.cursor.execute(sql, args)
         data = self.cursor.fetchall()
+        logger.debug(data)
 
         return {'data':self.tools.format_simple_psql_result(data)}

@@ -8,7 +8,7 @@
 	function VenteService ($resource, tabordngConfig) {
 		return $resource(tabordngConfig.api.url + ':resource/:action/:subresource/:subaction', {}, {
 			get_all : {
-				method : 'GET',
+				method : 'POST',
 				params : {
 					'resource': 'ventes',
 					'action' : 'get_all'

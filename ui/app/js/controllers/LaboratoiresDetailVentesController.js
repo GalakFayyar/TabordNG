@@ -5,8 +5,8 @@
 
 	angular.module('tabordNG').controller('LaboratoiresDetailVentesController', LaboratoiresDetailVentesController);
 
-	LaboratoiresDetailVentesController.$inject = ['$scope', '$filter', 'uiGridConstants', 'ngProgress', 'VenteService'];
-	function LaboratoiresDetailVentesController ($scope, $filter, uiGridConstants, ngProgress, VenteService) {
+	LaboratoiresDetailVentesController.$inject = ['$scope', '$rootScope', '$filter', 'uiGridConstants', 'ngProgress', 'VenteService'];
+	function LaboratoiresDetailVentesController ($scope, $rootScope, $filter, uiGridConstants, ngProgress, VenteService) {
 		$.AdminLTE.layout.activate();
 
 		$scope.formatNumbers = function (number) {
@@ -32,7 +32,7 @@
                 paginationPageSizes: [20, 50, 100],
                 paginationPageSize: 50,
                 showGridFooter: false,
-                showColumnFooter: true,
+                showColumnFooter: false,
 
                 columnDefs: [
                     {
@@ -112,8 +112,8 @@
 
 		var load_data = function () {
 			
-            VenteService.get_all({}, function (results) {
-                console.log(results);
+            VenteService.get_all({}, {idpharmacie: $rootScope.pharmacie.selected.id, periode: '201607', limit: '', offset: ''}, function (results) {
+                $scope.grid.detailVentePeriode.data = results.data.ventes;
             });
 
 			$scope.grid.detailVentePeriode.data = [];
