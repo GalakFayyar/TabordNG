@@ -33,7 +33,12 @@ class Vente():
 
         self.cursor.execute(sql, args)
         sql_result = self.cursor.fetchall()
-        
-        logger.debug(sql_result)
 
-        return {'data':sql_result}
+        result = []
+        for period in sql_result:
+            if len(period) > 0:
+                result.append(period['ventes'])
+        
+        logger.debug(result)
+
+        return {'data':result}
