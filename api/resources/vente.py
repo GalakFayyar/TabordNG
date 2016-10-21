@@ -19,17 +19,20 @@ class Vente():
         offset = p_request.json['offset']
 
         sql = """
-            SELECT ventes_p1->>'mois', ventes_p2->>'mois', ventes_p3->>'mois', ventes_p4->>'mois', ventes_p5->>'mois'  
+            SELECT 
+                ventes_p1->>'mois' AS period1, 
+                ventes_p2->>'mois' AS period2, 
+                ventes_p3->>'mois' AS period3, 
+                ventes_p4->>'mois' AS period4, 
+                ventes_p5->>'mois' AS period5
             FROM ventes_pharmacies_periodes 
             WHERE idpharmacie = %s 
             AND (ventes_p1->>'id' = %s OR ventes_p2->>'id' = %s OR ventes_p3->>'id' = %s OR ventes_p4->>'id' = %s OR ventes_p5->>'id' = %s);
             """
-        logger.debug(sql)
         args = (pharmacie_id, periode, periode, periode, periode, periode)
-        logger.debug(args)
 
         self.cursor.execute(sql, args)
-        data = self.cursor.fetchall()
+        sql_result = self.cursor.fetchall()
         logger.debug(data)
 
-        return {'data':self.tools.format_simple_psql_result(data)}
+        return {'data':sql_result}
