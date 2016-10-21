@@ -54,13 +54,6 @@
                         enableSorting: true,
                         type: 'string'
                     },{
-                        name: 'remise_arriere',
-                        displayName: 'Remise Arrière',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'string'
-                    },{
                         name: 'code_laboratoire',
                         displayName: 'Code Laboratoire',
                         pinnedLeft: false,
