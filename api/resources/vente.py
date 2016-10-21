@@ -33,7 +33,7 @@ class Vente():
 
         self.cursor.execute(sql, args)
         sql_result = self.cursor.fetchall()
-        for period in sql_result:
-            period = json.loads(period)
+        
+        logger.debug(sql_result)
 
         return {'data':sql_result}
