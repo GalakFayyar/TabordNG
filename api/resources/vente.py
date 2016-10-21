@@ -33,6 +33,5 @@ class Vente():
 
         self.cursor.execute(sql, args)
         sql_result = self.cursor.fetchall()
-        logger.debug(data)
 
         return {'data':sql_result}
