@@ -113,7 +113,7 @@
 		var load_data = function () {
 			
             VenteService.get_all({}, {idpharmacie: '2122492', periode: '2016', limit: '', offset: ''}, function (results) {
-                $scope.grid.detailVentePeriode.data = results.data.period1.ventes;
+                $scope.grid.detailVentePeriode.data = results.data.ventes;
             });
 
 			$scope.grid.detailVentePeriode.data = [];
