@@ -26,6 +26,7 @@ class Vente():
             """
         logger.debug(sql)
         args = (pharmacie_id, periode, periode, periode, periode, periode)
+        logger.debug(args)
 
         self.cursor.execute(sql, args)
         data = self.cursor.fetchall()
