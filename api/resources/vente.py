@@ -35,11 +35,10 @@ class Vente():
         sql_result = self.cursor.fetchall()
 
         result = {}
-        periods = ['period1', 'period2', 'period3', 'period4', 'period5']
 
-        for period in periods:
+        for period in ['period1', 'period2', 'period3', 'period4', 'period5']:
+            logger.debug(json.load(sql_result[period]))
             if period in sql_result and len(json.load(sql_result[period])) > 0:
-                logger.debug(json.load(sql_result[period]))
                 result = json.load(sql_result[period])
 
         logger.debug(result)
