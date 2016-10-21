@@ -38,7 +38,7 @@ class Vente():
         periods = ['period1', 'period2', 'period3', 'period4', 'period5']
 
         for period in periods:
-            if period in sql_result and len(sql_result[period]) > 0:
+            if period in sql_result and len(json.load(sql_result[period])) > 0:
                 result = json.load(sql_result[period])
 
         logger.debug(result)
