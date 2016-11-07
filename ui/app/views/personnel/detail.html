@@ -1,0 +1,66 @@
+<section class="content-header">
+	<h1>
+		Gestion du personnel
+		<small>Détail du salarié</small>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li><a href="#">Forms</a></li>
+		<li class="active">General Elements</li>
+	</ol>
+</section>
+
+<section resize-form class="content">
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="rows" style="margin-top:8px">
+				<div class="col-md-2">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-user"></i></span>
+						<input type="text" class="form-control" readonly placeholder="ID Salarié" ng-model="personnel.selected.id">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<ui-select style="width:100%" ng-model="personnel.selected" required="true" reset-search-input="false">
+						<ui-select-match placeholder="Créer ou sélectionner un salarié...">
+							<span>{{$select.selected.nom || $select.search}}</span>
+            				<!-- <a class="btn btn-xs btn-link pull-right" ng-click="clear($event, $select)"><i class="glyphicon glyphicon-remove"></i></a> -->
+            			</ui-select-match>
+						<ui-select-choices refresh="refreshResults($select)" refresh-delay="0" repeat="personnel in personnel.list | filter: $select.search">
+							<span ng-bind-html="personnel.nom | highlight: $select.search"></span>
+							<span ng-bind-html="personnel.prenom | highlight: $select.search"></span>
+						</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="col-md-4" style="text-align:right">
+					<button type="button" class="btn btn-primary btn-flat" ng-click="createNewPersonnel()"><i class="fa fa-pencil"></i> Créer</button>
+					<button type="button" class="btn btn-success btn-flat" ng-click="saveEditPersonnel()" ng-disabled="true"><i class="fa fa-save"></i> Enregistrer</button>
+					<button type="button" class="btn btn-danger btn-flat" ng-click="deletePersonnel()"><i class="fa fa-remove"></i> Supprimer</button>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<tabset justified="true" class="custom-form-style">
+		<tab heading="Identité" active="tab.identite.active" ng-click="tabHeadingClick('identite')">
+			<!-- <form-merchandising-context-environnemental></form-merchandising-context-environnemental> -->
+			<div ng-include="templatesUrl.identite.current" style="padding-top:10px"></div>
+		</tab>
+		<tab heading="Expérience" active="tab.experience.active" ng-click="tabHeadingClick('experience')">
+			<!-- <form-merchandising-context-environnemental></form-merchandising-context-environnemental> -->
+			<div ng-include="templatesUrl.experience.current"></div>
+		</tab>
+		<tab heading="Salaires" active="tab.salaires.active" ng-click="tabHeadingClick('salaires')">
+			<!-- <form-merchandising-context-interne></form-merchandising-context-interne> -->
+			<div ng-include="templatesUrl.salaires.current"></div>
+		</tab>
+		<tab heading="Analyse" active="tab.analyse.active" ng-click="tabHeadingClick('analyse')">
+			<!-- <form-merchandising-profil-marketing></form-merchandising-profil-marketing> -->
+			<div ng-include="templatesUrl.analyse.current"></div>
+		</tab>
+		<tab heading="Synthèse" active="tab.synthese.active" ng-click="tabHeadingClick('synthese')">
+			<!-- <form-merchandising-politique-personnel></form-merchandising-politique-personnel> -->
+			<div ng-include="templatesUrl.synthese.current"></div>
+		</tab>
+	</tabset>
+</section>

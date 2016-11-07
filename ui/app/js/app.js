@@ -99,6 +99,26 @@
 				parent: 'app'
 			})
 			/******************************************************************/
+			.state('personnel_dashboard', {
+				url: 'personnel/dashboard',
+				views: {
+					'content': {
+						templateUrl: 'views/personnel/dashboard.html',
+						controller: 'PersonnelDashboardController'
+					}
+				},
+				parent: 'app'
+			})
+			.state('personnel_edit', {
+				url: 'personnel/edit/:personnelId',
+				views: {
+					'content': {
+						templateUrl: 'views/personnel/detail.html',
+						controller: 'PersonnelDetailController'
+					}
+				},
+				parent: 'app'
+			})
 			.state('personnel_salaires', {
 				url: 'personnel/salaires',
 				views: {
