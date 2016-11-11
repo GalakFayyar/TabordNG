@@ -1,1 +1,81 @@
-<div></div>
+<div class="form-group">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="btn-edit-grid-formation">
+				<button type="button" class="btn btn-primary btn-xs">Ajouter</button>
+				<button type="button" class="btn btn-danger btn-xs">Supprimer</button>
+			</div>
+			<h4>Scolarité</h4>	
+			<div
+				ui-grid="grid.experienceScolaire" 
+				class="" 
+				style="margin-bottom: 15px"
+				ui-grid-edit 
+				ui-grid-row-edit 
+				ui-grid-exporter 
+				ui-grid-auto-resize 
+				ui-grid-resize-columns 
+				ui-grid-selection></div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="btn-edit-grid-formation">
+				<button type="button" class="btn btn-primary btn-xs">Ajouter</button>
+				<button type="button" class="btn btn-danger btn-xs">Supprimer</button>
+			</div>
+			<h4>Expérience professionnelle</h4>
+			<div
+				ui-grid="grid.experienceProfessionnelle" 
+				class="" 
+				style="margin-bottom: 15px"
+				ui-grid-edit 
+				ui-grid-row-edit 
+				ui-grid-exporter 
+				ui-grid-auto-resize 
+				ui-grid-resize-columns 
+				ui-grid-selection></div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<h4>Précédente rémunération</h4>
+		</div>
+		<form class="form-horizontal">
+				<label for="inputNameUsuel" class="col-sm-2 control-label">Salaire Brut</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="inputNameUsuel" placeholder="Montant">
+				</div>
+				<label for="inputTreiziemeMois" class="col-sm-2 control-label">13ème Mois</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="inputTreiziemeMois" placeholder="Montant">
+				</div>
+				<label for="inputPrimesDiverses" class="col-sm-2 control-label">Primes</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="inputPrimesDiverses" placeholder="Montant">
+				</div>
+				<label for="inputIndemnKm" class="col-sm-2 control-label">Indemn. Km</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="inputIndemnKm" placeholder="Montant">
+				</div>
+				<label for="inputPEE" class="col-sm-2 control-label">PEE</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="inputPEE" placeholder="Montant">
+				</div>
+				<label for="inputAvantagesDivers" class="col-sm-2 control-label">Avantages</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="inputAvantagesDivers" placeholder="Montant">
+				</div>
+		</form>
+	</div>
+</div>
+
+<div class="form-group">
+	<div class="row">
+		<div class="col-sm-offset-10 col-sm-2">
+	  		<button type="submit" class="btn btn-success">Enregistrer</button>
+		</div>
+	</div>
+</div>

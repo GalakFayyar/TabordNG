@@ -118,6 +118,11 @@ ul.sidebar-menu li.activated a{
 	color: #FFF;
 }
 
+/* Form Profile */
+.btn-edit-grid-formation {
+	float: right;
+}
+
 /*.nv-legend{ transform: translate(60px, 100px); }*/
 
 /*

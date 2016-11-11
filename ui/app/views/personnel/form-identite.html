@@ -1,24 +1,110 @@
-<div class="row">
-	<div class="col-md-3">
-		<div class="box box-primary">
-			<div class="box-body box-profile">
-				<img class="profile-user-img img-responsive img-circle" src="./img/personnel/001.jpg" alt="User profile picture">
-				<h3 class="profile-username text-center">Thomas FALCHER</h3>
-				<p class="text-muted text-center">Software Engineer</p>
-				<ul class="list-group list-group-unbordered">
-					<li class="list-group-item">
-						<b>Followers</b> <a class="pull-right">1,322</a>
-					</li>
-					<li class="list-group-item">
-						<b>Following</b> <a class="pull-right">543</a>
-					</li>
-					<li class="list-group-item">
-						<b>Friends</b> <a class="pull-right">13,287</a>
-					</li>
-				</ul>
-				<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
-			</div>
-			<!-- /.box-body -->
+<form class="form-horizontal">
+	<div class="form-group">
+		<label for="inputNameUsuel" class="col-sm-2 control-label">Noms</label>
+		<div class="col-sm-5">
+			<input type="email" class="form-control" id="inputNameUsuel" placeholder="Nom usuel">
+		</div>
+		<div class="col-sm-5">
+			<input type="email" class="form-control" id="inputNameUsuel" placeholder="Nom patronymique">
 		</div>
 	</div>
-</div>
+	<div class="form-group">
+		<label for="inputName" class="col-sm-2 control-label">Prénom</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="inputName" placeholder="Prénom">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputDateNaissance" class="col-sm-2 control-label">Naissance</label>
+		<div class="col-sm-4">
+			<input type="date" class="form-control" id="inputDateNaissance" placeholder="Date">
+		</div>
+		<label for="inputLieuNaissance" class="col-sm-1 control-label">à</label>
+		<div class="col-sm-5">
+			<input type="text" class="form-control" id="inputLieuNaissance" placeholder="Lieu">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputCivilite" class="col-sm-2 control-label">Civilité</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" id="inputCivilite" placeholder="Civilité">
+		</div>
+		<label for="inputNumINSEE" class="col-sm-2 control-label">Numéro INSEE</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" id="inputNumINSEE" placeholder="Numéro INSEE">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputEmail" class="col-sm-2 control-label">Email</label>
+		<div class="col-sm-10">
+			<input type="email" class="form-control" id="inputEmail" placeholder="Email">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputTel" class="col-sm-2 control-label">Téléphone</label>
+		<div class="col-sm-5">
+			<input type="email" class="form-control" id="inputTel" placeholder="Fixe">
+		</div>
+		<div class="col-sm-5">
+			<input type="email" class="form-control" placeholder="Mobile">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputObservation" class="col-sm-2 control-label">Observations</label>
+		<div class="col-sm-10">
+			<textarea class="form-control" id="inputObservation" placeholder="Observations"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputQualification" class="col-sm-2 control-label">Qualification</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" id="inputQualification" placeholder="Qualification">
+		</div>
+		<label for="inputNationalite" class="col-sm-2 control-label">Nationalité</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" id="inputNationalite" placeholder="Nationalité">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputTypeContrat" class="col-sm-2 control-label">Contrat</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" id="inputTypeContrat" placeholder="Type de contrat de travail">
+		</div>
+		<label for="inputDateFinContrat" class="col-sm-2 control-label">Fin prévue le</label>
+		<div class="col-sm-4">
+			<input type="date" class="form-control" id="inputDateFinContrat" placeholder="Date Fin de contrat">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputNumRueAdresse" class="col-sm-2 control-label">Adresse</label>
+		<div class="col-sm-2">
+			<input type="text" class="form-control" id="inputNumRueAdresse" placeholder="Num.">
+		</div>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="inputLibelleAdresse" placeholder="Libellé">
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-3">
+			<input type="text" class="form-control" placeholder="Code Postal">
+		</div>
+		<div class="col-sm-7">
+			<input type="text" class="form-control" placeholder="Ville">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-10 col-sm-2">
+			<button type="submit" class="btn btn-success">Enregistrer</button>
+		</div>
+	</div>
+</form>
