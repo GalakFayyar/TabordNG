@@ -49,8 +49,8 @@
 			<div class="box box-primary">
 				<div class="box-body box-profile">
 					<img class="profile-user-img img-responsive img-circle" src="http://vignette4.wikia.nocookie.net/captaintsubasa/images/1/11/Roberto.jpg/revision/latest?cb=20120105162427" alt="User profile picture">
-					<h3 class="profile-username text-center">{{ user.name || 'non défini' }}</h3>
-					<p class="text-muted text-center">Football Star</p>
+					<h3 class="profile-username text-center">{{ selectedUser.nom + ' ' + selectedUser.prenom || 'non défini' }}</h3>
+					<p class="text-muted text-center">{{ selectedUser.qualification || 'non défini' }}</p>
 
 					<ul class="list-group list-group-unbordered">
 						<li class="list-group-item">
