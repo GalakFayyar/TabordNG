@@ -2,10 +2,10 @@
 	<div class="form-group">
 		<label for="inputNameUsuel" class="col-sm-2 control-label">Noms</label>
 		<div class="col-sm-5">
-			<input type="email" class="form-control" id="inputNameUsuel" placeholder="Nom usuel" value="{{selectedUser.nom}}" />
+			<input type="email" class="form-control" id="inputNameUsuel" placeholder="Nom usuel" value="{{selectedUser.nom_usuel}}" />
 		</div>
 		<div class="col-sm-5">
-			<input type="email" class="form-control" id="inputNameUsuel" placeholder="Nom patronymique" value=""/>
+			<input type="email" class="form-control" id="inputNameUsuel" placeholder="Nom patronymique" value="{{selectedUser.nom_patronymique}}" />
 		</div>
 	</div>
 	<div class="form-group">
@@ -17,11 +17,11 @@
 	<div class="form-group">
 		<label for="inputDateNaissance" class="col-sm-2 control-label">Naissance</label>
 		<div class="col-sm-4">
-			<input type="date" class="form-control" id="inputDateNaissance" placeholder="Date" value="{{selectedUser.date_naissance}}" />
+			<input type="date" class="form-control" id="inputDateNaissance" placeholder="Date" value="{{selectedUser.naissance.date}}" />
 		</div>
 		<label for="inputLieuNaissance" class="col-sm-1 control-label">à</label>
 		<div class="col-sm-5">
-			<input type="text" class="form-control" id="inputLieuNaissance" placeholder="Lieu" value="{{selectedUser.lieu_naissance}}" />
+			<input type="text" class="form-control" id="inputLieuNaissance" placeholder="Lieu" value="{{selectedUser.naissance.lieu}}" />
 		</div>
 	</div>
 	<div class="form-group">
@@ -52,7 +52,7 @@
 	<div class="form-group">
 		<label for="inputObservation" class="col-sm-2 control-label">Observations</label>
 		<div class="col-sm-10">
-			<textarea class="form-control" id="inputObservation" placeholder="Observations">{{selectedUser.observations}}</textarea>
+			<textarea class="form-control" id="inputObservation" placeholder="Observations">{{selectedUser.observations.general}}</textarea>
 		</div>
 	</div>
 	<div class="form-group">
@@ -62,17 +62,17 @@
 		</div>
 		<label for="inputNationalite" class="col-sm-2 control-label">Nationalité</label>
 		<div class="col-sm-4">
-			<input type="text" class="form-control" id="inputNationalite" placeholder="Nationalité" value="{{selectedUser.nationalite}}" />
+			<input type="text" class="form-control" id="inputNationalite" placeholder="Nationalité" value="{{selectedUser.naissance.nationalite}}" />
 		</div>
 	</div>
 	<div class="form-group">
 		<label for="inputTypeContrat" class="col-sm-2 control-label">Contrat</label>
 		<div class="col-sm-4">
-			<input type="text" class="form-control" id="inputTypeContrat" placeholder="Type de contrat de travail" value="{{selectedUser.contrat}}" />
+			<input type="text" class="form-control" id="inputTypeContrat" placeholder="Type de contrat de travail" value="{{selectedUser.contrat.type}}" />
 		</div>
 		<label for="inputDateFinContrat" class="col-sm-2 control-label">Fin prévue le</label>
 		<div class="col-sm-4">
-			<input type="date" class="form-control" id="inputDateFinContrat" placeholder="Date Fin de contrat" value="{{selectedUser.date_fin}}" />
+			<input type="date" class="form-control" id="inputDateFinContrat" placeholder="Date Fin de contrat" value="{{selectedUser.contrat.dates.fin_contrat}}" />
 		</div>
 	</div>
 	<div class="form-group">

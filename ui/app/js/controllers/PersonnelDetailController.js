@@ -9,90 +9,88 @@
 	function PersonnelDetailController ($scope, $stateParams, HelperService, PersonnelService, uiGridConstants, ngProgress) {
 		$.AdminLTE.layout.activate();
 
-		console.log($stateParams);
-
-		$scope.selectedUser = {
-			id: '001',
-			nom: "FALC'HER",
-			prenom: "Thomas",
-			date_naissance: '07-07-1988',
-			lieu_naissance: 'QUIMPER',
-			civilite: 'M.',
-			num_insee: '00000001',
-			email: 'thomas.falcher@hotmail.fr',
-			telephone: {
-				fixe: '0102030405',
-				mobile: '0607080910'
-			},
-			observations: 'NEANT',
-			nationalite: 'FRANCAISE',
-			contrat: 'CDI',
-			date_fin: null,
-			adresse: {
-				num: '39',
-				libelle: 'RUE AURELIE NEMOURS',
-				cp: '35000',
-				ville: 'RENNES'
-			},
-			date_entree: "2016-01-01",
-			qualification: "INGENIEUR",
-			experience: {
-				scolaire: [
-					{ etablissement: 'LYCEE LE LIKES - QUIMPER', diplome: 'BACCALAUREAT SCIENTIFIQUE', date_obtention: '2006' },
-					{ etablissement: 'LYCEE CHARLES DE FOUCAULT - BREST', diplome: 'BREVET DE TECHNICIEN SUPERIEUR INFORMATIQUE DE GESTION', date_obtention: '2010' },
-					{ etablissement: 'ISEN - BREST', diplome: 'CERTIFICAT DE QUALIFICATION PARITAIRE DE LA METALLURGIE', date_obtention: '2011' },
-					{ etablissement: 'ISEN - BREST', diplome: 'DIPLOME D\'INGENIEUR', date_obtention: '2013' }
-				],
-				professionnelle: [
-					{
-						entreprise: 'ADRIA QUIMPER',
-						date_entree: new Date(2009, 12, 1),
-						date_sortie: new Date(2010, 3, 1),
-						qualification: 'TECHNICIEN SUPERIEUR',
-						motif: 'FIN DE STAGE',
-						stage: true
-					},
-					{
-						entreprise: 'SURAVENIR BREST',
-						date_entree: new Date(2010, 9, 1),
-						date_sortie: new Date(2011, 10, 1),
-						qualification: 'APPRENTIT INGENIEUR ETUDE',
-						motif: 'FIN DE CONTRAT DE PROFESSIONNALISATION',
-						stage: false
-					}
-				]
-			},
-			salaire: {
-				remuneration: [
-					{ mois: 'JANVIER', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
-					{ mois: 'FEVRIER', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
-					{ mois: 'MARS', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
-					{ mois: 'AVRIL', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
-					{ mois: 'MAI', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
-					{ mois: 'JUIN', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
-					{ mois: 'JUILLET', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
-					{ mois: 'AOUT', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
-					{ mois: 'SEPTEMBRE', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
-					{ mois: 'OCTOBRE', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
-					{ mois: 'NOVEMBRE', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
-					{ mois: 'DECEMBRE', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' }
-				],
-				repartition: [
-					{ mois: 'JANVIER', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
-					{ mois: 'FEVRIER', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
-					{ mois: 'MARS', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
-					{ mois: 'AVRIL', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
-					{ mois: 'MAI', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
-					{ mois: 'JUIN', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
-					{ mois: 'JUILLET', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
-					{ mois: 'AOUT', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
-					{ mois: 'SEPTEMBRE', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
-					{ mois: 'OCTOBRE', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
-					{ mois: 'NOVEMBRE', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
-					{ mois: 'DECEMBRE', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' }
-				]
-			}
-		};
+		// $scope.selectedUser = {
+		// 	id: '001',
+		// 	nom: "FALC'HER",
+		// 	prenom: "Thomas",
+		// 	date_naissance: '07-07-1988',
+		// 	lieu_naissance: 'QUIMPER',
+		// 	civilite: 'M.',
+		// 	num_insee: '00000001',
+		// 	email: 'thomas.falcher@hotmail.fr',
+		// 	telephone: {
+		// 		fixe: '0102030405',
+		// 		mobile: '0607080910'
+		// 	},
+		// 	observations: 'NEANT',
+		// 	nationalite: 'FRANCAISE',
+		// 	contrat: 'CDI',
+		// 	date_fin: null,
+		// 	adresse: {
+		// 		num: '39',
+		// 		libelle: 'RUE AURELIE NEMOURS',
+		// 		cp: '35000',
+		// 		ville: 'RENNES'
+		// 	},
+		// 	date_entree: "2016-01-01",
+		// 	qualification: "INGENIEUR",
+		// 	experience: {
+		// 		scolaire: [
+		// 			{ etablissement: 'LYCEE LE LIKES - QUIMPER', diplome: 'BACCALAUREAT SCIENTIFIQUE', date_obtention: '2006' },
+		// 			{ etablissement: 'LYCEE CHARLES DE FOUCAULT - BREST', diplome: 'BREVET DE TECHNICIEN SUPERIEUR INFORMATIQUE DE GESTION', date_obtention: '2010' },
+		// 			{ etablissement: 'ISEN - BREST', diplome: 'CERTIFICAT DE QUALIFICATION PARITAIRE DE LA METALLURGIE', date_obtention: '2011' },
+		// 			{ etablissement: 'ISEN - BREST', diplome: 'DIPLOME D\'INGENIEUR', date_obtention: '2013' }
+		// 		],
+		// 		professionnelle: [
+		// 			{
+		// 				entreprise: 'ADRIA QUIMPER',
+		// 				date_entree: new Date(2009, 12, 1),
+		// 				date_sortie: new Date(2010, 3, 1),
+		// 				qualification: 'TECHNICIEN SUPERIEUR',
+		// 				motif: 'FIN DE STAGE',
+		// 				stage: true
+		// 			},
+		// 			{
+		// 				entreprise: 'SURAVENIR BREST',
+		// 				date_entree: new Date(2010, 9, 1),
+		// 				date_sortie: new Date(2011, 10, 1),
+		// 				qualification: 'APPRENTIT INGENIEUR ETUDE',
+		// 				motif: 'FIN DE CONTRAT DE PROFESSIONNALISATION',
+		// 				stage: false
+		// 			}
+		// 		]
+		// 	},
+		// 	salaire: {
+		// 		remuneration: [
+		// 			{ mois: 'JANVIER', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
+		// 			{ mois: 'FEVRIER', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
+		// 			{ mois: 'MARS', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
+		// 			{ mois: 'AVRIL', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
+		// 			{ mois: 'MAI', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
+		// 			{ mois: 'JUIN', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
+		// 			{ mois: 'JUILLET', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
+		// 			{ mois: 'AOUT', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
+		// 			{ mois: 'SEPTEMBRE', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
+		// 			{ mois: 'OCTOBRE', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
+		// 			{ mois: 'NOVEMBRE', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' },
+		// 			{ mois: 'DECEMBRE', salaire_brut: '1967,91', primes_brut: '219,82', interessement: '145,92', indemnites: '87,75', moy_charges_soc: '312,59', total_cout: '2471,83' }
+		// 		],
+		// 		repartition: [
+		// 			{ mois: 'JANVIER', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
+		// 			{ mois: 'FEVRIER', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
+		// 			{ mois: 'MARS', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
+		// 			{ mois: 'AVRIL', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
+		// 			{ mois: 'MAI', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
+		// 			{ mois: 'JUIN', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
+		// 			{ mois: 'JUILLET', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
+		// 			{ mois: 'AOUT', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
+		// 			{ mois: 'SEPTEMBRE', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
+		// 			{ mois: 'OCTOBRE', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
+		// 			{ mois: 'NOVEMBRE', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' },
+		// 			{ mois: 'DECEMBRE', heures_mensuelles: '147,87', heures_supp: '4,8', jours_trav: '13', jours_mal: '1', jours_conges: '2', jours_abs: '1',jours_formation: '3', jours_divers: '1', total_jour: '21' }
+		// 		]
+		// 	}
+		// };
 
 		$scope.templatesUrl = {
 			identite: 'views/personnel/form-identite.html',
@@ -106,18 +104,19 @@
 		var load_data = function () {
 			// Call service, load data in grid and forms...
 			PersonnelService.get({subresource: $stateParams.personnelId}, function (results) {
-				$scope.selectedUser = results.data;
+				console.log('results:', results);
+				$scope.selectedUser = results.data[0];
+
+				$scope.grid.experienceScolaire.data = $scope.selectedUser.experience.scolaire;
+				$scope.grid.experienceProfessionnelle.data = $scope.selectedUser.experience.professionnelle;
+				$scope.grid.salaireRemuneration.data = $scope.selectedUser.salaire.remuneration;
+				$scope.grid.salaireRepartition.data = $scope.selectedUser.salaire.repartition;
+
+				ngProgress.complete();
 			}, function (error) {
 				console.log(error);
+				ngProgress.reset();
 			});
-
-			// Données bouchons
-			$scope.grid.experienceScolaire.data = $scope.selectedUser.experience.scolaire;
-			$scope.grid.experienceProfessionnelle.data = $scope.selectedUser.experience.professionnelle;
-			$scope.grid.salaireRemuneration.data = $scope.selectedUser.salaire.remuneration;
-			$scope.grid.salaireRepartition.data = $scope.selectedUser.salaire.repartition;
-
-			ngProgress.complete();
 		}
 
 		$scope.tabHeadingClick = function (page) {

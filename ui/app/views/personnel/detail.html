@@ -54,22 +54,22 @@
 
 					<ul class="list-group list-group-unbordered">
 						<li class="list-group-item">
-							<b>Code opérateur</b> <a class="pull-right">457 215 674</a>
+							<b>Code opérateur</b> <a class="pull-right">{{user.codeOperateur}}</a>
 						</li>
 						<li class="list-group-item">
-							<b>Date entrée</b> <a class="pull-right">01/01/2016</a>
+							<b>Date entrée</b> <a class="pull-right">{{selectedUser.contrat.dates.entree}}</a>
 						</li>
 						<li class="list-group-item">
-							<b>Date sortie</b> <a class="pull-right">01/01/2017</a>
+							<b>Date sortie</b> <a class="pull-right">{{selectedUser.contrat.dates.sortie}}</a>
 						</li>
 						<li class="list-group-item">
-							<b>Coefficient</b> <a class="pull-right">170</a>
+							<b>Coefficient</b> <a class="pull-right">{{selectedUser.contrat.coefficient}}</a>
 						</li>
 						<li class="list-group-item">
-							<b>Capital détenu</b> <a class="pull-right">80 %</a>
+							<b>Capital détenu</b> <a class="pull-right">{{selectedUser.contrat.prc_capital}} %</a>
 						</li>
 						<li class="list-group-item">
-							<b>Statut cadre</b> <a class="pull-right">oui</a>
+							<b>Statut cadre</b> <a class="pull-right">{{selectedUser.contrat.cadre}}</a>
 						</li>
 					</ul>
 					<!--<a href="#" class="btn btn-primary btn-block"><b>Validay !</b></a>-->
