@@ -5,8 +5,8 @@
 
 	angular.module('tabordNG').controller('PersonnelDashboardController', PersonnelDashboardController);
 
-	PersonnelDashboardController.$inject = ['$scope', '$state', 'HelperService', 'uiGridConstants', 'ngProgress'];
-	function PersonnelDashboardController ($scope, $state, HelperService, uiGridConstants, ngProgress) {
+	PersonnelDashboardController.$inject = ['$scope', '$state', 'HelperService', 'uiGridConstants', 'PersonnelService', 'ngProgress'];
+	function PersonnelDashboardController ($scope, $state, HelperService, PersonnelService, uiGridConstants, ngProgress) {
 		$.AdminLTE.layout.activate();
 
 		$scope.grid = {
@@ -79,36 +79,39 @@
 		var load_data = function () {
 			// Call service, load data in grid...
 			ngProgress.complete();
-			$scope.grid.personnel.data = [
-				{
-					id: '001',
-					nom: "FALC'HER",
-					prenom: "Thomas",
-					date_entree: "2016-01-01",
-					qualification: "INGENIEUR"
-				},
-				{
-					id: '002',
-					nom: "FALC'HER",
-					prenom: "Pierre-Antoine",
-					date_entree: "2016-01-01",
-					qualification: "PAYSAGISTE"
-				},
-				{
-					id: '003',
-					nom: "FALC'HER",
-					prenom: "Louis",
-					date_entree: "2016-01-01",
-					qualification: "CHIRURGIEN DENTISTE"
-				},
-				{
-					id: '004',
-					nom: "FALC'HER",
-					prenom: "Christine",
-					date_entree: "2016-01-01",
-					qualification: "DELEGUEE MEDICALE"
-				}
-			];
+			// $scope.grid.personnel.data = [
+			// 	{
+			// 		id: '001',
+			// 		nom: "FALC'HER",
+			// 		prenom: "Thomas",
+			// 		date_entree: "2016-01-01",
+			// 		qualification: "INGENIEUR"
+			// 	},
+			// 	{
+			// 		id: '002',
+			// 		nom: "FALC'HER",
+			// 		prenom: "Pierre-Antoine",
+			// 		date_entree: "2016-01-01",
+			// 		qualification: "PAYSAGISTE"
+			// 	},
+			// 	{
+			// 		id: '003',
+			// 		nom: "FALC'HER",
+			// 		prenom: "Louis",
+			// 		date_entree: "2016-01-01",
+			// 		qualification: "CHIRURGIEN DENTISTE"
+			// 	},
+			// 	{
+			// 		id: '004',
+			// 		nom: "FALC'HER",
+			// 		prenom: "Christine",
+			// 		date_entree: "2016-01-01",
+			// 		qualification: "DELEGUEE MEDICALE"
+			// 	}
+			// ];
+			PersonnelService.list({}, function (result) {
+				$scope.grid.personnel.data = result.data;
+			});
 		}
 
 		$scope.editPersonnel = function (personnel) {

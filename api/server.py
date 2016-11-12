@@ -5,6 +5,7 @@ from logger import logger, configure
 from resources.pharmacie import *
 from resources.merchandising import *
 from resources.vente import *
+from resources.personnel import *
 
 import json, psycopg2, hashlib
 from psycopg2.extras import RealDictCursor
@@ -50,6 +51,7 @@ try:
     pharmacie_resource = Pharmacie(app, conn, cursor)
     merchandising_resource = Merchandising(app, conn, cursor)
     ventes_resource = Vente(app, conn, cursor)
+    personnel_resource = Personnel(app, conn, cursor)
 except:
     logger.error("ERREUR INITIALISATION ACCES RESOURCES")
 
@@ -177,7 +179,16 @@ def delete_form_merchandising(form_id):
 
 
 ################################################################################
-#   MERCHANDISING ROUTES
+#   PERSONNEL ROUTES
+################################################################################
+@app.route(url_prefix + "/personnel/list", methods=['POST'])
+def list_personnel():
+    personnel = personnel_resource.list(request)
+    return jsonify(personnel)
+
+
+################################################################################
+#   VENTES ROUTES
 ################################################################################
 @app.route(url_prefix + "/ventes/get_all", methods=['POST'])
 def get_all_ventes():
