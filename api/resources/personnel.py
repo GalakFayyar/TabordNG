@@ -24,4 +24,4 @@ class Personnel():
         self.cursor.execute(sql)
         data = self.cursor.fetchall()
 
-        return {'data':self.tools.format_simple_psql_result(data)}
+        return {'data':data}
