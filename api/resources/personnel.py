@@ -25,3 +25,12 @@ class Personnel():
         data = self.cursor.fetchall()
 
         return {'data':data}
+
+    def get_one(self, id):
+        sql = "SELECT * FROM personnel WHERE id = %s;"
+
+        args = (id,)
+        self.cursor.execute(sql, args)
+        data = self.cursor.fetchall()
+
+        return {'data':self.tools.format_simple_psql_result(data)}

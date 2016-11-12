@@ -13,6 +13,13 @@
 					'resource': 'personnel',
 					'action': 'list'
 				}
+			},
+			get : {
+				method : 'GET',
+				params : {
+					'resource': 'personnel',
+					'action': 'get'
+				}
 			}
 		});
 	};

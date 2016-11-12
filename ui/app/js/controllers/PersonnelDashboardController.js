@@ -55,7 +55,7 @@
 						enableSorting: true,
 						type: 'string'
 					},{
-						name: 'date_entree',
+						name: 'date_debut_contrat',
 						displayName: 'Date entrée',
 						pinnedLeft: true,
 						enableFiltering: true, 

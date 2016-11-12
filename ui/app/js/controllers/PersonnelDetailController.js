@@ -5,8 +5,8 @@
 
 	angular.module('tabordNG').controller('PersonnelDetailController', PersonnelDetailController);
 
-	PersonnelDetailController.$inject = ['$scope', '$stateParams', 'HelperService', 'uiGridConstants', 'ngProgress'];
-	function PersonnelDetailController ($scope, $stateParams, HelperService, uiGridConstants, ngProgress) {
+	PersonnelDetailController.$inject = ['$scope', '$stateParams', 'HelperService', 'PersonnelService', 'uiGridConstants', 'ngProgress'];
+	function PersonnelDetailController ($scope, $stateParams, HelperService, PersonnelService, uiGridConstants, ngProgress) {
 		$.AdminLTE.layout.activate();
 
 		console.log($stateParams);
@@ -105,6 +105,11 @@
 
 		var load_data = function () {
 			// Call service, load data in grid and forms...
+			PersonnelService.get({subresource: $stateParams.personnelId}, function (results) {
+				$scope.selectedUser = results.data;
+			}, function (error) {
+				console.log(error);
+			});
 
 			// Données bouchons
 			$scope.grid.experienceScolaire.data = $scope.selectedUser.experience.scolaire;

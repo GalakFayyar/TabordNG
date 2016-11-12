@@ -20,8 +20,6 @@ class Pharmacie():
         return {'data':self.tools.format_simple_psql_result(data)}
 
     def update(self, data):
-        print('Mise a jour des pharmacies ...')
-
         for pharmacie in data['pharmacies']:
             _id = pharmacie['id']
             del pharmacie['id']
@@ -36,8 +34,6 @@ class Pharmacie():
         return {'status': 'success', 'code': 200}
 
     def create(self, data):
-        print('Creation nouvelle pharmacie ...')
-
         for pharmacie in data['pharmacie']:
             sql = "INSERT INTO pharmacie (data) VALUES ('%s');" %(json.dumps(pharmacie).strip())
 
@@ -48,10 +44,7 @@ class Pharmacie():
         return {'status': 'success', 'code': 200}
 
     def delete(self, data):
-        print('Suppression pharmacie ...')
-
         for pharmacie in data['pharmacie']:
-            print('Suppression pharmacie id=%s' %(pharmacie['id']))
             sql = "DELETE FROM pharmacie WHERE id = %s;" %(pharmacie['id'])
 
             self.cursor.execute(sql)

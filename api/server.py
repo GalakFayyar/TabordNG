@@ -186,6 +186,11 @@ def list_personnel():
     personnel = personnel_resource.list()
     return jsonify(personnel)
 
+@app.route(url_prefix + "/personnel/get/<id>", methods=['GET'])
+def get_personnel(id):
+    personnel = personnel_resource.get_one(id)
+    return jsonify(personnel)
+
 
 ################################################################################
 #   VENTES ROUTES
