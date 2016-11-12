@@ -11,7 +11,7 @@
 				method : 'GET',
 				params : {
 					'resource': 'personnel',
-					'action' : 'list'
+					'action': 'list'
 				}
 			}
 		});

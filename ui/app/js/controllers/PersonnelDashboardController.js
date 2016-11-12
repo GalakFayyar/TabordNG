@@ -5,7 +5,7 @@
 
 	angular.module('tabordNG').controller('PersonnelDashboardController', PersonnelDashboardController);
 
-	PersonnelDashboardController.$inject = ['$scope', '$state', 'HelperService', 'uiGridConstants', 'PersonnelService', 'ngProgress'];
+	PersonnelDashboardController.$inject = ['$scope', '$state', 'HelperService', 'PersonnelService', 'uiGridConstants', 'ngProgress'];
 	function PersonnelDashboardController ($scope, $state, HelperService, PersonnelService, uiGridConstants, ngProgress) {
 		$.AdminLTE.layout.activate();
 
@@ -78,7 +78,7 @@
 
 		var load_data = function () {
 			// Call service, load data in grid...
-			ngProgress.complete();
+			
 			// $scope.grid.personnel.data = [
 			// 	{
 			// 		id: '001',
@@ -109,8 +109,13 @@
 			// 		qualification: "DELEGUEE MEDICALE"
 			// 	}
 			// ];
-			PersonnelService.list({}, function (result) {
-				$scope.grid.personnel.data = result.data;
+
+			PersonnelService.list({}, function (results) {
+				$scope.grid.personnel.data = results.data;
+				ngProgress.complete();
+			}, function (error) {
+				ngProgress.reset();
+				console.log('Erreur load_data(): ', error);
 			});
 		}
 

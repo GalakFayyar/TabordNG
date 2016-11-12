@@ -181,7 +181,7 @@ def delete_form_merchandising(form_id):
 ################################################################################
 #   PERSONNEL ROUTES
 ################################################################################
-@app.route(url_prefix + "/personnel/list", methods=['POST'])
+@app.route(url_prefix + "/personnel/list", methods=['GET'])
 def list_personnel():
     personnel = personnel_resource.list(request)
     return jsonify(personnel)
