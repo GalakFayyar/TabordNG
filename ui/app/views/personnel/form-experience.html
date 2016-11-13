@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="btn-edit-grid-formation">
-				<button type="button" class="btn btn-primary btn-xs">Ajouter</button>
+				<button type="button" class="btn btn-primary btn-xs" ng-click="addExperience()">Ajouter</button>
 				<button type="button" class="btn btn-danger btn-xs">Supprimer</button>
 			</div>
 			<h4>Scolarité</h4>	
@@ -80,3 +80,17 @@
 	</div>
 </div> 
 -->
+
+<!-- Modal -->
+<div class="modal">
+	<div class="modal-header">
+        <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+        COUCOU
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+    </div>
+</div>

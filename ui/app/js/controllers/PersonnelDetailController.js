@@ -5,8 +5,8 @@
 
 	angular.module('tabordNG').controller('PersonnelDetailController', PersonnelDetailController);
 
-	PersonnelDetailController.$inject = ['$scope', '$stateParams', 'HelperService', 'PersonnelService', 'uiGridConstants', 'ngProgress'];
-	function PersonnelDetailController ($scope, $stateParams, HelperService, PersonnelService, uiGridConstants, ngProgress) {
+	PersonnelDetailController.$inject = ['$scope', '$stateParams', '$modal', 'HelperService', 'PersonnelService', 'uiGridConstants', 'ngProgress'];
+	function PersonnelDetailController ($scope, $stateParams, $modal, HelperService, PersonnelService, uiGridConstants, ngProgress) {
 		$.AdminLTE.layout.activate();
 
 		// $scope.selectedUser = {
@@ -418,6 +418,63 @@
             }
 		};
 
+		$scope.addExperience = function () {
+			var modalInstance = $modal.open({
+				templateUrl: 'views/personnel/modal-add-experience.html',
+				controller: 'PersonnelAddExperienceScolaireModalController',
+				backdrop: 'static',
+				resolve: {
+					parameters: function () {
+						// Déclaration des variables
+						var modalTitle = 'TITRE';
+						var modalContent = '<input type="text" />';
+						// Retourne 1 objet avec toutes les variables
+						return {
+							modalTitle: modalTitle,
+							modalContent: modalContent
+						};
+					}
+				}
+			});
+
+			modalInstance.result.then(function (returned_element) {}, function (error) { console.log(error); });
+		}
+
 		load_data();
+	}
+
+	/*#####################################################################################
+	### ADD EXPERIENCE MODAL SCREEN
+	#####################################################################################*/
+	angular.module('tabordNG').controller('PersonnelAddExperienceScolaireModalController', PersonnelAddExperienceScolaireModalController);
+
+	PersonnelAddExperienceScolaireModalController.$inject = ['$scope', '$rootScope', '$modalInstance', '$timeout', 'HelperService', 'PersonnelService', 'ngProgress', 'parameters'];
+	function PersonnelAddExperienceScolaireModalController ($scope, $rootScope, $modalInstance, $timeout, HelperService, PersonnelService, ngProgress, parameters) {
+		$scope.modalTitle = parameters.modalTitle;
+		$scope.modalContent = parameters.modalContent;
+		$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
+		};
+		$scope.launchOperation = function () {
+			ngProgress.start();
+			// Fermeture Popup
+			$modalInstance.dismiss();
+			PersonnelService.addExperienceScolaire({}, function (operationResponse) {
+				// message d'alerte
+				var alert = {
+					msg: 'Opération réalisée. Recharger la page pour afficher les modifications.',
+					type: 'info'
+				};
+				$rootScope.alerts.push(alert);
+				ngProgress.complete();
+
+				// nettoyage de la liste des popin
+				$timeout(function (){
+					$rootScope.alerts.splice($rootScope.alerts.indexOf(alert), 1);
+				}, boRubriqueEditorConfig.timeoutAlertMessages);
+			}, function (error) {
+				console.log(error);
+			});
+		};
 	}
 })();

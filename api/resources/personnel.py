@@ -27,7 +27,15 @@ class Personnel():
         return {'data':data}
 
     def get_one(self, id):
-        sql = "SELECT * FROM personnel WHERE id = %s;"
+        sql = """
+            SELECT 
+                p.id AS id,
+                p.data AS data_personnel,
+                s.data AS data_salaires
+            FROM personnel p 
+            JOIN salaires s ON p.id = s.id_personnel 
+            WHERE p.id = %s;
+        """
 
         args = (id,)
         self.cursor.execute(sql, args)

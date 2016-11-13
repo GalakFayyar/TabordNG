@@ -100,10 +100,7 @@ CREATE TABLE personnel(
 	id SERIAL NOT NULL,
 	data json,
 	id_pharmacie INT,
-	id_qualification INT,
 	id_operateur INT,
-	id_situation_familiale INT,
-	id_transports INT,
 	CONSTRAINT prk_constraint_personnel PRIMARY KEY (id)
 )WITHOUT OIDS;
 
@@ -220,18 +217,18 @@ VALUES (
 			{ "mois": "DECEMBRE", "salaire_brut": "1967,91", "primes_brut": "219,82", "interessement": "145,92", "indemnites": "87,75", "moy_charges_soc": "312,59", "total_cout": "2471,83" }
 		],
 		"repartition": [
-			{ "mois": "JANVIER", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": 21" },
-			{ "mois": "FEVRIER", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": 21" },
-			{ "mois": "MARS", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": 21" },
-			{ "mois": "AVRIL", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": 21" },
-			{ "mois": "MAI", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": 21" },
-			{ "mois": "JUIN", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": 21" },
-			{ "mois": "JUILLET", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": 21" },
-			{ "mois": "AOUT", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": 21" },
-			{ "mois": "SEPTEMBRE", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": 21" },
-			{ "mois": "OCTOBRE", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": 21" },
-			{ "mois": "NOVEMBRE", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": 21" },
-			{ "mois": "DECEMBRE", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": 21" }
+			{ "mois": "JANVIER", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": "21" },
+			{ "mois": "FEVRIER", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": "21" },
+			{ "mois": "MARS", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": "21" },
+			{ "mois": "AVRIL", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": "21" },
+			{ "mois": "MAI", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": "21" },
+			{ "mois": "JUIN", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": "21" },
+			{ "mois": "JUILLET", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": "21" },
+			{ "mois": "AOUT", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": "21" },
+			{ "mois": "SEPTEMBRE", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": "21" },
+			{ "mois": "OCTOBRE", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": "21" },
+			{ "mois": "NOVEMBRE", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": "21" },
+			{ "mois": "DECEMBRE", "heures_mensuelles": "147,87", "heures_supp": "4,8", "jours_trav": "13", "jours_mal": "1", "jours_conges": "2", "jours_abs": "1", "jours_formation": "3", "jours_divers": "1", "total_jour": "21" }
 		]
 	}',
 	0
