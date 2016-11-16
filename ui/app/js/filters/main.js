@@ -6,8 +6,7 @@
 	*	Filtre qui permet de remplacer ngBindHtmlUnsafe
 	*/
 	angular.module('tabordNG').filter('unsafe', unsafe);
-
-	function unsafe ($sce, $rootScope) {
+	function unsafe ($sce) {
 		return function (html) {
 			return $sce.trustAsHtml(html);
 		};
@@ -20,7 +19,6 @@
 	 * We want to perform a OR.
 	 */
 	angular.module('tabordNG').filter('propsFilter', propsFilter);
-
 	function propsFilter () {
 	  	return function (items, props) {
 			var out = [];

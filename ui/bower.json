@@ -5,7 +5,7 @@
     "Thomas Falc'her"
   ],
   "version": "0.1.0",
-  "homepage": "https://git.test.services.local:80/dt_ct_ioda/bo-edito-filtres-ui.git",
+  "homepage": "https://github.com/GalakFayyar/TabordNG",
   "license": "Apache2",
   "private": true,
   "dependencies": {

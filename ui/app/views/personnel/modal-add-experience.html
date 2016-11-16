@@ -1,8 +1,8 @@
 <div class="modal-header">
     <h3 class="modal-title" id="modal-title">{{modalTitle}}</h3>
 </div>
-<div class="modal-body" id="modal-body" ng-bind-html="modalContent | unsafe"></div>
+<div class="modal-body" id="modal-body" bind-html-compile="modalContent"></div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="validate()">OK</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
+    <button class="btn btn-primary" type="button" ng-click="validate()">Enregistrer</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">Annuler</button>
 </div>

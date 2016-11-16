@@ -3,7 +3,7 @@
 
 	/* Directives */
 
-	angular.module('tabordNG').directive('directiveEvalCodeAngularJs', directiveEvalCodeAngularJs);
+	angular.module('tabordNG').directive('bindHtmlCompile', bindHtmlCompile);
 	angular.module('tabordNG').directive('uiSelectWrap', uiSelectWrap);
 	angular.module('tabordNG').directive('ngReallyClick', reallyClick);
 	angular.module('tabordNG').directive('resizeForm', resizeForm);
@@ -13,18 +13,21 @@
 	// angular.module('tabordNG').directive('formMerchandisingPolitiquePersonnel', formMerchandisingPolitiquePersonnel);
 	// angular.module('tabordNG').directive('formMerchandisingGestionStock', formMerchandisingGestionStock);
 	// angular.module('tabordNG').directive('formMerchandisingDivers', formMerchandisingDivers);
-	// angular.module('tabordNG').directive('resize', resize);
+	// angular.module('tabordNG').directive('resize', resize);w
 
-	function directiveEvalCodeAngularJs ($compile, $parse) {
+	bindHtmlCompile.$inject = ['$compile'];
+	function bindHtmlCompile ($compile) {
 		return {
-			restrict: 'A',
-			link: function(scope, element, attr) {
-				scope.$watch(attr.content, function() {
-					element.html($parse(attr.content)(scope))
-					$compile(element.contents())(scope)
-				}, true)
-			}
-		}
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                scope.$watch(function () {
+                    return scope.$eval(attrs.bindHtmlCompile);
+                }, function (value) {
+                    element.html(value);
+                    $compile(element.contents())(scope);
+                });
+            }
+        }
 	}
 
 	function uiSelectWrap ($document, uiGridEditConstants) {

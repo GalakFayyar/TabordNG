@@ -107,10 +107,10 @@
 				console.log('results:', results);
 				$scope.selectedUser = results.data[0];
 
-				$scope.grid.experienceScolaire.data = $scope.selectedUser.experience.scolaire;
-				$scope.grid.experienceProfessionnelle.data = $scope.selectedUser.experience.professionnelle;
-				$scope.grid.salaireRemuneration.data = $scope.selectedUser.salaire.remuneration;
-				$scope.grid.salaireRepartition.data = $scope.selectedUser.salaire.repartition;
+				$scope.grid.experienceScolaire.data = $scope.selectedUser.data_personnel.experience.scolaire;
+				$scope.grid.experienceProfessionnelle.data = $scope.selectedUser.data_personnel.experience.professionnelle;
+				$scope.grid.salaireRemuneration.data = $scope.selectedUser.data_salaires.remuneration;
+				$scope.grid.salaireRepartition.data = $scope.selectedUser.data_salaires.repartition;
 
 				ngProgress.complete();
 			}, function (error) {
@@ -418,7 +418,7 @@
             }
 		};
 
-		$scope.addExperience = function () {
+		$scope.addExperienceScolaire = function () {
 			var modalInstance = $modal.open({
 				templateUrl: 'views/personnel/modal-add-experience.html',
 				controller: 'PersonnelAddExperienceScolaireModalController',
@@ -426,12 +426,90 @@
 				resolve: {
 					parameters: function () {
 						// Déclaration des variables
-						var modalTitle = 'TITRE';
-						var modalContent = '<input type="text" />';
+						var modalTitle = 'Ajouter une expérience';
+						var modalContent = '<form class="form-horizontal"> \
+							<div class="form-group"> \
+								<label for="inputNomEtablissement" class="col-sm-3 control-label">Etablissement</label> \
+								<div class="col-sm-9"> \
+									<input type="text" class="form-control" id="inputNomEtablissement" placeholder="Nom Etablissement" ng-model="newData.etablissement" /> \
+								</div> \
+							</div> \
+							<div class="form-group"> \
+								<label for="inputDiplome" class="col-sm-3 control-label">Diplôme</label> \
+								<div class="col-sm-9"> \
+									<input type="text" class="form-control" id="inputDiplome" placeholder="Diplome" ng-model="newData.diplome" /> \
+								</div> \
+							</div> \
+							<div class="form-group"> \
+								<label for="inputAnneeDiplome" class="col-sm-3 control-label">Année d\'obtention</label> \
+								<div class="col-sm-9"> \
+									<input type="text" class="form-control" id="inputAnneeDiplome" placeholder="Année" ng-model="newData.date_obtention" /> \
+								</div> \
+							</div> \
+						</form>';
 						// Retourne 1 objet avec toutes les variables
 						return {
 							modalTitle: modalTitle,
-							modalContent: modalContent
+							modalContent: modalContent,
+							currentPerson: $scope.selectedUser
+						};
+					}
+				}
+			});
+
+			modalInstance.result.then(function (returned_element) {}, function (error) { console.log(error); });
+		}
+
+		$scope.addExperiencePro = function () {
+			var modalInstance = $modal.open({
+				templateUrl: 'views/personnel/modal-add-experience.html',
+				controller: 'PersonnelAddExperienceProModalController',
+				backdrop: 'static',
+				resolve: {
+					parameters: function () {
+						// Déclaration des variables
+						var modalTitle = 'Ajouter une expérience';
+						var modalContent = '<form class="form-horizontal"> \
+							<div class="form-group"> \
+								<label for="inputNomEntreprise" class="col-sm-3 control-label">Entreprise</label> \
+								<div class="col-sm-9"> \
+									<input type="text" class="form-control" id="inputNomEntreprise" placeholder="Nom Entreprise" ng-model="newData.entreprise" /> \
+								</div> \
+							</div> \
+							<div class="form-group"> \
+								<label for="inputQualification" class="col-sm-3 control-label">Qualification</label> \
+								<div class="col-sm-9"> \
+									<input type="text" class="form-control" id="inputQualification" placeholder="Qualification" ng-model="newData.qualification" /> \
+								</div> \
+							</div> \
+							<div class="form-group"> \
+								<label for="inputDateEntree" class="col-sm-3 control-label">Date entrée</label> \
+								<div class="col-sm-3"> \
+									<input type="date" class="form-control" id="inputDateEntree" placeholder="Date entrée" ng-model="newData.date_entree" /> \
+								</div> \
+								<label for="inputDateSortie" class="col-sm-3 control-label">Date sortie</label> \
+								<div class="col-sm-3"> \
+									<input type="date" class="form-control" id="inputDateSortie" placeholder="Date sortie" ng-model="newData.date_sortie" /> \
+								</div> \
+							</div> \
+							<div class="form-group"> \
+								<label for="inputMotifDepart" class="col-sm-3 control-label">Motif du départ</label> \
+								<div class="col-sm-4"> \
+									<input type="text" class="form-control" id="inputMotifDepart" placeholder="Motif départ" ng-model="newData.motif" /> \
+								</div> \
+							</div> \
+							<div class="form-group"> \
+								<label for="inputStage" class="col-sm-3 control-label">Expérience Stage</label> \
+								<div class="col-sm-9"> \
+									<input type="checkbox" style="margin-top:12px;" id="inputStage" ng-model="newData.stage" /> \
+								</div> \
+							</div> \
+						</form>';
+						// Retourne 1 objet avec toutes les variables
+						return {
+							modalTitle: modalTitle,
+							modalContent: modalContent,
+							currentPerson: $scope.selectedUser
 						};
 					}
 				}
@@ -444,7 +522,7 @@
 	}
 
 	/*#####################################################################################
-	### ADD EXPERIENCE MODAL SCREEN
+	### ADD EXPERIENCE SCOLAIRE MODAL CONTROLLER
 	#####################################################################################*/
 	angular.module('tabordNG').controller('PersonnelAddExperienceScolaireModalController', PersonnelAddExperienceScolaireModalController);
 
@@ -452,18 +530,67 @@
 	function PersonnelAddExperienceScolaireModalController ($scope, $rootScope, $modalInstance, $timeout, HelperService, PersonnelService, ngProgress, parameters) {
 		$scope.modalTitle = parameters.modalTitle;
 		$scope.modalContent = parameters.modalContent;
+		$scope.newData = { etablissement: null, diplome: null, date_obtention: null };
 		$scope.cancel = function () {
 			$modalInstance.dismiss('cancel');
 		};
-		$scope.launchOperation = function () {
+		$scope.validate = function () {
+			// Add experience to array
+			console.log('newData:', $scope.newData);
+			parameters.currentPerson.data_personnel.experience.scolaire.push({
+				etablissement: $scope.newData.etablissement,
+				diplome: $scope.newData.diplome,
+				date_obtention: $scope.newData.date_obtention
+			});
+
 			ngProgress.start();
 			// Fermeture Popup
 			$modalInstance.dismiss();
 			PersonnelService.addExperienceScolaire({}, function (operationResponse) {
 				// message d'alerte
 				var alert = {
-					msg: 'Opération réalisée. Recharger la page pour afficher les modifications.',
-					type: 'info'
+					msg: 'Opération réalisée.',
+					type: 'success'
+				};
+				$rootScope.alerts.push(alert);
+				ngProgress.complete();
+
+				// nettoyage de la liste des popin
+				$timeout(function (){
+					$rootScope.alerts.splice($rootScope.alerts.indexOf(alert), 1);
+				}, boRubriqueEditorConfig.timeoutAlertMessages);
+			}, function (error) {
+				console.log(error);
+			});
+		};
+	}
+
+	/*#####################################################################################
+	### ADD EXPERIENCE PROFESIONNELLE MODAL CONTROLLER
+	#####################################################################################*/
+	angular.module('tabordNG').controller('PersonnelAddExperienceProModalController', PersonnelAddExperienceProModalController);
+
+	PersonnelAddExperienceProModalController.$inject = ['$scope', '$rootScope', '$modalInstance', '$timeout', 'HelperService', 'PersonnelService', 'ngProgress', 'parameters'];
+	function PersonnelAddExperienceProModalController ($scope, $rootScope, $modalInstance, $timeout, HelperService, PersonnelService, ngProgress, parameters) {
+		$scope.modalTitle = parameters.modalTitle;
+		$scope.modalContent = parameters.modalContent;
+		$scope.newData = { entreprise: null, qualification: null, date_entree: null, date_sortie: null, motif_depart: null, stage: null };
+		$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
+		};
+		$scope.validate = function () {
+			// Add experience to array
+			console.log('newData:', $scope.newData);
+			parameters.currentPerson.data_personnel.experience.professionnelle.push($scope.newData);
+
+			ngProgress.start();
+			// Fermeture Popup
+			$modalInstance.dismiss();
+			PersonnelService.addExperienceScolaire({}, function (operationResponse) {
+				// message d'alerte
+				var alert = {
+					msg: 'Opération réalisée.',
+					type: 'success'
 				};
 				$rootScope.alerts.push(alert);
 				ngProgress.complete();
