@@ -9,6 +9,45 @@
 	function PersonnelDetailController ($scope, $stateParams, $modal, HelperService, PersonnelService, uiGridConstants, ngProgress) {
 		$.AdminLTE.layout.activate();
 
+        var initNewUser = function () {
+            $scope.selectedUser = {
+                data_personnel: {
+                    id: null,
+                    nom: null,
+                    prenom: null,
+                    date_naissance: null,
+                    lieu_naissance: null,
+                    civilite: null,
+                    num_insee: null,
+                    email: null,
+                    telephone: {
+                        fixe: null,
+                        mobile: null
+                    },
+                    observations: null,
+                    nationalite: null,
+                    contrat: null,
+                    date_fin: null,
+                    adresse: {
+                        num: null,
+                        libelle: null,
+                        cp: null,
+                        ville: null
+                    },
+                    date_entree: null,
+                    qualification: null,
+                    experience: {
+                        scolaire: [],
+                        professionnelle: []
+                    }
+                },
+                data_salaire: {
+                    remuneration: [],
+                    repartition: []
+                }
+            }
+        }
+
 		// $scope.selectedUser = {
 		// 	id: '001',
 		// 	nom: "FALC'HER",
@@ -103,20 +142,25 @@
 
 		var load_data = function () {
 			// Call service, load data in grid and forms...
-			PersonnelService.get({subresource: $stateParams.personnelId}, function (results) {
-				console.log('results:', results);
-				$scope.selectedUser = results.data[0];
+            if ($stateParams && $stateParams.personnelId) {
+                PersonnelService.get({subresource: $stateParams.personnelId}, function (results) {
+                    console.log('results:', results);
+                    $scope.selectedUser = results.data[0];
 
-				$scope.grid.experienceScolaire.data = $scope.selectedUser.data_personnel.experience.scolaire;
-				$scope.grid.experienceProfessionnelle.data = $scope.selectedUser.data_personnel.experience.professionnelle;
-				$scope.grid.salaireRemuneration.data = $scope.selectedUser.data_salaires.remuneration;
-				$scope.grid.salaireRepartition.data = $scope.selectedUser.data_salaires.repartition;
+                    $scope.grid.experienceScolaire.data = $scope.selectedUser.data_personnel.experience.scolaire;
+                    $scope.grid.experienceProfessionnelle.data = $scope.selectedUser.data_personnel.experience.professionnelle;
+                    $scope.grid.salaireRemuneration.data = ($scope.selectedUser.data_salaires) ? $scope.selectedUser.data_salaires.remuneration : [];
+                    $scope.grid.salaireRepartition.data = ($scope.selectedUser.data_salaires) ? $scope.selectedUser.data_salaires.repartition : [];
 
-				ngProgress.complete();
-			}, function (error) {
-				console.log(error);
-				ngProgress.reset();
-			});
+                    ngProgress.complete();
+                }, function (error) {
+                    console.log(error);
+                    ngProgress.reset();
+                });
+            } else {
+                initNewUser();
+                ngProgress.complete();
+            }
 		}
 
 		$scope.tabHeadingClick = function (page) {
@@ -518,6 +562,39 @@
 			modalInstance.result.then(function (returned_element) {}, function (error) { console.log(error); });
 		}
 
+        $scope.createNewPersonnel = function () {
+            initNewUser();
+
+            $scope.grid.experienceScolaire.data = $scope.selectedUser.data_personnel.experience.scolaire;
+            $scope.grid.experienceProfessionnelle.data = $scope.selectedUser.data_personnel.experience.professionnelle;
+            $scope.grid.salaireRemuneration.data = $scope.selectedUser.data_salaires.remuneration;
+            $scope.grid.salaireRepartition.data = $scope.selectedUser.data_salaires.repartition;
+        }
+
+        $scope.saveEditPersonnel = function () {
+            // Création
+            if ($scope.selectedUser != null && $scope.selectedUser.id) {
+                PersonnelService.update({'subresource': $scope.selectedUser.id}, {'data': $scope.selectedUser}, function (results) {
+                    console.log('results:', results);
+                    // TODO popin CREATION OK
+                    ngProgress.complete();
+                }, function (error) {
+                    console.log(error);
+                    ngProgress.reset();
+                });
+            } else { 
+                // Mise à jour
+                PersonnelService.create({}, {'data': $scope.selectedUser}, function (results) {
+                    console.log('results:', results);
+                    // TODO popin MAJ OK
+                    ngProgress.complete();
+                }, function (error) {
+                    console.log(error);
+                    ngProgress.reset();
+                });
+            }
+        }
+        
 		load_data();
 	}
 

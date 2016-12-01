@@ -20,6 +20,27 @@
 					'resource': 'personnel',
 					'action': 'get'
 				}
+			},
+			create : {
+				method : 'POST',
+				params : {
+					'resource': 'personnel',
+					'action': 'create'
+				}
+			},
+			delete : {
+				method : 'POST',
+				params : {
+					'resource': 'personnel',
+					'action': 'delete'
+				}
+			},
+			update : {
+				method : 'POST',
+				params : {
+					'resource': 'personnel',
+					'action': 'update'
+				}
 			}
 		});
 	};

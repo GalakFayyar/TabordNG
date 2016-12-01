@@ -31,20 +31,26 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 url_prefix = conf['url_prefix']
 
 ### PostgreSQL configuration
-app.config['DATABASE_USER'] = 'Galak'
-app.config['DATABASE_PASSWORD'] = 'Galak'
-app.config['DATABASE_DB'] = 'tabordng_dev'
+app.config['DATABASE_USER'] = 'tabordng'
+app.config['DATABASE_PASSWORD'] = 'tabordng'
+app.config['DATABASE_DB'] = 'tabordng'
 app.config['DATABASE_HOST'] = 'localhost'
 
 try:
     # Connection loading
-    conn = psycopg2.connect("dbname='%s' user='%s' host='%s' password='%s'" %( app.config['DATABASE_DB'], 
-                                                                                app.config['DATABASE_USER'],
-                                                                                app.config['DATABASE_HOST'],
-                                                                                app.config['DATABASE_PASSWORD']))
+    # conn = psycopg2.connect("dbname='%s' user='%s' host='%s' password='%s'" %( app.config['DATABASE_DB'], 
+    #                                                                             app.config['DATABASE_USER'],
+    #                                                                             app.config['DATABASE_HOST'],
+    #                                                                             app.config['DATABASE_PASSWORD']))
+    conn = psycopg2.connect(database=app.config['DATABASE_DB'], 
+                            user=app.config['DATABASE_USER'],
+                            password=app.config['DATABASE_PASSWORD'],
+                            host=app.config['DATABASE_HOST'])
+
     cursor = conn.cursor(cursor_factory=RealDictCursor)
 except:
     logger.error("ERREUR INITIALISATION ACCES DATABASE")
+    exit()
 
 try:
     # Resources loading
@@ -54,6 +60,7 @@ try:
     personnel_resource = Personnel(app, conn, cursor)
 except:
     logger.error("ERREUR INITIALISATION ACCES RESOURCES")
+    exit()
 
 ### Root REST API endpoint: display all available registered routes
 @app.route(url_prefix + "/")
@@ -189,6 +196,21 @@ def list_personnel():
 @app.route(url_prefix + "/personnel/get/<id>", methods=['GET'])
 def get_personnel(id):
     personnel = personnel_resource.get_one(id)
+    return jsonify(personnel)
+
+@app.route(url_prefix + "/personnel/create", methods=['POST'])
+def create_personnel():
+    personnel = personnel_resource.create_one(request.json)
+    return jsonify(personnel)
+
+@app.route(url_prefix + "/personnel/update/<id>", methods=['POST'])
+def update_personnel(id):
+    personnel = personnel_resource.update_one(id, request.json)
+    return jsonify(personnel)
+
+@app.route(url_prefix + "/personnel/delete", methods=['POST'])
+def delete_personnel():
+    personnel = personnel_resource.delete(request.json)
     return jsonify(personnel)
 
 

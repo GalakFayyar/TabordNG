@@ -34,7 +34,7 @@
 				</div>
 				<div class="col-md-4" style="text-align:right">
 					<button type="button" class="btn btn-primary btn-flat" ng-click="createNewPersonnel()"><i class="fa fa-pencil"></i> Créer</button>
-					<button type="button" class="btn btn-success btn-flat" ng-click="saveEditPersonnel()" ng-disabled="true"><i class="fa fa-save"></i> Enregistrer</button>
+					<button type="button" class="btn btn-success btn-flat" ng-click="saveEditPersonnel()" ng-disabled="selectedUser.data_personnel.nom_usuel == null"><i class="fa fa-save"></i> Enregistrer</button>
 					<button type="button" class="btn btn-danger btn-flat" ng-click="deletePersonnel()"><i class="fa fa-remove"></i> Supprimer</button>
 				</div>
 			</div>

@@ -109,6 +109,16 @@
 				},
 				parent: 'app'
 			})
+			.state('personnel_create', {
+				url: 'personnel/create',
+				views: {
+					'content': {
+						templateUrl: 'views/personnel/detail.html',
+						controller: 'PersonnelDetailController'
+					}
+				},
+				parent: 'app'
+			})
 			.state('personnel_edit', {
 				url: 'personnel/edit/:personnelId',
 				views: {

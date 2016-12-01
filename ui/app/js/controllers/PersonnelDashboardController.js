@@ -21,12 +21,21 @@
 				rowSelection: true,
 				enableRowHeaderSelection: true,
 				multiSelect: true,
-				enableCellEdit: true,
-				enableCellEditOnFocus: true,
+				enableCellEdit: false,
+				enableCellEditOnFocus: false,
 				rowEditWaitInterval: -1,
 
 				columnDefs: [
 					{
+						name: 'edition',
+						width: 80,
+						displayName: '',
+						pinnedLeft: true,
+						enableFiltering: false, 
+						enableSorting: false,
+						type: 'string',
+						cellTemplate: '<div class="ui-grid-cell-contents"><button type="button" class="btn btn-xs btn-default btn-flat" ng-click="grid.appScope.editPersonnel(row.entity)"><i class="fa fa-pencil"></i> modifier</button></div>'
+					},{
 						name: 'id',
 						displayName: 'Num.',
 						pinnedLeft: true,
@@ -119,8 +128,24 @@
 			});
 		}
 
+		$scope.createNewPersonnel = function () {
+			$state.go('personnel_create', {personnelId: null});
+		}
+
 		$scope.editPersonnel = function (personnel) {
 			$state.go('personnel_edit', {personnelId: personnel.id});
+		}
+
+		$scope.deletePersonnel = function () {
+			PersonnelService.delete({}, {'persons': $scope.tngDashboardPersonnelGridApi.selection.getSelectedRows()}, function (results) {
+				// TODO popin DELETE OK
+
+				load_data();
+				ngProgress.complete();
+			}, function (error) {
+				ngProgress.reset();
+				console.log('Erreur deletePersonnel(): ', error);
+			});
 		}
 
 		load_data();

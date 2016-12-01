@@ -33,7 +33,7 @@ class Personnel():
                 p.data AS data_personnel,
                 s.data AS data_salaires
             FROM personnel p 
-            JOIN salaires s ON p.id = s.id_personnel 
+            LEFT JOIN salaires s ON p.id = s.id_personnel 
             WHERE p.id = %s;
         """
 
@@ -43,3 +43,45 @@ class Personnel():
 
         # return {'data':self.tools.format_multi_data_fields_result(data, ['data_personnel', 'data_salaires'])}
         return {'data':data}
+
+    def create_one(self, data):
+        if 'data' in data and 'data_personnel' in data['data']:
+            sql = """
+                INSERT INTO personnel (data) VALUES (%s);
+            """
+
+            args = (json.dumps(data['data']['data_personnel']).strip(),)
+            self.cursor.execute(sql, args)
+            self.connector.commit()
+
+            return {'status': 'success', 'code': 200}
+        else:
+            return {'status': 'error', 'code': 500, 'message': 'bad request'}
+
+
+    def update_one(self, id, data):
+        if 'data' in data and 'data_personnel' in data['data']:
+            sql = """
+                UPDATE personnel SET data = %s WHERE id = %s;
+            """
+
+            args = (json.dumps(data['data']['data_personnel']).strip(), id)
+            self.cursor.execute(sql, args)
+            self.connector.commit()
+
+            return {'status': 'success', 'code': 200}
+        else:
+            return {'status': 'error', 'code': 500, 'message': 'bad request'}
+
+    def delete(self, data):
+        for person in data['persons']:
+            print(person['id'])
+            sql = """
+                DELETE FROM personnel WHERE id = %s;
+            """
+            args = (person['id'],)
+            self.cursor.execute(sql, args)
+        
+        self.connector.commit()
+
+        return {'status': 'success', 'code': 200}

@@ -182,9 +182,6 @@ VALUES (
 		}
 	}',
 	NULL,
-	NULL,
-	NULL,
-	NULL,
 	NULL
 );
 
