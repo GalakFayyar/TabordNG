@@ -3,8 +3,8 @@
 
 	angular.module('tabordNG').controller('LoginController', LoginController);
 
-	LoginController.$inject = ['$scope', '$rootScope', '$location', '$cookieStore', 'UserService', 'PharmacieService', 'ConfigService', '$state', 'ngProgress'];
-	function LoginController ($scope, $rootScope, $location, $cookieStore, UserService, PharmacieService, ConfigService, $state, ngProgress) {	
+	LoginController.$inject = ['$scope', '$rootScope', '$location', 'HelperService', 'UserService', 'PharmacieService', 'ConfigService', '$state', 'ngProgress'];
+	function LoginController ($scope, $rootScope, $location, HelperService, UserService, PharmacieService, ConfigService, $state, ngProgress) {	
 		/*$scope.apiConfig = ConfigService.getConfig({}, function(apiConfig, getResponseHeaders) {
 				$rootScope.permissions = apiConfig.permissions;
 				$scope.features = apiConfig.features;
@@ -45,10 +45,11 @@
 				console.log(authenticatedUser);
 				if (authenticatedUser.data && authenticatedUser.data.authenticated) {
 					console.log('authentication succesful');
-					$rootScope.user = authenticatedUser;
+					$rootScope.user = authenticatedUser.data;
 
 					if ($scope.rememberMe) {
-						$cookieStore.put('tabordngUser', $rootScope.user);
+						//$cookieStore.put('tabordngUser', $rootScope.user);
+						HelperService.setCookieData($rootScope.user);
 					}
 
 					$state.go('dashboard');

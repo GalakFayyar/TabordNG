@@ -6,10 +6,23 @@
 
 	angular.module('tabordNG').factory('HelperService', HelperService);
 
-	HelperService.$inject = ['$rootScope'];
-	function HelperService ($rootScope) {
+	HelperService.$inject = ['$rootScope', '$cookies'];
+	function HelperService ($rootScope, $cookies) {
+		var _user = "";
 		// Fonctions communes à la factory et exposée
 		return {
+			setCookieData: function(user) {
+				_user = user;
+				$cookies.putObject("tabordngUser", _user);
+			},
+			getCookieData: function() {
+				_user = $cookies.getObject("tabordngUser");
+				return _user;
+			},
+			clearCookieData: function() {
+				_user = "";
+				$cookies.remove("tabordngUser");
+			},
 			getPaginationOptions: function () {
 				return {
 					pageNumber: 1,

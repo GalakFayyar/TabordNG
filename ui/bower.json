@@ -9,15 +9,15 @@
   "license": "Apache2",
   "private": true,
   "dependencies": {
-	  "angular": "1.2.x",
-    "angular-mocks": "1.2.x",
+	  "angular": "1.4.x",
+    "angular-mocks": "1.x.x",
     "jquery": "~2.1.1",
     "bootstrap": "~3.3.1",
-    "angular-route": "1.2.x",
-    "angular-resource": "1.2.x",
-    "angular-cookies": "1.2.x",
-    "angular-animate": "1.2.x",
-    "angular-sanitize": "1.2.x",
+    "angular-route": "1.x.x",
+    "angular-resource": "1.x.x",
+    "angular-cookies": "1.x.x",
+    "angular-animate": "1.x.x",
+    "angular-sanitize": "1.x.x",
     "angular-bootstrap": "0.12.1",
     "angular-ui-router": "0.2.15",
     "angular-ui-grid": "3.0.7",
@@ -35,6 +35,6 @@
     "bootstrap-datepicker": "1.6.1"
   },
   "resolutions": {
-    "angular": "1.2.x"
+    "angular": "1.4.x"
   }
 }

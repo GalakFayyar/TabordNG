@@ -17,7 +17,7 @@
 			<li class="dropdown user user-menu mega-dropdown">
 				
 				<a href class="dropdown-toggle" data-toggle="dropdown">
-					<span class="hidden-xs">{{$root.user.data.username}}</span> - Options<b class="caret"></b>
+					<span class="hidden-xs">{{$root.user.username}}</span> - Options<b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
 					<!-- <li>
@@ -32,7 +32,7 @@
 									title="Sélectionner une pharmacie">
 							<ui-select-match placeholder="Sélectionner une pharmacie">{{$select.selected.denomination}}</ui-select-match>
 							<ui-select-choices 
-									repeat="pharmacie in pharmacies.list track by pharmacie.id | filter: {denomination: $select.search}">
+									repeat="pharmacie in pharmacies.list | filter: {denomination: $select.search}">
 								<div ng-bind-html="pharmacie.denomination | highlight: $select.search"></div>
 								<small>
 									code: <span ng-bind-html="''+pharmacie.id | highlight: $select.search"></span>

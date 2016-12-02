@@ -8,14 +8,15 @@
 	angular.module('tabordNG').controller('LeftSideBarController', LeftSideBarController);
 	angular.module('tabordNG').controller('FooterController', FooterController);
 
-	MainController.$inject = ['$scope', 'TestService'];
-	function MainController ($scope, TestService) {
+	MainController.$inject = ['$rootScope', '$scope', 'HelperService'];
+	function MainController ($rootScope, $scope, HelperService) {
 		// $scope.toto = "test";
 		// var codes = TestService.get_codes_tva({}, function (values) {
 		// 	console.log(values.data);
 		// }, function (){
 		// 	console.log('ERROR');
 		// });
+		$rootScope.user = HelperService.getCookieData();
 	}
 
 	HeaderController.$inject = ['$scope', '$state', '$timeout','PharmacieService'];
