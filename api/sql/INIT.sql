@@ -191,6 +191,7 @@ VALUES (
 CREATE TABLE salaires(
 	id SERIAL NOT NULL,
 	data json,
+	annee INT,
 	id_personnel INT,
 	CONSTRAINT prk_constraint_salaire PRIMARY KEY (id)
 )WITHOUT OIDS;

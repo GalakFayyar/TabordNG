@@ -1,8 +1,19 @@
 <div class="row">
 	<div class="col-sm-12">
 		<div class="btn-edit-grid-formation">
-			<button type="button" class="btn btn-primary btn-xs">Ajouter</button>
-			<button type="button" class="btn btn-danger btn-xs">Supprimer</button>
+			<!-- <button type="button" class="btn btn-primary btn-xs">Ajouter</button>
+			<button type="button" class="btn btn-danger btn-xs">Supprimer</button> -->
+			<ui-select  ng-model="anneesSalaire.selected"
+						ng-change="updateSalairesData()"
+						theme="select2" 
+						class="ui-select-salaires"
+						search-enabled="false"
+						title="Année">
+				<ui-select-match placeholder="Année">{{$select.selected}}</ui-select-match>
+				<ui-select-choices repeat="annee in anneesSalaire.list">
+					<div ng-bind-html="annee | highlight: $select.search"></div>
+				</ui-select-choices>
+			</ui-select>
 		</div>
 		<h4>Rémunération</h4>
 		<div

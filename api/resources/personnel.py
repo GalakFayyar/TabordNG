@@ -58,7 +58,6 @@ class Personnel():
         else:
             return {'status': 'error', 'code': 500, 'message': 'bad request'}
 
-
     def update_one(self, id, data):
         if 'data' in data and 'data_personnel' in data['data']:
             sql = """
@@ -75,7 +74,6 @@ class Personnel():
 
     def delete(self, data):
         for person in data['persons']:
-            print(person['id'])
             sql = """
                 DELETE FROM personnel WHERE id = %s;
             """

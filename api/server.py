@@ -6,6 +6,7 @@ from resources.pharmacie import *
 from resources.merchandising import *
 from resources.vente import *
 from resources.personnel import *
+from resources.salaire import *
 
 import json, psycopg2, hashlib
 from psycopg2.extras import RealDictCursor
@@ -58,6 +59,7 @@ try:
     merchandising_resource = Merchandising(app, conn, cursor)
     ventes_resource = Vente(app, conn, cursor)
     personnel_resource = Personnel(app, conn, cursor)
+    salaire_resource = Salaire(app, conn, cursor)
 except:
     logger.error("ERREUR INITIALISATION ACCES RESOURCES")
     exit()
@@ -212,6 +214,40 @@ def update_personnel(id):
 def delete_personnel():
     personnel = personnel_resource.delete(request.json)
     return jsonify(personnel)
+
+
+################################################################################
+#   PERSONNEL ROUTES
+################################################################################
+@app.route(url_prefix + "/salaire/get/<idPersonnel>", methods=['GET'])
+def get_salaires(idPersonnel):
+    salaires = salaire_resource.get_all(idPersonnel)
+    return jsonify(salaires)
+
+@app.route(url_prefix + "/salaire/get/<idPersonnel>/<annee>", methods=['GET'])
+def get_salaire(idPersonnel, annee):
+    salaire = salaire_resource.get_one(idPersonnel, annee)
+    return jsonify(salaire)
+
+@app.route(url_prefix + "/salaire/create", methods=['POST'])
+def create_salaire():
+    salaires = salaire_resource.create(request.json)
+    return jsonify(salaires)
+
+@app.route(url_prefix + "/salaire/update/<idPersonnel>/<annee>", methods=['POST'])
+def update_salaire(idPersonnel, annee):
+    salaires = salaire_resource.update(idPersonnel, annee, request.json)
+    return jsonify(salaires)
+
+@app.route(url_prefix + "/salaire/upsert/<idPersonnel>/<annee>", methods=['POST'])
+def upsert_salaire(idPersonnel, annee):
+    salaires = salaire_resource.upsert(idPersonnel, annee, request.json)
+    return jsonify(salaires)
+
+@app.route(url_prefix + "/salaire/delete", methods=['POST'])
+def delete_salaire():
+    salaires = salaire_resource.delete(request.json)
+    return jsonify(salaires)
 
 
 ################################################################################

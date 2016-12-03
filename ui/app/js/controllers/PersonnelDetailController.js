@@ -5,48 +5,48 @@
 
 	angular.module('tabordNG').controller('PersonnelDetailController', PersonnelDetailController);
 
-	PersonnelDetailController.$inject = ['$scope', '$stateParams', '$modal', 'HelperService', 'PersonnelService', 'uiGridConstants', 'ngProgress'];
-	function PersonnelDetailController ($scope, $stateParams, $modal, HelperService, PersonnelService, uiGridConstants, ngProgress) {
+	PersonnelDetailController.$inject = ['$scope', '$stateParams', '$modal', 'HelperService', 'PersonnelService', 'SalaireService', 'uiGridConstants', 'ngProgress'];
+	function PersonnelDetailController ($scope, $stateParams, $modal, HelperService, PersonnelService, SalaireService, uiGridConstants, ngProgress) {
 		$.AdminLTE.layout.activate();
 
-        var initNewUser = function () {
-            $scope.selectedUser = {
-                data_personnel: {
-                    id: null,
-                    nom: null,
-                    prenom: null,
-                    date_naissance: null,
-                    lieu_naissance: null,
-                    civilite: null,
-                    num_insee: null,
-                    email: null,
-                    telephone: {
-                        fixe: null,
-                        mobile: null
-                    },
-                    observations: null,
-                    nationalite: null,
-                    contrat: null,
-                    date_fin: null,
-                    adresse: {
-                        num: null,
-                        libelle: null,
-                        cp: null,
-                        ville: null
-                    },
-                    date_entree: null,
-                    qualification: null,
-                    experience: {
-                        scolaire: [],
-                        professionnelle: []
-                    }
-                },
-                data_salaire: {
-                    remuneration: [],
-                    repartition: []
-                }
-            }
-        }
+		var initNewUser = function () {
+			$scope.selectedUser = {
+				data_personnel: {
+					id: null,
+					nom: null,
+					prenom: null,
+					date_naissance: null,
+					lieu_naissance: null,
+					civilite: null,
+					num_insee: null,
+					email: null,
+					telephone: {
+						fixe: null,
+						mobile: null
+					},
+					observations: null,
+					nationalite: null,
+					contrat: null,
+					date_fin: null,
+					adresse: {
+						num: null,
+						libelle: null,
+						cp: null,
+						ville: null
+					},
+					date_entree: null,
+					qualification: null,
+					experience: {
+						scolaire: [],
+						professionnelle: []
+					}
+				},
+				data_salaire: {
+					remuneration: [],
+					repartition: []
+				}
+			}
+		}
 
 		// $scope.selectedUser = {
 		// 	id: '001',
@@ -140,326 +140,396 @@
 		};
 		$scope.selectedPage = $scope.templatesUrl.identite;
 
+		var emptyRemunerationArray = [
+				{ mois: 'JANVIER', salaire_brut: null, primes_brut: null, interessement: null, indemnites: null, moy_charges_soc: null, total_cout: null },
+				{ mois: 'FEVRIER', salaire_brut: null, primes_brut: null, interessement: null, indemnites: null, moy_charges_soc: null, total_cout: null },
+				{ mois: 'MARS', salaire_brut: null, primes_brut: null, interessement: null, indemnites: null, moy_charges_soc: null, total_cout: null },
+				{ mois: 'AVRIL', salaire_brut: null, primes_brut: null, interessement: null, indemnites: null, moy_charges_soc: null, total_cout: null },
+				{ mois: 'MAI', salaire_brut: null, primes_brut: null, interessement: null, indemnites: null, moy_charges_soc: null, total_cout: null },
+				{ mois: 'JUIN', salaire_brut: null, primes_brut: null, interessement: null, indemnites: null, moy_charges_soc: null, total_cout: null },
+				{ mois: 'JUILLET', salaire_brut: null, primes_brut: null, interessement: null, indemnites: null, moy_charges_soc: null, total_cout: null },
+				{ mois: 'AOUT', salaire_brut: null, primes_brut: null, interessement: null, indemnites: null, moy_charges_soc: null, total_cout: null },
+				{ mois: 'SEPTEMBRE', salaire_brut: null, primes_brut: null, interessement: null, indemnites: null, moy_charges_soc: null, total_cout: null },
+				{ mois: 'OCTOBRE', salaire_brut: null, primes_brut: null, interessement: null, indemnites: null, moy_charges_soc: null, total_cout: null },
+				{ mois: 'NOVEMBRE', salaire_brut: null, primes_brut: null, interessement: null, indemnites: null, moy_charges_soc: null, total_cout: null },
+				{ mois: 'DECEMBRE', salaire_brut: null, primes_brut: null, interessement: null, indemnites: null, moy_charges_soc: null, total_cout: null }
+			],
+			emptyRepartitionArray = [
+				{ mois: 'JANVIER', heures_mensuelles: null, heures_supp: null, jours_trav: null, jours_mal: null, jours_conges: null, jours_abs: null,jours_formation: null, jours_divers: null, total_jour: null },
+				{ mois: 'FEVRIER', heures_mensuelles: null, heures_supp: null, jours_trav: null, jours_mal: null, jours_conges: null, jours_abs: null,jours_formation: null, jours_divers: null, total_jour: null },
+				{ mois: 'MARS', heures_mensuelles: null, heures_supp: null, jours_trav: null, jours_mal: null, jours_conges: null, jours_abs: null,jours_formation: null, jours_divers: null, total_jour: null },
+				{ mois: 'AVRIL', heures_mensuelles: null, heures_supp: null, jours_trav: null, jours_mal: null, jours_conges: null, jours_abs: null,jours_formation: null, jours_divers: null, total_jour: null },
+				{ mois: 'MAI', heures_mensuelles: null, heures_supp: null, jours_trav: null, jours_mal: null, jours_conges: null, jours_abs: null,jours_formation: null, jours_divers: null, total_jour: null },
+				{ mois: 'JUIN', heures_mensuelles: null, heures_supp: null, jours_trav: null, jours_mal: null, jours_conges: null, jours_abs: null,jours_formation: null, jours_divers: null, total_jour: null },
+				{ mois: 'JUILLET', heures_mensuelles: null, heures_supp: null, jours_trav: null, jours_mal: null, jours_conges: null, jours_abs: null,jours_formation: null, jours_divers: null, total_jour: null },
+				{ mois: 'AOUT', heures_mensuelles: null, heures_supp: null, jours_trav: null, jours_mal: null, jours_conges: null, jours_abs: null,jours_formation: null, jours_divers: null, total_jour: null },
+				{ mois: 'SEPTEMBRE', heures_mensuelles: null, heures_supp: null, jours_trav: null, jours_mal: null, jours_conges: null, jours_abs: null,jours_formation: null, jours_divers: null, total_jour: null },
+				{ mois: 'OCTOBRE', heures_mensuelles: null, heures_supp: null, jours_trav: null, jours_mal: null, jours_conges: null, jours_abs: null,jours_formation: null, jours_divers: null, total_jour: null },
+				{ mois: 'NOVEMBRE', heures_mensuelles: null, heures_supp: null, jours_trav: null, jours_mal: null, jours_conges: null, jours_abs: null,jours_formation: null, jours_divers: null, total_jour: null },
+				{ mois: 'DECEMBRE', heures_mensuelles: null, heures_supp: null, jours_trav: null, jours_mal: null, jours_conges: null, jours_abs: null,jours_formation: null, jours_divers: null, total_jour: null }
+			];
+
+		$scope.anneesSalaire = {
+			selected : null,
+			list : [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
+		};
+		$scope.anneesSalaire.selected = $scope.anneesSalaire.list[$scope.anneesSalaire.list.length - 1];
+
 		var load_data = function () {
 			// Call service, load data in grid and forms...
-            if ($stateParams && $stateParams.personnelId) {
-                PersonnelService.get({subresource: $stateParams.personnelId}, function (results) {
-                    console.log('results:', results);
-                    $scope.selectedUser = results.data[0];
+			if ($stateParams && $stateParams.personnelId) {
+				PersonnelService.get({subresource: $stateParams.personnelId}, function (results) {
+					console.log('results infos personnel: ', results.data[0]);
+					$scope.selectedUser = results.data[0];
 
-                    $scope.grid.experienceScolaire.data = $scope.selectedUser.data_personnel.experience.scolaire;
-                    $scope.grid.experienceProfessionnelle.data = $scope.selectedUser.data_personnel.experience.professionnelle;
-                    $scope.grid.salaireRemuneration.data = ($scope.selectedUser.data_salaires) ? $scope.selectedUser.data_salaires.remuneration : [];
-                    $scope.grid.salaireRepartition.data = ($scope.selectedUser.data_salaires) ? $scope.selectedUser.data_salaires.repartition : [];
+					$scope.selectedUser.data_personnel.naissance.date = new Date($scope.selectedUser.data_personnel.naissance.date);
 
-                    ngProgress.complete();
-                }, function (error) {
-                    console.log(error);
-                    ngProgress.reset();
-                });
-            } else {
-                initNewUser();
-                ngProgress.complete();
-            }
-		}
+					$scope.grid.experienceScolaire.data = $scope.selectedUser.data_personnel.experience.scolaire;
+					$scope.grid.experienceProfessionnelle.data = $scope.selectedUser.data_personnel.experience.professionnelle;
+					/*$scope.grid.salaireRemuneration.data = ($scope.selectedUser.data_salaires) ? $scope.selectedUser.data_salaires.remuneration : [];
+					$scope.grid.salaireRepartition.data = ($scope.selectedUser.data_salaires) ? $scope.selectedUser.data_salaires.repartition : [];*/
+
+					ngProgress.complete();
+				}, function (error) {
+					console.log(error);
+					ngProgress.reset();
+				});
+
+				SalaireService.get_one({subresource: $stateParams.personnelId, subaction: $scope.anneesSalaire.selected}, function (results) {
+					console.log('results info salaires: ', results);
+					$scope.selectedUser.data_salaires = results.data;
+
+					if ($scope.selectedUser.data_salaires == undefined) {
+						$scope.selectedUser.data_salaires = { remuneration: emptyRemunerationArray, repartition: emptyRepartitionArray };
+					}
+
+					$scope.grid.salaireRemuneration.data = $scope.selectedUser.data_salaires.remuneration;
+					$scope.grid.salaireRepartition.data = $scope.selectedUser.data_salaires.repartition;
+				}, function (error) {
+					console.log(error);
+				});
+			} else {
+				initNewUser();
+				ngProgress.complete();
+			}
+		};
+
+		$scope.updateSalairesData = function () {
+			ngProgress.start();
+			SalaireService.get_one({'subresource': $stateParams.personnelId, 'subaction': $scope.anneesSalaire.selected}, function (results) {
+				console.log('results info salaires: ', results);
+				$scope.selectedUser.data_salaires = results.data[0];
+
+				if ($scope.selectedUser.data_salaires == undefined) {
+					$scope.selectedUser.data_salaires = { remuneration: emptyRemunerationArray, repartition: emptyRepartitionArray };
+				}
+
+				$scope.grid.salaireRemuneration.data = $scope.selectedUser.data_salaires.remuneration;
+				$scope.grid.salaireRepartition.data = $scope.selectedUser.data_salaires.repartition;
+				ngProgress.complete();
+			}, function (error) {
+				console.log(error);
+				ngProgress.reset();
+			});
+		};
 
 		$scope.tabHeadingClick = function (page) {
 			$scope.selectedPage = $scope.templatesUrl[page];
 		};
 
 		$scope.grid = {
-            experienceScolaire: {
-                enableSelectAll: false,
-                enableColumnMenus: false,
-                minRowsToShow: 3,
-                enableGridMenu: false,
-                enableFiltering: false,
-                useExternalFiltering: false,
-                exporterMenuPdf: false,
-                rowSelection: true,
-                enableRowHeaderSelection: false,
-                multiSelect: false,
-                enableCellEdit: true,
-                enableCellEditOnFocus: true,
-                rowEditWaitInterval: -1,
-                paginationPageSizes: [20, 50, 100],
-                paginationPageSize: 50,
-                showGridFooter: false,
-                showColumnFooter: false,
+			experienceScolaire: {
+				enableSelectAll: false,
+				enableColumnMenus: false,
+				minRowsToShow: 3,
+				enableGridMenu: false,
+				enableFiltering: false,
+				useExternalFiltering: false,
+				exporterMenuPdf: false,
+				rowSelection: true,
+				enableRowHeaderSelection: false,
+				multiSelect: false,
+				enableCellEdit: true,
+				enableCellEditOnFocus: true,
+				rowEditWaitInterval: -1,
+				paginationPageSizes: [20, 50, 100],
+				paginationPageSize: 50,
+				showGridFooter: false,
+				showColumnFooter: false,
 
-                columnDefs: [
-                    {
-                        name: 'etablissement',
-                        displayName: 'Etablissement',
-                        pinnedLeft: false,
-                        enableFiltering: false,
-                        enableSorting: true,
-                        type: 'string',
-                        enableHiding: false
-                    },{
-                        name: 'diplome',
-                        displayName: 'Diplôme',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'string'
-                    },{
-                        name: 'date_obtention',
-                        displayName: 'Date d\'obtention',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'string'
-                    }
-                ],
-                onRegisterApi: function (gridApi) {
-                    $scope.tngExperienceScolaireGridApi = gridApi;
-                }
-            },
-            experienceProfessionnelle: {
-                enableSelectAll: false,
-                enableColumnMenus: false,
-                minRowsToShow: 3,
-                enableGridMenu: false,
-                enableFiltering: false,
-                useExternalFiltering: false,
-                exporterMenuPdf: false,
-                rowSelection: true,
-                enableRowHeaderSelection: false,
-                multiSelect: false,
-                enableCellEdit: true,
-                enableCellEditOnFocus: true,
-                rowEditWaitInterval: -1,
-                paginationPageSizes: [20, 50, 100],
-                paginationPageSize: 50,
-                showGridFooter: false,
-                showColumnFooter: false,
+				columnDefs: [
+					{
+						name: 'etablissement',
+						displayName: 'Etablissement',
+						pinnedLeft: false,
+						enableFiltering: false,
+						enableSorting: true,
+						type: 'string',
+						enableHiding: false
+					},{
+						name: 'diplome',
+						displayName: 'Diplôme',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'string'
+					},{
+						name: 'date_obtention',
+						displayName: 'Date d\'obtention',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'string'
+					}
+				],
+				onRegisterApi: function (gridApi) {
+					$scope.tngExperienceScolaireGridApi = gridApi;
+				}
+			},
+			experienceProfessionnelle: {
+				enableSelectAll: false,
+				enableColumnMenus: false,
+				minRowsToShow: 3,
+				enableGridMenu: false,
+				enableFiltering: false,
+				useExternalFiltering: false,
+				exporterMenuPdf: false,
+				rowSelection: true,
+				enableRowHeaderSelection: false,
+				multiSelect: false,
+				enableCellEdit: true,
+				enableCellEditOnFocus: true,
+				rowEditWaitInterval: -1,
+				paginationPageSizes: [20, 50, 100],
+				paginationPageSize: 50,
+				showGridFooter: false,
+				showColumnFooter: false,
 
-                columnDefs: [
-                    {
-                        name: 'entreprise',
-                        displayName: 'Entreprise',
-                        pinnedLeft: false,
-                        enableFiltering: false,
-                        enableSorting: true,
-                        type: 'string',
-                        enableHiding: false
-                    },{
-                        name: 'date_entree',
-                        displayName: 'Date entrée',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'date',
-                        cellFilter: 'date:\'dd-MM-yyyy\''
-                    },{
-                        name: 'date_sortie',
-                        displayName: 'Date sortie',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'date',
-                        cellFilter: 'date:\'dd-MM-yyyy\''
-                    },{
-                        name: 'qualification',
-                        displayName: 'Qualification',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'string'
-                    },{
-                        name: 'motif',
-                        displayName: 'Motif du départ',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'string'
-                    },{
-                        name: 'stage',
-                        displayName: 'Stage',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'boolean'
-                    }
-                ],
-                onRegisterApi: function (gridApi) {
-                    $scope.tngExperienceProfessionnelleGridApi = gridApi;
-                }
-            },
-            salaireRemuneration: {
-                enableSelectAll: false,
-                enableColumnMenus: false,
-                minRowsToShow: 12,
-                enableGridMenu: false,
-                enableFiltering: false,
-                useExternalFiltering: false,
-                exporterMenuPdf: false,
-                rowSelection: true,
-                enableRowHeaderSelection: false,
-                multiSelect: false,
-                enableCellEdit: true,
-                enableCellEditOnFocus: true,
-                rowEditWaitInterval: -1,
-                paginationPageSizes: [20, 50, 100],
-                paginationPageSize: 50,
-                showGridFooter: false,
-                showColumnFooter: true,
+				columnDefs: [
+					{
+						name: 'entreprise',
+						displayName: 'Entreprise',
+						pinnedLeft: false,
+						enableFiltering: false,
+						enableSorting: true,
+						type: 'string',
+						enableHiding: false
+					},{
+						name: 'date_entree',
+						displayName: 'Date entrée',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'date',
+						cellFilter: 'date:\'dd-MM-yyyy\''
+					},{
+						name: 'date_sortie',
+						displayName: 'Date sortie',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'date',
+						cellFilter: 'date:\'dd-MM-yyyy\''
+					},{
+						name: 'qualification',
+						displayName: 'Qualification',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'string'
+					},{
+						name: 'motif',
+						displayName: 'Motif du départ',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'string'
+					},{
+						name: 'stage',
+						displayName: 'Stage',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'boolean'
+					}
+				],
+				onRegisterApi: function (gridApi) {
+					$scope.tngExperienceProfessionnelleGridApi = gridApi;
+				}
+			},
+			salaireRemuneration: {
+				enableSelectAll: false,
+				enableColumnMenus: false,
+				minRowsToShow: 12,
+				enableGridMenu: false,
+				enableFiltering: false,
+				useExternalFiltering: false,
+				exporterMenuPdf: false,
+				rowSelection: true,
+				enableRowHeaderSelection: false,
+				multiSelect: false,
+				enableCellEdit: true,
+				enableCellEditOnFocus: true,
+				rowEditWaitInterval: -1,
+				paginationPageSizes: [20, 50, 100],
+				paginationPageSize: 50,
+				showGridFooter: false,
+				showColumnFooter: true,
 
-                columnDefs: [
-                    {
-                        name: 'mois',
-                        displayName: 'Mois',
-                        pinnedLeft: false,
-                        enableFiltering: false,
-                        enableSorting: true,
-                        type: 'string',
-                        enableHiding: false
-                    },{
-                        name: 'salaire_brut',
-                        displayName: 'Salaire Brut',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'string'
-                    },{
-                        name: 'primes_brut',
-                        displayName: 'Primes brut',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'date'
-                    },{
-                        name: 'interessement',
-                        displayName: 'Intéressement',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'string'
-                    },{
-                        name: 'indemnites',
-                        displayName: 'Indemnités',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'string'
-                    },{
-                        name: 'moy_charges_soc',
-                        displayName: 'Moy. Charges Sociales',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'string'
-                    },{
-                        name: 'total_cout',
-                        displayName: 'TOTAL COUT',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'string'
-                    }
-                ],
-                onRegisterApi: function (gridApi) {
-                    $scope.tngSalaireRemunerationGridApi = gridApi;
-                }
-            },
-            salaireRepartition: {
-                enableSelectAll: false,
-                enableColumnMenus: false,
-                minRowsToShow: 12,
-                enableGridMenu: false,
-                enableFiltering: false,
-                useExternalFiltering: false,
-                exporterMenuPdf: false,
-                rowSelection: true,
-                enableRowHeaderSelection: false,
-                multiSelect: false,
-                enableCellEdit: true,
-                enableCellEditOnFocus: true,
-                rowEditWaitInterval: -1,
-                paginationPageSizes: [20, 50, 100],
-                paginationPageSize: 50,
-                showGridFooter: false,
-                showColumnFooter: true,
+				columnDefs: [
+					{
+						name: 'mois',
+						displayName: 'Mois',
+						pinnedLeft: false,
+						enableFiltering: false,
+						enableSorting: true,
+						type: 'string',
+						enableHiding: false
+					},{
+						name: 'salaire_brut',
+						displayName: 'Salaire Brut',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'string'
+					},{
+						name: 'primes_brut',
+						displayName: 'Primes brut',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'date'
+					},{
+						name: 'interessement',
+						displayName: 'Intéressement',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'string'
+					},{
+						name: 'indemnites',
+						displayName: 'Indemnités',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'string'
+					},{
+						name: 'moy_charges_soc',
+						displayName: 'Moy. Charges Sociales',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'string'
+					},{
+						name: 'total_cout',
+						displayName: 'TOTAL COUT',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'string'
+					}
+				],
+				onRegisterApi: function (gridApi) {
+					$scope.tngSalaireRemunerationGridApi = gridApi;
+				}
+			},
+			salaireRepartition: {
+				enableSelectAll: false,
+				enableColumnMenus: false,
+				minRowsToShow: 12,
+				enableGridMenu: false,
+				enableFiltering: false,
+				useExternalFiltering: false,
+				exporterMenuPdf: false,
+				rowSelection: true,
+				enableRowHeaderSelection: false,
+				multiSelect: false,
+				enableCellEdit: true,
+				enableCellEditOnFocus: true,
+				rowEditWaitInterval: -1,
+				paginationPageSizes: [20, 50, 100],
+				paginationPageSize: 50,
+				showGridFooter: false,
+				showColumnFooter: true,
 
-                columnDefs: [
-                    {
-                        name: 'mois',
-                        displayName: 'Mois',
-                        pinnedLeft: false,
-                        enableFiltering: false,
-                        enableSorting: true,
-                        type: 'string',
-                        enableHiding: false
-                    },{
-                        name: 'heures_mensuelles',
-                        displayName: 'H mens.',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'number'
-                    },{
-                        name: 'heures_supp',
-                        displayName: 'H suppl.',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'number'
-                    },{
-                        name: 'jours_trav',
-                        displayName: 'J trav.',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'number'
-                    },{
-                        name: 'jours_mal',
-                        displayName: 'J mal.',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'number'
-                    },{
-                        name: 'jours_conges',
-                        displayName: 'J congés',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'number'
-                    },{
-                        name: 'jours_abs',
-                        displayName: 'J abs.',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'number'
-                    },{
-                        name: 'jours_formation',
-                        displayName: 'J form.',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'number'
-                    },{
-                        name: 'jours_divers',
-                        displayName: 'J divers',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'number'
-                    },{
-                        name: 'total_jour',
-                        displayName: 'TOTAL JOUR',
-                        pinnedLeft: false,
-                        enableFiltering: true, 
-                        enableSorting: true,
-                        type: 'number'
-                    }
-                ],
-                onRegisterApi: function (gridApi) {
-                    $scope.tngSalaireRepartitionGridApi = gridApi;
-                }
-            }
+				columnDefs: [
+					{
+						name: 'mois',
+						displayName: 'Mois',
+						pinnedLeft: false,
+						enableFiltering: false,
+						enableSorting: true,
+						type: 'string',
+						enableHiding: false
+					},{
+						name: 'heures_mensuelles',
+						displayName: 'H mens.',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'number'
+					},{
+						name: 'heures_supp',
+						displayName: 'H suppl.',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'number'
+					},{
+						name: 'jours_trav',
+						displayName: 'J trav.',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'number'
+					},{
+						name: 'jours_mal',
+						displayName: 'J mal.',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'number'
+					},{
+						name: 'jours_conges',
+						displayName: 'J congés',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'number'
+					},{
+						name: 'jours_abs',
+						displayName: 'J abs.',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'number'
+					},{
+						name: 'jours_formation',
+						displayName: 'J form.',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'number'
+					},{
+						name: 'jours_divers',
+						displayName: 'J divers',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'number'
+					},{
+						name: 'total_jour',
+						displayName: 'TOTAL JOUR',
+						pinnedLeft: false,
+						enableFiltering: true, 
+						enableSorting: true,
+						type: 'number'
+					}
+				],
+				onRegisterApi: function (gridApi) {
+					$scope.tngSalaireRepartitionGridApi = gridApi;
+				}
+			}
 		};
 
 		$scope.addExperienceScolaire = function () {
@@ -562,39 +632,68 @@
 			modalInstance.result.then(function (returned_element) {}, function (error) { console.log(error); });
 		}
 
-        $scope.createNewPersonnel = function () {
-            initNewUser();
+		$scope.createNewPersonnel = function () {
+			initNewUser();
 
-            $scope.grid.experienceScolaire.data = $scope.selectedUser.data_personnel.experience.scolaire;
-            $scope.grid.experienceProfessionnelle.data = $scope.selectedUser.data_personnel.experience.professionnelle;
-            $scope.grid.salaireRemuneration.data = $scope.selectedUser.data_salaires.remuneration;
-            $scope.grid.salaireRepartition.data = $scope.selectedUser.data_salaires.repartition;
-        }
+			$scope.grid.experienceScolaire.data = $scope.selectedUser.data_personnel.experience.scolaire;
+			$scope.grid.experienceProfessionnelle.data = $scope.selectedUser.data_personnel.experience.professionnelle;
+			$scope.grid.salaireRemuneration.data = $scope.selectedUser.data_salaires.remuneration;
+			$scope.grid.salaireRepartition.data = $scope.selectedUser.data_salaires.repartition;
+		}
 
-        $scope.saveEditPersonnel = function () {
-            // Création
-            if ($scope.selectedUser != null && $scope.selectedUser.id) {
-                PersonnelService.update({'subresource': $scope.selectedUser.id}, {'data': $scope.selectedUser}, function (results) {
-                    console.log('results:', results);
-                    // TODO popin CREATION OK
-                    ngProgress.complete();
-                }, function (error) {
-                    console.log(error);
-                    ngProgress.reset();
-                });
-            } else { 
-                // Mise à jour
-                PersonnelService.create({}, {'data': $scope.selectedUser}, function (results) {
-                    console.log('results:', results);
-                    // TODO popin MAJ OK
-                    ngProgress.complete();
-                }, function (error) {
-                    console.log(error);
-                    ngProgress.reset();
-                });
-            }
-        }
-        
+		$scope.saveEditPersonnel = function () {
+			// Mise à jour
+			if ($scope.selectedUser != null && $scope.selectedUser.id) {
+				updatePersonnelData();
+				updateSalairePersonnel();
+			} else { 
+				// Création
+				createPersonnelData();
+				createSalairePersonnel();
+			}
+		}
+
+		var createPersonnelData = function () {
+				PersonnelService.create({}, {'data': $scope.selectedUser}, function (results) {
+					console.log('results createPersonnelData: ', results);
+					// TODO popin MAJ OK
+					ngProgress.complete();
+				}, function (error) {
+					console.log(error);
+					ngProgress.reset();
+				});
+			},
+			updatePersonnelData = function () {
+				PersonnelService.update({'subresource': $scope.selectedUser.id}, {'data': $scope.selectedUser}, function (results) {
+					console.log('results updatePersonnelData: ', results);
+					// TODO popin CREATION OK
+					ngProgress.complete();
+				}, function (error) {
+					console.log(error);
+					ngProgress.reset();
+				});
+			},
+			createSalairePersonnel = function () {
+				SalaireService.create({}, {data_salaire: $scope.selectedUser.data_salaires}, function (results) {
+					console.log('results createSalairePersonnel: ', results);
+					// TODO popin CREATE OK
+					ngProgress.complete();
+				}, function (error) {
+					console.log(error);
+					ngProgress.reset();
+				});
+			},
+			updateSalairePersonnel = function () {
+				SalaireService.upsert({'subresource': $scope.selectedUser.id, 'subaction': $scope.anneesSalaire.selected}, {'data_salaire': $scope.selectedUser.data_salaires}, function (results) {
+					console.log('results updateSalairePersonnel: ', results);
+					// TODO popin UPDATE OK
+					ngProgress.complete();
+				}, function (error) {
+					console.log(error);
+					ngProgress.reset();
+				});
+			}
+		
 		load_data();
 	}
 
