@@ -1,0 +1,26 @@
+.form-label {
+	line-height: 35px;
+	vertical-align: middle;
+	overflow: ellipsis;
+	font-weight: bold;
+}
+.custom-header-part-form {
+	padding: 15px;
+}
+.custom-header-part-form .btn {
+	padding: 0 !important;
+}
+.custom-form-style table{
+	border-collapse: separate !important;
+}
+.custom-form-style .large-width-radio{
+	width: 100%;
+}
+.custom-bottom-ventes {
+	background-color: #3c8dbc;
+	color: #FFF;
+}
+.custom-bottom-marge {
+	background-color:#00a65a;
+	color: #FFF;
+}

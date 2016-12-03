@@ -1,0 +1,16 @@
+/*
+ *	Login Page
+ */
+
+.link-read-only {
+	width: 100%;
+	margin-top: 20px;
+}
+.bloc-read-only {
+	border-top: solid 1px #EEE;
+	margin-top: 30px;
+	padding-top: 30px;
+}
+.login-box .login-failed{
+	margin: 15px 0;
+}

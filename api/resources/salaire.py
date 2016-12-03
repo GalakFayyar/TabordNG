@@ -32,7 +32,7 @@ class Salaire():
         result = self.cursor.fetchall()
 
         # return {'data':self.tools.format_multi_data_fields_result(data, ['data_personnel', 'data_salaires'])}
-        return {'data': result[0]['data']}
+        return {'data': result[0]['data'] if len(result) > 0 else None}
 
     def create(self, data):
         if 'data' in data and 'data_salaire' in data['data']:
@@ -70,7 +70,6 @@ class Salaire():
 
 
     def upsert(self, idPersonnel, annee, data):
-        print(data)
         if 'data_salaire' in data:
 
             insert_sql = "INSERT INTO salaires (id_personnel, annee, data) SELECT %s, %s, %s"

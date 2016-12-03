@@ -1,0 +1,11 @@
+.ui-select-pharmacie {
+	width: 92%;
+	margin: 4% !important;
+}
+.ui-select-period {
+	width: 92%;
+	margin: 0 4% 2% 4% !important;
+}
+.ui-select-period a.ui-select-match {
+	color: #333 !important;
+}

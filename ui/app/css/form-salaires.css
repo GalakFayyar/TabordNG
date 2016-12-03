@@ -1,0 +1,9 @@
+.ui-grid-salaires .ui-grid-row.ng-scope.ui-grid-row-dirty,
+.ui-grid-repartition .ui-grid-row.ng-scope.ui-grid-row-dirty {
+    font-weight: bold !important;
+}
+.ui-grid-salaires .ui-grid-row-dirty .ui-grid-cell,
+.ui-grid-repartition .ui-grid-row-dirty .ui-grid-cell {
+	color: #FFF !important;
+	background: #3c8dbc !important;
+}

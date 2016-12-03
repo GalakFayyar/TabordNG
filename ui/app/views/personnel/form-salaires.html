@@ -4,7 +4,7 @@
 			<!-- <button type="button" class="btn btn-primary btn-xs">Ajouter</button>
 			<button type="button" class="btn btn-danger btn-xs">Supprimer</button> -->
 			<ui-select  ng-model="anneesSalaire.selected"
-						ng-change="updateSalairesData()"
+						ng-change="getSalaireData(anneesSalaire.selected, '{{anneesSalaire.selected}}')"
 						theme="select2" 
 						class="ui-select-salaires"
 						search-enabled="false"
@@ -18,7 +18,7 @@
 		<h4>Rémunération</h4>
 		<div
 			ui-grid="grid.salaireRemuneration" 
-			class="" 
+			class="ui-grid-salaires" 
 			style="margin-bottom: 15px"
 			ui-grid-edit 
 			ui-grid-row-edit 
@@ -38,7 +38,7 @@
 		<h4>Répartition</h4>
 		<div
 			ui-grid="grid.salaireRepartition" 
-			class="" 
+			class="ui-grid-repartition" 
 			style="margin-bottom: 15px"
 			ui-grid-edit 
 			ui-grid-row-edit 

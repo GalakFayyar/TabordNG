@@ -171,31 +171,51 @@
 
 		$scope.anneesSalaire = {
 			selected : null,
-			list : [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
+			list : [2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010]
 		};
-		$scope.anneesSalaire.selected = $scope.anneesSalaire.list[$scope.anneesSalaire.list.length - 1];
+		$scope.anneesSalaire.selected = $scope.anneesSalaire.list[0];
 
 		var load_data = function () {
-			// Call service, load data in grid and forms...
-			if ($stateParams && $stateParams.personnelId) {
-				PersonnelService.get({subresource: $stateParams.personnelId}, function (results) {
-					console.log('results infos personnel: ', results.data[0]);
-					$scope.selectedUser = results.data[0];
+				// Call service, load data in grid and forms...
+				if ($stateParams && $stateParams.personnelId) {
+					PersonnelService.get({subresource: $stateParams.personnelId}, function (results) {
+						console.log('results infos personnel: ', results.data[0]);
+						$scope.selectedUser = results.data[0];
 
-					$scope.selectedUser.data_personnel.naissance.date = new Date($scope.selectedUser.data_personnel.naissance.date);
+						$scope.selectedUser.data_personnel.naissance.date = new Date($scope.selectedUser.data_personnel.naissance.date);
 
-					$scope.grid.experienceScolaire.data = $scope.selectedUser.data_personnel.experience.scolaire;
-					$scope.grid.experienceProfessionnelle.data = $scope.selectedUser.data_personnel.experience.professionnelle;
-					/*$scope.grid.salaireRemuneration.data = ($scope.selectedUser.data_salaires) ? $scope.selectedUser.data_salaires.remuneration : [];
-					$scope.grid.salaireRepartition.data = ($scope.selectedUser.data_salaires) ? $scope.selectedUser.data_salaires.repartition : [];*/
+						$scope.grid.experienceScolaire.data = $scope.selectedUser.data_personnel.experience.scolaire;
+						$scope.grid.experienceProfessionnelle.data = $scope.selectedUser.data_personnel.experience.professionnelle;
+						/*$scope.grid.salaireRemuneration.data = ($scope.selectedUser.data_salaires) ? $scope.selectedUser.data_salaires.remuneration : [];
+						$scope.grid.salaireRepartition.data = ($scope.selectedUser.data_salaires) ? $scope.selectedUser.data_salaires.repartition : [];*/
 
+						ngProgress.complete();
+					}, function (error) {
+						console.log(error);
+						ngProgress.reset();
+					});
+
+					SalaireService.get_one({subresource: $stateParams.personnelId, subaction: $scope.anneesSalaire.selected}, function (results) {
+						console.log('results info salaires: ', results);
+						$scope.selectedUser.data_salaires = results.data;
+
+						if ($scope.selectedUser.data_salaires == undefined) {
+							$scope.selectedUser.data_salaires = { remuneration: emptyRemunerationArray, repartition: emptyRepartitionArray };
+						}
+
+						$scope.grid.salaireRemuneration.data = $scope.selectedUser.data_salaires.remuneration;
+						$scope.grid.salaireRepartition.data = $scope.selectedUser.data_salaires.repartition;
+					}, function (error) {
+						console.log(error);
+					});
+				} else {
+					initNewUser();
 					ngProgress.complete();
-				}, function (error) {
-					console.log(error);
-					ngProgress.reset();
-				});
-
-				SalaireService.get_one({subresource: $stateParams.personnelId, subaction: $scope.anneesSalaire.selected}, function (results) {
+				}
+			},
+			getSalairesData = function () {
+				ngProgress.start();
+				SalaireService.get_one({'subresource': $stateParams.personnelId, 'subaction': $scope.anneesSalaire.selected}, function (results) {
 					console.log('results info salaires: ', results);
 					$scope.selectedUser.data_salaires = results.data;
 
@@ -205,37 +225,71 @@
 
 					$scope.grid.salaireRemuneration.data = $scope.selectedUser.data_salaires.remuneration;
 					$scope.grid.salaireRepartition.data = $scope.selectedUser.data_salaires.repartition;
+					ngProgress.complete();
 				}, function (error) {
 					console.log(error);
+					ngProgress.reset();
+				});
+			},
+			cleanDirtyRowsGrid = function (gridApi) {
+				var dirtyRows = gridApi.rowEdit.getDirtyRows(gridApi.grid);
+				var dirtyDataRows = dirtyRows.map( function (gridRow) { return gridRow.entity; });
+				gridApi.rowEdit.setRowsClean(dirtyDataRows);
+			};
+
+		$scope.getSalaireData = function (newValue, oldValue) {
+			// Avant changement année, controle si donnée dirty
+			var dirtyRowsSalaireRemuneration = $scope.tngSalaireRemunerationGridApi.rowEdit.getDirtyRows($scope.tngSalaireRemunerationGridApi.grid);
+			var dirtyRowsSalaireRepartition = $scope.tngSalaireRepartitionGridApi.rowEdit.getDirtyRows($scope.tngSalaireRepartitionGridApi.grid);
+			if (dirtyRowsSalaireRemuneration.length > 0 || dirtyRowsSalaireRepartition.length > 0) {
+				var modalInstance = $modal.open({
+					templateUrl: 'views/personnel/modal-add-experience.html',
+					controller: 'PersonnelInfoDirtyRowsModalController',
+					backdrop: 'static',
+					resolve: {
+						parameters: function () {
+							// Déclaration des variables
+							var modalTitle = 'Attention';
+							var modalContent = 'Des données ont été éditées sur l\'année ' + oldValue + ' mais pas sauvegardées.<br/> \
+												Souhaitez-vous enregistrer vos modifications avant de changer d\'année ?';
+							// Retourne 1 objet avec toutes les variables
+							return {
+								modalTitle: modalTitle,
+								modalContent: modalContent
+							};
+						}
+					}
+				});
+
+				modalInstance.result.then(function (returned_element) {
+					console.log('returned_element: ', returned_element);
+					$scope.tngSalaireRemunerationGridApi.rowEdit.flushDirtyRows($scope.tngSalaireRemunerationGridApi.grid);
+					$scope.tngSalaireRepartitionGridApi.rowEdit.flushDirtyRows($scope.tngSalaireRepartitionGridApi.grid);
+				}, function (returnedAction) { 
+					console.log('returnedAction ModalInstanceResult: ', returnedAction); 
+					if (returnedAction == 'cancel') {
+						$scope.anneesSalaire.selected = oldValue;
+					} else if (returnedAction == 'validate') {
+						// Sauvegarde précédente année
+						$scope.anneesSalaire.selected = oldValue;
+						updateSalairePersonnel();
+						
+						cleanDirtyRowsGrid($scope.tngSalaireRemunerationGridApi);
+						cleanDirtyRowsGrid($scope.tngSalaireRepartitionGridApi);
+
+						// Chargement nouvelle année
+						$scope.anneesSalaire.selected = newValue;
+						getSalairesData();
+					}
 				});
 			} else {
-				initNewUser();
-				ngProgress.complete();
+				getSalairesData();
 			}
-		};
-
-		$scope.updateSalairesData = function () {
-			ngProgress.start();
-			SalaireService.get_one({'subresource': $stateParams.personnelId, 'subaction': $scope.anneesSalaire.selected}, function (results) {
-				console.log('results info salaires: ', results);
-				$scope.selectedUser.data_salaires = results.data[0];
-
-				if ($scope.selectedUser.data_salaires == undefined) {
-					$scope.selectedUser.data_salaires = { remuneration: emptyRemunerationArray, repartition: emptyRepartitionArray };
-				}
-
-				$scope.grid.salaireRemuneration.data = $scope.selectedUser.data_salaires.remuneration;
-				$scope.grid.salaireRepartition.data = $scope.selectedUser.data_salaires.repartition;
-				ngProgress.complete();
-			}, function (error) {
-				console.log(error);
-				ngProgress.reset();
-			});
-		};
+		}
 
 		$scope.tabHeadingClick = function (page) {
 			$scope.selectedPage = $scope.templatesUrl[page];
-		};
+		}
 
 		$scope.grid = {
 			experienceScolaire: {
@@ -530,7 +584,7 @@
 					$scope.tngSalaireRepartitionGridApi = gridApi;
 				}
 			}
-		};
+		}
 
 		$scope.addExperienceScolaire = function () {
 			var modalInstance = $modal.open({
@@ -651,6 +705,9 @@
 				createPersonnelData();
 				createSalairePersonnel();
 			}
+
+			cleanDirtyRowsGrid($scope.tngSalaireRemunerationGridApi);
+			cleanDirtyRowsGrid($scope.tngSalaireRepartitionGridApi);
 		}
 
 		var createPersonnelData = function () {
@@ -778,6 +835,24 @@
 			}, function (error) {
 				console.log(error);
 			});
+		};
+	}
+
+	/*#####################################################################################
+	### POPUP ALERT DIRTY ROWS SALAIRES MODAL CONTROLLER
+	#####################################################################################*/
+	angular.module('tabordNG').controller('PersonnelInfoDirtyRowsModalController', PersonnelInfoDirtyRowsModalController);
+
+	PersonnelInfoDirtyRowsModalController.$inject = ['$scope', '$rootScope', '$modalInstance', '$timeout', 'ngProgress', 'parameters'];
+	function PersonnelInfoDirtyRowsModalController ($scope, $rootScope, $modalInstance, $timeout, ngProgress, parameters) {
+		$scope.modalTitle = parameters.modalTitle;
+		$scope.modalContent = parameters.modalContent;
+		$scope.validate = function () {			
+			// Fermeture Popup
+			$modalInstance.dismiss('validate');
+		}
+		$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
 		};
 	}
 })();

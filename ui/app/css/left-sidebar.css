@@ -1,0 +1,6 @@
+ul.sidebar-menu li.activated a{
+	font-weight: bold;
+	color: #00a65a;
+	border-left-color: #00a65a;
+	background: #DDD;
+}
