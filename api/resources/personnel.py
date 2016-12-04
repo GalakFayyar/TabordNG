@@ -26,6 +26,23 @@ class Personnel():
 
         return {'data':data}
 
+    def list_with_salaries(self):
+        sql = """
+            SELECT 
+                id, 
+                data::json->'nom_usuel' as nom, 
+                p.data::json->'prenom' as prenom, 
+                p.data::json->'contrat'->'dates'->'entree' as date_debut_contrat, 
+                p.data::json->'qualification' as qualification, 
+                p.data::json->'remuneration' as remuneration 
+            FROM personnel p;
+        """
+
+        self.cursor.execute(sql)
+        data = self.cursor.fetchall()
+
+        return {'data':data}
+
     def get_one(self, id):
         sql = """
             SELECT 

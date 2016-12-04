@@ -26,7 +26,18 @@
 					},
 					observations: null,
 					nationalite: null,
-					contrat: null,
+					contrat: {
+						type: null,
+						coefficient: null,
+						dates: {
+							debut: null,
+							fin: null
+						},
+						remuneration: {
+							montant_brut: null,
+							montant_net: null
+						}
+					},
 					date_fin: null,
 					adresse: {
 						num: null,

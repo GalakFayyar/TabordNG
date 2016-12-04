@@ -40,6 +40,4 @@ class Vente():
             if period in sql_result[0] and len(json.loads(sql_result[0][period])) > 0:
                 result = json.loads(sql_result[0][period])
 
-        logger.debug(result)
-
         return {'data':result[0]}

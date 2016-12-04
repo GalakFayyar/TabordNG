@@ -1,3 +1,23 @@
+<div class="row form-group">
+	<div class="col-sm-12">
+		<h4>Précédente rémunération</h4>
+	</div>
+	<form class="form-horizontal">
+		<label for="inputCoefficient" class="col-sm-2 control-label">Coefficient</label>
+		<div class="col-sm-2">
+			<input type="text" class="form-control" id="inputCoefficient" placeholder="Coefficient" ng-model="selectedUser.data_personnel.contrat.coefficient" />
+		</div>
+		<label for="inputMontantSalaireBrut" class="col-sm-2 control-label">Salaire Brut</label>
+		<div class="col-sm-2">
+			<input type="text" class="form-control" id="inputMontantSalaireBrut" placeholder="Montant" ng-model="selectedUser.data_personnel.contrat.remuneration.montant_brut" />
+		</div>
+		<label for="inputMontantSalaireNet" class="col-sm-2 control-label">Salaire Net</label>
+		<div class="col-sm-2">
+			<input type="text" class="form-control" id="inputMontantSalaireNet" placeholder="Montant" ng-model="selectedUser.data_personnel.contrat.remuneration.montant_net" />
+		</div>
+	</form>
+</div>
+
 <div class="row">
 	<div class="col-sm-12">
 		<div class="btn-edit-grid-formation">
