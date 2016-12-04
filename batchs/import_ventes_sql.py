@@ -26,7 +26,7 @@ from tools.swallow.swallow.Swallow import Swallow
 from psycopg2.extras import RealDictCursor
 
 import datetime, pytz
-
+from subprocess import call
 
 def file_to_postgresql(p_doc, p_type, p_date_operation=None):
     """
@@ -129,6 +129,14 @@ if __name__ == '__main__':
         cursor = connector.cursor(cursor_factory=RealDictCursor)
     except:
         logger.error("ERREUR INITIALISATION ACCES DATABASE")
+        exit()
+
+    # Création table si inexistante
+    cmd = "psql {database} < `pwd`/{sql_file}".format(database=conf['postgresql']['credentials']['db'], sql_file='sql/batchs_init.sql')
+    return_code = call(cmd, shell=True)
+    if return_code != 0:
+        logger.error("ECHEC DE CREATION DES TABLES BATCHS")
+        exit()
 
     # Vidage table SQL
     sql = "TRUNCATE {table};".format(table=type_fichier)

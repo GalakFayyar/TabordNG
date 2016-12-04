@@ -1,10 +1,10 @@
-CREATE TABLE batchs_laboratoires(
+CREATE TABLE IF NOT EXISTS batchs_laboratoires(
 	id SERIAL NOT NULL,
 	libelle VARCHAR(50) NOT NULL,
 	CONSTRAINT prk_constraint_batchs_laboratoires PRIMARY KEY (id)
 );
 
-CREATE TABLE batchs_produits(
+CREATE TABLE IF NOT EXISTS batchs_produits(
 	id SERIAL NOT NULL,
 	code07 VARCHAR(50) NOT NULL,
 	code13 VARCHAR(50) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE batchs_produits(
 	CONSTRAINT prk_constraint_batchs_produits PRIMARY KEY (id)
 );
 
-CREATE TABLE batchs_ventes(
+CREATE TABLE IF NOT EXISTS batchs_ventes(
 	id BIGINT NOT NULL,
 	periode VARCHAR(50) NOT NULL,
 	codeCIP VARCHAR(50) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE batchs_ventes(
 	CONSTRAINT prk_constraint_batchs_ventes PRIMARY KEY (id)
 );
 
-CREATE TABLE ventes_pharmacies_periodes(
+CREATE TABLE IF NOT EXISTS ventes_pharmacies_periodes(
 	id SERIAL NOT NULL,
 	idPharmacie INT NOT NULL,
 	ventes_p1 json,

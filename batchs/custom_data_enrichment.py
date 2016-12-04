@@ -2,10 +2,10 @@
 # coding: utf-8
 
 """ 
-    Intègre les données extraites des ventes labo dans une base PostgreSQL
+    Integration des données extraites des laboratoires dans l'outil TabordNG
 
     Usage:
-        enrich_data.py [--debug]
+        custom_data_enrichment.py [--debug]
 
     Options:
         --help                      Affiche l'aide
