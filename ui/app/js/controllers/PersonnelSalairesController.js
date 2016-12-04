@@ -5,8 +5,8 @@
 
 	angular.module('tabordNG').controller('PersonnelSalairesController', PersonnelSalairesController);
 
-	PersonnelSalairesController.$inject = ['$scope', 'HelperService', 'uiGridConstants', 'ngProgress'];
-	function PersonnelSalairesController ($scope, HelperService, uiGridConstants, ngProgress) {
+	PersonnelSalairesController.$inject = ['$scope', 'HelperService', 'uiGridConstants', 'PersonnelService', 'ngProgress'];
+	function PersonnelSalairesController ($scope, HelperService, uiGridConstants, PersonnelService, ngProgress) {
 		$.AdminLTE.layout.activate();
 
 		$scope.grid = {
@@ -14,16 +14,18 @@
 				enableSelectAll: false,
 				enableColumnMenus: false,
 				minRowsToShow: 4,
-				enableGridMenu: false,
+				enableGridMenu: true,
 				enableFiltering: false,
 				useExternalFiltering: false,
 				exporterMenuPdf: false,
 				rowSelection: true,
 				enableRowHeaderSelection: false,
 				multiSelect: false,
-				enableCellEdit: true,
-				enableCellEditOnFocus: true,
+				enableCellEdit: false,
+				enableCellEditOnFocus: false,
 				rowEditWaitInterval: -1,
+
+				enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
 
 				columnDefs: [
 					{
@@ -54,6 +56,7 @@
 						type: 'bool'
 					},{
 						name: 'montant',
+						field: 'remuneration.montant_brut',
 						displayName: 'Montant Brut',
 						pinnedLeft: true,
 						enableFiltering: true, 
@@ -67,7 +70,7 @@
 						enableSorting: true,
 						type: 'string'
 					},{
-						name: 'date_entree',
+						name: 'date_debut_contrat',
 						displayName: 'Ancienneté',
 						pinnedLeft: true,
 						enableFiltering: true, 
@@ -82,8 +85,13 @@
 		};
 
 		var load_data = function () {
-			// Call service, load data in grid...
-			ngProgress.complete();
+			PersonnelService.list_with_salaries({}, function (results) {
+				$scope.grid.salaires.data = results.data;
+				ngProgress.complete();
+			}, function (error) {
+				ngProgress.reset();
+				console.log('Erreur load_data(): ', error);
+			});
 		}
 
 		load_data();

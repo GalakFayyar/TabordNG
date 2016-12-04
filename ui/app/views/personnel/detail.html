@@ -22,8 +22,9 @@
 				</div>
 				<div class="col-md-6">
 					<ui-select style="width:100%" ng-model="personnel.selected" required="true" reset-search-input="false">
-						<ui-select-match placeholder="Créer ou sélectionner un salarié...">
+						<ui-select-match placeholder="Sélectionner un salarié...">
 							<span>{{$select.selected.nom || $select.search}}</span>
+							<span>{{$select.selected.prenom || $select.search}}</span>
             				<!-- <a class="btn btn-xs btn-link pull-right" ng-click="clear($event, $select)"><i class="glyphicon glyphicon-remove"></i></a> -->
             			</ui-select-match>
 						<ui-select-choices refresh="refreshResults($select)" refresh-delay="0" repeat="personnel in personnel.list | filter: $select.search">

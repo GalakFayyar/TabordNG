@@ -14,6 +14,13 @@
 					'action': 'list'
 				}
 			},
+			list_with_salaries : {
+				method : 'GET',
+				params : {
+					'resource': 'personnel',
+					'action': 'list_with_salaries'
+				}
+			},
 			get : {
 				method : 'GET',
 				params : {

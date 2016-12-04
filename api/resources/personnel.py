@@ -16,7 +16,7 @@ class Personnel():
                 id, 
                 data::json->'nom_usuel' as nom, 
                 data::json->'prenom' as prenom, 
-                data::json->'contrat'->'dates'->'entree' as date_debut_contrat, 
+                data::json->'contrat'->'dates'->'debut' as date_debut_contrat, 
                 data::json->'qualification' as qualification 
             FROM personnel;
         """
@@ -32,9 +32,8 @@ class Personnel():
                 id, 
                 data::json->'nom_usuel' as nom, 
                 p.data::json->'prenom' as prenom, 
-                p.data::json->'contrat'->'dates'->'entree' as date_debut_contrat, 
-                p.data::json->'qualification' as qualification, 
-                p.data::json->'remuneration' as remuneration 
+                p.data::json->'contrat'->'dates'->'debut' as date_debut_contrat, 
+                p.data::json->'contrat'->'remuneration' as remuneration 
             FROM personnel p;
         """
 

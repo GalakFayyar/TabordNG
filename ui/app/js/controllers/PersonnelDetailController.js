@@ -187,6 +187,20 @@
 		$scope.anneesSalaire.selected = $scope.anneesSalaire.list[0];
 
 		var load_data = function () {
+				$scope.personnel = {
+					list: [],
+					selected: null
+				};
+				
+				PersonnelService.list({}, function (results) {
+					$scope.personnel.list = results.data;
+					$scope.personnel.selected = results.data[0];
+					ngProgress.complete();
+				}, function (error) {
+					ngProgress.reset();
+					console.log('Erreur get all personnel(): ', error);
+				});
+
 				// Call service, load data in grid and forms...
 				if ($stateParams && $stateParams.personnelId) {
 					PersonnelService.get({subresource: $stateParams.personnelId}, function (results) {
@@ -440,6 +454,8 @@
 				paginationPageSize: 50,
 				showGridFooter: false,
 				showColumnFooter: true,
+				enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
+				enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
 
 				columnDefs: [
 					{
@@ -516,6 +532,8 @@
 				paginationPageSize: 50,
 				showGridFooter: false,
 				showColumnFooter: true,
+				enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
+				enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
 
 				columnDefs: [
 					{

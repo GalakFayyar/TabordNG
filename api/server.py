@@ -195,6 +195,11 @@ def list_personnel():
     personnel = personnel_resource.list()
     return jsonify(personnel)
 
+@app.route(url_prefix + "/personnel/list_with_salaries", methods=['GET'])
+def list_personnel_with_salaries():
+    personnel = personnel_resource.list_with_salaries()
+    return jsonify(personnel)
+
 @app.route(url_prefix + "/personnel/get/<id>", methods=['GET'])
 def get_personnel(id):
     personnel = personnel_resource.get_one(id)
@@ -217,7 +222,7 @@ def delete_personnel():
 
 
 ################################################################################
-#   PERSONNEL ROUTES
+#   SALAIRES ROUTES
 ################################################################################
 @app.route(url_prefix + "/salaire/get/<idPersonnel>", methods=['GET'])
 def get_salaires(idPersonnel):
