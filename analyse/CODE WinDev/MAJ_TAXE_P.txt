@@ -1,0 +1,40 @@
+PROCEDURE MAJ_TAXE_P()
+CAHT_Prev,CAHT_Reel,SATotal_Brut	est un monétaire=0
+TOTAL_TA_MTTP	est un monétaire=0
+	
+CAHT_Prev=Rech_CA("P","TC.CA_HT")	
+CAHT_Reel=Rech_CA("R","TC.CA_HT")	
+SATotal_Brut=Rech_SA("P","TS.TS_TBRUT")	
+
+HFiltre("TAXE","TA_CLE1",Convert(PE.PECLEUNIK)+"P"+Caract(0),Convert(PE.PECLEUNIK)+"P"+Caract(255))
+HLitPremier("TAXE","TA_CLE1")
+TANTQUE PAS HEnDehors()
+	TA.TA_MTT = (CAHT_Prev*TA.TA_CAHTP)/100
+	SI SATotal_Brut<>0
+		TA.TA_SAL = (TA.TA_MTT*100)/SATotal_Brut
+	SINON
+		TA.TA_SAL = 0
+	FIN
+	SI CAHT_Reel<>0
+		TA.TA_CAHTR = (TA.TA_MTT*100)/CAHT_Reel	
+	SINON
+		TA.TA_CAHTR = 0
+	FIN
+	TOTAL_TA_MTTP	= TOTAL_TA_MTTP+TA.TA_MTT
+	HModifie("TAXE")
+	HLitSuivant("TAXE","TA_CLE1")
+FIN
+
+HDésactiveFiltre(TOTALTA)
+HLitRecherchePremier(TOTALTA,TQ_CLE1,HConstruitValClé(TOTALTA,TQ_CLE1,PE.PECLEUNIK,"P"))
+SI HTrouve()
+	TQ.TA_MTT=TOTAL_TA_MTTP
+	HModifie("TOTALTA")
+SINON
+    TQ.PECLEUNIK=PE.PECLEUNIK
+	TQ.TA_REF	="P"
+	TQ.TA_MTT=TOTAL_TA_MTTP
+	HAjoute("TOTALTA")
+FIN
+
+

@@ -4,8 +4,8 @@
 
 	angular.module('tabordNG').controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['$scope', '$rootScope', '$timeout', 'HelperService', 'ngProgress'];
-	function DashboardController ($scope, $rootScope, $timeout, HelperService, ngProgress) {
+	DashboardController.$inject = ['$scope', '$rootScope', '$timeout', 'HelperService'];
+	function DashboardController ($scope, $rootScope, $timeout, HelperService) {
 		setTimeout(function() {$.AdminLTE.layout.activate();}, 500);
 		console.log("AdminLTE loaded");
 
@@ -65,7 +65,7 @@
 		};
 
 		$timeout(function(){
-			ngProgress.complete();
+			$rootScope.ngProgress.complete();
 		});
 
 		var months = ['Jan', 'Fev', 'Mars', 'Avr', 'Mai', 'Juin', 'Juil', 'Aout', 'Sept', 'Oct', 'Nov', 'Dec'];
@@ -163,14 +163,14 @@
 		};
 	}
 
-	// boRubriqueEditorControllers.controller('DashboardController', [ '$scope', '$rootScope', '$filter', '$state', '$modal', '$timeout', 'ngProgress', 'uiGridConstants', 'uiGridEditConstants', 'boRubriqueEditorConfig', 'BoErStatusConfService', 'BoErRubriqueService', 'BoErSettingsService', 'HelperService', 
-	// 	function ($scope, $rootScope, $filter, $state, $modal, $timeout, ngProgress, uiGridConstants, uiGridEditConstants, boRubriqueEditorConfig, BoErStatusConfService, BoErRubriqueService, BoErSettingsService, HelperService) {
+	// boRubriqueEditorControllers.controller('DashboardController', [ '$scope', '$rootScope', '$filter', '$state', '$modal', '$timeout', '$rootScope.ngProgress', 'uiGridConstants', 'uiGridEditConstants', 'boRubriqueEditorConfig', 'BoErStatusConfService', 'BoErRubriqueService', 'BoErSettingsService', 'HelperService', 
+	// 	function ($scope, $rootScope, $filter, $state, $modal, $timeout, $rootScope.ngProgress, uiGridConstants, uiGridEditConstants, boRubriqueEditorConfig, BoErStatusConfService, BoErRubriqueService, BoErSettingsService, HelperService) {
 	// 		HelperService.checkAdminLTELoaded();
 
 	// 		$scope.breadcrumb = 'rubriques';
 	// 		$scope.pageTitle = 'Rubriques';
 
-	// 		ngProgress.color('#FFF');
+	// 		$rootScope.ngProgress.color('#FFF');
 
 	// 		$scope.tab_gridApi = [];
 
@@ -261,9 +261,9 @@
 	// 		};
 
 	// 		$scope.disableReadOnlyMode = function () {
-	// 			ngProgress.start();
+	// 			$rootScope.ngProgress.start();
 	// 			BoErStatusConfService.unset({}, function (statusConf, getResponseHeaders) {
-	// 				ngProgress.complete();
+	// 				$rootScope.ngProgress.complete();
 	// 			});
 	// 		};
 
@@ -943,7 +943,7 @@
 	// 		};
 
 	// 		var getPage = function () {
-	// 			ngProgress.start();
+	// 			$rootScope.ngProgress.start();
 
 	// 			var query_params = ($scope.boErRubriquesGrid.useExternalPagination) ? {'offset' : HelperService.getPaginationOptions().offset, 'limit' : HelperService.getPaginationOptions().pageSize, 'filter_by_libelle' : $scope.filter_rubrique_by_libelle } : {'limit' : 5000 };
 	// 				query_params.es_index = ($rootScope.selected_index) ? $rootScope.selected_index.index : null;
@@ -977,7 +977,7 @@
 	// 						$scope.boErRubriquesGridApi.grid.getColDef(doc_connexe).filter.selectOptions = list_values_doc_connexes[doc_connexe];
 	// 					});
 
-	// 					ngProgress.complete();
+	// 					$rootScope.ngProgress.complete();
 	// 				}
 	// 			);
 				
@@ -1012,8 +1012,8 @@
 	// /*#################################################################################
 	// ### IMPORT MODAL SCREEN
 	// #####################################################################################*/
-	// boRubriqueEditorControllers.controller('DashboardImportModalController', [ '$scope', '$rootScope', 'Upload', 'boRubriqueEditorConfig', 'BatchEditoRubriqueService', '$modal', '$modalInstance', 'parameters', '$timeout', 'ngProgress',
-	// 	function ($scope, $rootScope, Upload, boRubriqueEditorConfig, BatchEditoRubriqueService, $modal, $modalInstance, parameters, $timeout, ngProgress) {	
+	// boRubriqueEditorControllers.controller('DashboardImportModalController', [ '$scope', '$rootScope', 'Upload', 'boRubriqueEditorConfig', 'BatchEditoRubriqueService', '$modal', '$modalInstance', 'parameters', '$timeout', '$rootScope.ngProgress',
+	// 	function ($scope, $rootScope, Upload, boRubriqueEditorConfig, BatchEditoRubriqueService, $modal, $modalInstance, parameters, $timeout, $rootScope.ngProgress) {	
 	// 		$scope.actionLabel = parameters.actionLabel;
 	// 		$scope.descriptionLabel = parameters.descriptionLabel;
 	// 		$scope.listTypes = parameters.listTypes;
@@ -1025,7 +1025,7 @@
 	// 		var index = $scope.listTypes.map(function (e) { return e.show; }).indexOf(true);
 	// 		$scope.selectedType = $scope.listTypes[index];
 
-	// 		var compareData = function (config, ngProgress) {
+	// 		var compareData = function (config, $rootScope.ngProgress) {
 	// 			var args = {
 	// 				'type_doc': $scope.selectedType.value,
 	// 				'source_file': config.file.name,
@@ -1112,15 +1112,15 @@
 	// 				});
 
 	// 				modalInstance.result.then(function () {
-	// 					integrateData(config, ngProgress);
+	// 					integrateData(config, $rootScope.ngProgress);
 	// 				}, function () {
 	// 					$scope.avancement = 0;
-	// 					ngProgress.reset();
+	// 					$rootScope.ngProgress.reset();
 	// 				});
 	// 			});
 	// 		};
 
-	// 		var integrateData = function (config, ngProgress) {
+	// 		var integrateData = function (config, $rootScope.ngProgress) {
 	// 			/*
 	// 			 *	Mise à jour du document envoyé dans ES métier
 	// 			 */
@@ -1140,7 +1140,7 @@
 	// 					type: 'info'
 	// 				};
 	// 				$rootScope.alerts.push(alert);
-	// 				ngProgress.complete();
+	// 				$rootScope.ngProgress.complete();
 
 	// 				$scope.avancement = 100;
 
@@ -1158,7 +1158,7 @@
 	// 		};
 
 	// 		$scope.upload = function (with_compare) {
-	// 			ngProgress.start();
+	// 			$rootScope.ngProgress.start();
 
 	// 			// Vérou bouton Import pendant la durée de l'opération
 	// 			$scope.import_in_progress = true;
@@ -1178,9 +1178,9 @@
 	// 						//console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
 	// 					}).success(function (data, status, headers, config) {
 	// 						if (with_compare) {
-	// 							compareData(config, ngProgress);
+	// 							compareData(config, $rootScope.ngProgress);
 	// 						} else {
-	// 							integrateData(config, ngProgress);
+	// 							integrateData(config, $rootScope.ngProgress);
 	// 						}
 	// 					}).error(function (data, status, headers, config) {
 	// 						// message d'alerte
@@ -1189,7 +1189,7 @@
 	// 							type: 'error'
 	// 						};
 	// 						$rootScope.alerts.push(alert);
-	// 						ngProgress.reset();
+	// 						$rootScope.ngProgress.reset();
 
 	// 						$scope.import_in_progress = false;
 
@@ -1207,15 +1207,15 @@
 	// /*#####################################################################################
 	// ### CONFIRM SAVE EDITION MODAL SCREEN
 	// #####################################################################################*/
-	// boRubriqueEditorControllers.controller('DashboardConfirmSaveModalController', [ '$scope', '$rootScope', 'boRubriqueEditorConfig', 'BoErRubriqueService', '$modalInstance', '$timeout', 'ngProgress', 'actionLabel', 'nbRubriquesEdited', 'editedRubriques', 'scope', 
-	// 	function ($scope, $rootScope, boRubriqueEditorConfig, BoErRubriqueService, $modalInstance, $timeout, ngProgress, actionLabel, nbRubriquesEdited, editedRubriques, scope) {	
+	// boRubriqueEditorControllers.controller('DashboardConfirmSaveModalController', [ '$scope', '$rootScope', 'boRubriqueEditorConfig', 'BoErRubriqueService', '$modalInstance', '$timeout', '$rootScope.ngProgress', 'actionLabel', 'nbRubriquesEdited', 'editedRubriques', 'scope', 
+	// 	function ($scope, $rootScope, boRubriqueEditorConfig, BoErRubriqueService, $modalInstance, $timeout, $rootScope.ngProgress, actionLabel, nbRubriquesEdited, editedRubriques, scope) {	
 	// 		$scope.actionLabel = actionLabel;
 	// 		$scope.nbRubriquesEdited = nbRubriquesEdited;
 	// 		$scope.cancel = function () {
 	// 			$modalInstance.dismiss('cancel');
 	// 		};
 	// 		$scope.submitEdit = function () {
-	// 			ngProgress.start();
+	// 			$rootScope.ngProgress.start();
 	// 			// Suppression du flag (non enregistré dans ES)
 	// 			editedRubriques.forEach(function (edited_rubrique){
 	// 				delete edited_rubrique._edited;
@@ -1228,7 +1228,7 @@
 	// 					type: 'success'
 	// 				};
 	// 				$rootScope.alerts.push(alert);
-	// 				ngProgress.complete();
+	// 				$rootScope.ngProgress.complete();
 
 	// 				// Déselection des lignes précédemment éditées
 	// 				scope.boErRubriquesGridApi.selection.clearSelectedRows();
@@ -1257,15 +1257,15 @@
 	// /*#####################################################################################
 	// ### CONFIRM LAUNCH OPERATION PEREMPTION MODAL SCREEN
 	// #####################################################################################*/
-	// boRubriqueEditorControllers.controller('DashboardConfirmLaunchOperationPeremptionModalController', [ '$scope', '$rootScope', 'boRubriqueEditorConfig', 'BatchEditoRubriqueService', '$modalInstance', '$timeout', 'ngProgress', 'actionLabel', 'descriptionOperationLabel', 
-	// 	function ($scope, $rootScope, boRubriqueEditorConfig, BatchEditoRubriqueService, $modalInstance, $timeout, ngProgress, actionLabel, descriptionOperationLabel) {	
+	// boRubriqueEditorControllers.controller('DashboardConfirmLaunchOperationPeremptionModalController', [ '$scope', '$rootScope', 'boRubriqueEditorConfig', 'BatchEditoRubriqueService', '$modalInstance', '$timeout', '$rootScope.ngProgress', 'actionLabel', 'descriptionOperationLabel', 
+	// 	function ($scope, $rootScope, boRubriqueEditorConfig, BatchEditoRubriqueService, $modalInstance, $timeout, $rootScope.ngProgress, actionLabel, descriptionOperationLabel) {	
 	// 		$scope.actionLabel = actionLabel;
 	// 		$scope.descriptionOperationLabel = descriptionOperationLabel;
 	// 		$scope.cancel = function () {
 	// 			$modalInstance.dismiss('cancel');
 	// 		};
 	// 		$scope.launchOperation = function () {
-	// 			ngProgress.start();
+	// 			$rootScope.ngProgress.start();
 	// 			// Fermeture Popup
 	// 			$modalInstance.dismiss();
 	// 			BatchEditoRubriqueService.peremptionOperation({}, function (operationResponse) {
@@ -1275,7 +1275,7 @@
 	// 					type: 'info'
 	// 				};
 	// 				$rootScope.alerts.push(alert);
-	// 				ngProgress.complete();
+	// 				$rootScope.ngProgress.complete();
 
 	// 				// nettoyage de la liste des popin
 	// 				$timeout(function (){
@@ -1289,8 +1289,8 @@
 	// /*#####################################################################################
 	// ###	LIST ACTIVITES VOISINES MODAL SCREEN
 	// #####################################################################################*/
-	// boRubriqueEditorControllers.controller('DashboardShowActivitesVoisinesModalController', [ '$scope', '$rootScope', 'boRubriqueEditorConfig', 'BatchEditoRubriqueService', '$modalInstance', '$timeout', 'ngProgress', 'actionLabel', 'descriptionOperationLabel', 'selectedRubrique', 'listRubriques', 
-	// 	function ($scope, $rootScope, boRubriqueEditorConfig, BatchEditoRubriqueService, $modalInstance, $timeout, ngProgress, actionLabel, descriptionOperationLabel, selectedRubrique, listRubriques) {	
+	// boRubriqueEditorControllers.controller('DashboardShowActivitesVoisinesModalController', [ '$scope', '$rootScope', 'boRubriqueEditorConfig', 'BatchEditoRubriqueService', '$modalInstance', '$timeout', '$rootScope.ngProgress', 'actionLabel', 'descriptionOperationLabel', 'selectedRubrique', 'listRubriques', 
+	// 	function ($scope, $rootScope, boRubriqueEditorConfig, BatchEditoRubriqueService, $modalInstance, $timeout, $rootScope.ngProgress, actionLabel, descriptionOperationLabel, selectedRubrique, listRubriques) {	
 	// 		$scope.actionLabel = actionLabel;
 	// 		$scope.descriptionOperationLabel = descriptionOperationLabel;
 	// 		$scope.rubrique = selectedRubrique;

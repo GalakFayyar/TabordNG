@@ -3,8 +3,8 @@
 
 	angular.module('tabordNG').controller('LoginController', LoginController);
 
-	LoginController.$inject = ['$scope', '$rootScope', '$location', 'HelperService', 'UserService', 'PharmacieService', 'ConfigService', '$state', 'ngProgress'];
-	function LoginController ($scope, $rootScope, $location, HelperService, UserService, PharmacieService, ConfigService, $state, ngProgress) {	
+	LoginController.$inject = ['$scope', '$rootScope', '$location', 'HelperService', 'UserService', 'PharmacieService', 'ConfigService', '$state'];
+	function LoginController ($scope, $rootScope, $location, HelperService, UserService, PharmacieService, ConfigService, $state) {	
 		/*$scope.apiConfig = ConfigService.getConfig({}, function(apiConfig, getResponseHeaders) {
 				$rootScope.permissions = apiConfig.permissions;
 				$scope.features = apiConfig.features;
@@ -113,10 +113,10 @@
 				};
 				console.log($scope.pharmacies.list);
 				$rootScope.pharmacie.selected = $scope.pharmacies.list[0];
-				ngProgress.complete();
+				$rootScope.ngProgress.complete();
 			}, function (error) {
 				console.log('Erreur get_all_pharmacie(): ', error);
-				ngProgress.reset();
+				$rootScope.ngProgress.reset();
 			});
 		};
 

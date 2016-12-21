@@ -1,0 +1,41 @@
+PROCEDURE Enregistrer_COMMENTA_11()
+NumMois11		est un entier  = 11
+Cpt				est un entier 
+Mtt,Mtt_Prev,Mtt_Reel	est un monétaire=0
+HDésactiveFiltre(COMMENTA)
+HLitRecherchePremier(COMMENTA,CM_CLE1,HConstruitValClé(COMMENTA,CM_CLE1,PE.PECLEUNIK,"R",NumMois11))
+SI HTrouve()
+	SI Rech_EF_Mois("R",NumMois11,"EF.EF_MTEFE")>Rech_EF_Mois("R",NumMois11,"EF.EF_MTRAT")
+		CM.CM_OBSC="Votre capacité à mobiliser l'équipe officinale est exceptionnelle"
+	SINON
+		CM.CM_OBSC="L'équipe officinale peut faire face à une augmentation de l'activité"
+	FIN
+
+	SI Rech_SK_Mois("R",NumMois11,"SK.SK_JOUR1")>21
+		CM.CM_OBSC=CM.CM_OBSC+RC+RC+...
+					"Votre stock médicament remboursable est au-dessus de la moyenne"
+	SINON
+		CM.CM_OBSC=CM.CM_OBSC+RC+RC+...
+					"Votre stock médicament remboursable est un peu faible. Attention à ne pas faire revenir trop souvent vos clients"
+	FIN
+	
+	POUR Cpt=1 A 10
+		Mtt_Prev = Mtt_Prev+Rech_CA_Mois("P",Cpt,"CA.CA_HT")
+		Mtt_Reel = Mtt_Reel+Rech_CA_Mois("R",Cpt,"CA.CA_HT")
+	FIN
+	SI Mtt_Reel>Mtt_Prev
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...	 
+					"Le chiffre d'affaires HT réalisé cumulé est supérieur à vos prévisions"
+	SINON
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...	 
+					"Le chiffre d'affaires HT prévisionnel cumulé est inférieur au réalisé"
+	FIN
+
+	Mtt = Rech_EF_Mois("R",NumMois11,"EF.EF_MTEFC")
+	CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...	 
+				"L'efficacité économique depuis le début de l'exercice est de "+NumériqueVersChaîne(Mtt,"10.2fS")+" euros"
+	
+	HModifie("COMMENTA")
+FIN
+
+

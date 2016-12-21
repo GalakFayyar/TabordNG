@@ -1,0 +1,31 @@
+PROCEDURE Enregistrer_COMMENTA_12()
+NumMois12		est un entier  = 12
+PctMA,PctMC,PctACG,PctACD,PctRE		est un réel
+MttCA,MttACG,MttACD	est un monétaire
+HDésactiveFiltre(COMMENTA)
+HLitRecherchePremier(COMMENTA,CM_CLE1,HConstruitValClé(COMMENTA,CM_CLE1,PE.PECLEUNIK,"R",NumMois12))
+SI HTrouve()
+	PctMA 	= Rech_MA("R","TT.MA_MDLHR")
+	PctMC 	= Rech_CR_Mois("R","C"," ",NumMois12,"CR.CR_PCTMA")
+	MttCA	= Rech_CA("R","TC.CA_TTC")
+	MttACG 	= Rech_AC("R","TK.AC_GROSS")
+	MttACD 	= Rech_AC("R","TK.AC_LABO")
+	SI (MttACG+MttACD)<>0
+		PctACG = MttACG*100/(MttACG+MttACD)
+		PctACD = MttACD*100/(MttACG+MttACD)
+	FIN
+	PctRE	= Rech_CR_Mois("R","C"," ",NumMois12,"CR.CR_PCTNE")
+	
+	CM.CM_OBSC="Les chiffres-clés de votre exercice :"+RC+...
+			   "-------------------------------------------------------"+RC+...
+	           "La MDL moyenne hors remise est de "+NumériqueVersChaîne(PctMA,"+6.2f")+" %"+RC+RC+...
+			   "La marge commerciale ressort à "+NumériqueVersChaîne(PctMC,"+6.2f")+" %"+RC+RC+...
+			   "La Chiffre d'affaires TTC est de "+NumériqueVersChaîne(MttCA,"10.2Sf")+" euros"+RC+RC+...
+			   "Vos achats chez vos grossistes sont de "+NumériqueVersChaîne(MttACG,"10.2Sf")+" euros soit "+NumériqueVersChaîne(PctACG,"5.2Sf")+" %"+RC+RC+...
+			   "Vos achats directes sont de "+NumériqueVersChaîne(MttACD,"10.2Sf")+" euros soit "+NumériqueVersChaîne(PctACD,"5.2Sf")+" %"+RC+RC+...
+			   "Le résultat net comptable représente "+NumériqueVersChaîne(PctRE,"5.2Sf")+" % du CA HT"
+	
+	HModifie("COMMENTA")
+FIN
+
+

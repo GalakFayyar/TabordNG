@@ -5,8 +5,8 @@
 
 	angular.module('tabordNG').controller('PersonnelDetailController', PersonnelDetailController);
 
-	PersonnelDetailController.$inject = ['$scope', '$stateParams', '$modal', 'HelperService', 'PersonnelService', 'SalaireService', 'uiGridConstants', 'ngProgress'];
-	function PersonnelDetailController ($scope, $stateParams, $modal, HelperService, PersonnelService, SalaireService, uiGridConstants, ngProgress) {
+	PersonnelDetailController.$inject = ['$scope', '$rootScope', '$stateParams', '$modal', 'HelperService', 'PersonnelService', 'SalaireService', 'uiGridConstants'];
+	function PersonnelDetailController ($scope, $rootScope, $stateParams, $modal, HelperService, PersonnelService, SalaireService, uiGridConstants) {
 		$.AdminLTE.layout.activate();
 
 		var initNewUser = function () {
@@ -195,9 +195,9 @@
 				PersonnelService.list({}, function (results) {
 					$scope.personnel.list = results.data;
 					$scope.personnel.selected = results.data[0];
-					ngProgress.complete();
+					$rootScope.ngProgress.complete();
 				}, function (error) {
-					ngProgress.reset();
+					$rootScope.ngProgress.reset();
 					console.log('Erreur get all personnel(): ', error);
 				});
 
@@ -214,10 +214,10 @@
 						/*$scope.grid.salaireRemuneration.data = ($scope.selectedUser.data_salaires) ? $scope.selectedUser.data_salaires.remuneration : [];
 						$scope.grid.salaireRepartition.data = ($scope.selectedUser.data_salaires) ? $scope.selectedUser.data_salaires.repartition : [];*/
 
-						ngProgress.complete();
+						$rootScope.ngProgress.complete();
 					}, function (error) {
 						console.log(error);
-						ngProgress.reset();
+						$rootScope.ngProgress.reset();
 					});
 
 					SalaireService.get_one({subresource: $stateParams.personnelId, subaction: $scope.anneesSalaire.selected}, function (results) {
@@ -235,11 +235,11 @@
 					});
 				} else {
 					initNewUser();
-					ngProgress.complete();
+					$rootScope.ngProgress.complete();
 				}
 			},
 			getSalairesData = function () {
-				ngProgress.start();
+				$rootScope.ngProgress.start();
 				SalaireService.get_one({'subresource': $stateParams.personnelId, 'subaction': $scope.anneesSalaire.selected}, function (results) {
 					console.log('results info salaires: ', results);
 					$scope.selectedUser.data_salaires = results.data;
@@ -250,10 +250,10 @@
 
 					$scope.grid.salaireRemuneration.data = $scope.selectedUser.data_salaires.remuneration;
 					$scope.grid.salaireRepartition.data = $scope.selectedUser.data_salaires.repartition;
-					ngProgress.complete();
+					$rootScope.ngProgress.complete();
 				}, function (error) {
 					console.log(error);
-					ngProgress.reset();
+					$rootScope.ngProgress.reset();
 				});
 			},
 			cleanDirtyRowsGrid = function (gridApi) {
@@ -743,40 +743,40 @@
 				PersonnelService.create({}, {'data': $scope.selectedUser}, function (results) {
 					console.log('results createPersonnelData: ', results);
 					// TODO popin MAJ OK
-					ngProgress.complete();
+					$rootScope.ngProgress.complete();
 				}, function (error) {
 					console.log(error);
-					ngProgress.reset();
+					$rootScope.ngProgress.reset();
 				});
 			},
 			updatePersonnelData = function () {
 				PersonnelService.update({'subresource': $scope.selectedUser.id}, {'data': $scope.selectedUser}, function (results) {
 					console.log('results updatePersonnelData: ', results);
 					// TODO popin CREATION OK
-					ngProgress.complete();
+					$rootScope.ngProgress.complete();
 				}, function (error) {
 					console.log(error);
-					ngProgress.reset();
+					$rootScope.ngProgress.reset();
 				});
 			},
 			createSalairePersonnel = function () {
 				SalaireService.create({}, {data_salaire: $scope.selectedUser.data_salaires}, function (results) {
 					console.log('results createSalairePersonnel: ', results);
 					// TODO popin CREATE OK
-					ngProgress.complete();
+					$rootScope.ngProgress.complete();
 				}, function (error) {
 					console.log(error);
-					ngProgress.reset();
+					$rootScope.ngProgress.reset();
 				});
 			},
 			updateSalairePersonnel = function () {
 				SalaireService.upsert({'subresource': $scope.selectedUser.id, 'subaction': $scope.anneesSalaire.selected}, {'data_salaire': $scope.selectedUser.data_salaires}, function (results) {
 					console.log('results updateSalairePersonnel: ', results);
 					// TODO popin UPDATE OK
-					ngProgress.complete();
+					$rootScope.ngProgress.complete();
 				}, function (error) {
 					console.log(error);
-					ngProgress.reset();
+					$rootScope.ngProgress.reset();
 				});
 			}
 		
@@ -788,8 +788,8 @@
 	#####################################################################################*/
 	angular.module('tabordNG').controller('PersonnelAddExperienceScolaireModalController', PersonnelAddExperienceScolaireModalController);
 
-	PersonnelAddExperienceScolaireModalController.$inject = ['$scope', '$rootScope', '$modalInstance', '$timeout', 'HelperService', 'PersonnelService', 'ngProgress', 'parameters'];
-	function PersonnelAddExperienceScolaireModalController ($scope, $rootScope, $modalInstance, $timeout, HelperService, PersonnelService, ngProgress, parameters) {
+	PersonnelAddExperienceScolaireModalController.$inject = ['$scope', '$rootScope', '$modalInstance', '$timeout', 'HelperService', 'PersonnelService', 'parameters'];
+	function PersonnelAddExperienceScolaireModalController ($scope, $rootScope, $modalInstance, $timeout, HelperService, PersonnelService, parameters) {
 		$scope.modalTitle = parameters.modalTitle;
 		$scope.modalContent = parameters.modalContent;
 		$scope.newData = { etablissement: null, diplome: null, date_obtention: null };
@@ -805,7 +805,7 @@
 				date_obtention: $scope.newData.date_obtention
 			});
 
-			ngProgress.start();
+			$rootScope.ngProgress.start();
 			// Fermeture Popup
 			$modalInstance.dismiss();
 			PersonnelService.addExperienceScolaire({}, function (operationResponse) {
@@ -815,7 +815,7 @@
 					type: 'success'
 				};
 				$rootScope.alerts.push(alert);
-				ngProgress.complete();
+				$rootScope.ngProgress.complete();
 
 				// nettoyage de la liste des popin
 				$timeout(function (){
@@ -832,8 +832,8 @@
 	#####################################################################################*/
 	angular.module('tabordNG').controller('PersonnelAddExperienceProModalController', PersonnelAddExperienceProModalController);
 
-	PersonnelAddExperienceProModalController.$inject = ['$scope', '$rootScope', '$modalInstance', '$timeout', 'HelperService', 'PersonnelService', 'ngProgress', 'parameters'];
-	function PersonnelAddExperienceProModalController ($scope, $rootScope, $modalInstance, $timeout, HelperService, PersonnelService, ngProgress, parameters) {
+	PersonnelAddExperienceProModalController.$inject = ['$scope', '$rootScope', '$modalInstance', '$timeout', 'HelperService', 'PersonnelService', 'parameters'];
+	function PersonnelAddExperienceProModalController ($scope, $rootScope, $modalInstance, $timeout, HelperService, PersonnelService, parameters) {
 		$scope.modalTitle = parameters.modalTitle;
 		$scope.modalContent = parameters.modalContent;
 		$scope.newData = { entreprise: null, qualification: null, date_entree: null, date_sortie: null, motif_depart: null, stage: null };
@@ -845,7 +845,7 @@
 			console.log('newData:', $scope.newData);
 			parameters.currentPerson.data_personnel.experience.professionnelle.push($scope.newData);
 
-			ngProgress.start();
+			$rootScope.ngProgress.start();
 			// Fermeture Popup
 			$modalInstance.dismiss();
 			PersonnelService.addExperienceScolaire({}, function (operationResponse) {
@@ -855,7 +855,7 @@
 					type: 'success'
 				};
 				$rootScope.alerts.push(alert);
-				ngProgress.complete();
+				$rootScope.ngProgress.complete();
 
 				// nettoyage de la liste des popin
 				$timeout(function (){
@@ -872,8 +872,8 @@
 	#####################################################################################*/
 	angular.module('tabordNG').controller('PersonnelInfoDirtyRowsModalController', PersonnelInfoDirtyRowsModalController);
 
-	PersonnelInfoDirtyRowsModalController.$inject = ['$scope', '$rootScope', '$modalInstance', '$timeout', 'ngProgress', 'parameters'];
-	function PersonnelInfoDirtyRowsModalController ($scope, $rootScope, $modalInstance, $timeout, ngProgress, parameters) {
+	PersonnelInfoDirtyRowsModalController.$inject = ['$scope', '$rootScope', '$modalInstance', '$timeout', 'parameters'];
+	function PersonnelInfoDirtyRowsModalController ($scope, $rootScope, $modalInstance, $timeout, parameters) {
 		$scope.modalTitle = parameters.modalTitle;
 		$scope.modalContent = parameters.modalContent;
 		$scope.validate = function () {			

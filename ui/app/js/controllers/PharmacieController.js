@@ -5,8 +5,8 @@
 
 	angular.module('tabordNG').controller('PharmacieController', PharmacieController);
 
-	PharmacieController.$inject = ['$scope', '$state', '$timeout', 'HelperService', 'PharmacieService', 'uiGridConstants', 'ngProgress'];
-	function PharmacieController ($scope, $state, $timeout, HelperService, PharmacieService, uiGridConstants, ngProgress) {
+	PharmacieController.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'HelperService', 'PharmacieService', 'uiGridConstants'];
+	function PharmacieController ($scope, $rootScope, $state, $timeout, HelperService, PharmacieService, uiGridConstants) {
 		$.AdminLTE.layout.activate();
 
 		$scope.pharmacie = {
@@ -43,52 +43,52 @@
 		// };
 
 		var getPharmacies = function () {
-			ngProgress.start();
+			$rootScope.ngProgress.start();
 			PharmacieService.get_all({}, function (results) {
 				//$scope.listPharmaciesGrid.data = results.data;
 				$scope.pharmacies = {
 					list: results.data
 				};
 				console.log($scope.pharmacies.list);
-				ngProgress.complete();
+				$rootScope.ngProgress.complete();
 			}, function (error) {
-				ngProgress.reset();
+				$rootScope.ngProgress.reset();
 				console.log('Erreur get_all_pharmacie(): ', error);
 			});
 		};
 
 		var updateCurrentPharmacie = function () {
-			ngProgress.start();
+			$rootScope.ngProgress.start();
 			PharmacieService.update({}, {'pharmacies': [$scope.pharmacie.selected]}, function (result) {
-				ngProgress.complete();
+				$rootScope.ngProgress.complete();
 				console.log(result);
 			}, function (error) {
-				ngProgress.reset();
+				$rootScope.ngProgress.reset();
 				console.log('Erreur de mise à jour de la pharmacie: ', $scope.pharmacie.selected);
 			});
 		};
 
 		var createCurrentPharmacie = function () {
-			ngProgress.start();
+			$rootScope.ngProgress.start();
 			PharmacieService.create({}, {'pharmacie': [$scope.pharmacie.selected]}, function (result) {
-				ngProgress.complete();
+				$rootScope.ngProgress.complete();
 				console.log(result);
 				getPharmacies();
 			}, function (error) {
-				ngProgress.reset();
+				$rootScope.ngProgress.reset();
 				console.log('Erreur de création de la pharmacie: ', $scope.pharmacie.selected);
 			});
 		};
 
 		var deleteCurrentPharmacie = function () {
-			ngProgress.start();
+			$rootScope.ngProgress.start();
 			PharmacieService.delete({}, {'pharmacie': [$scope.pharmacie.selected]}, function (result) {
-				ngProgress.complete();
+				$rootScope.ngProgress.complete();
 				console.log(result);
 				getPharmacies();
 				$scope.pharmacie.selected = null;
 			}, function (error) {
-				ngProgress.reset();
+				$rootScope.ngProgress.reset();
 				console.log('Erreur de suppression de la pharmacie: ', $scope.pharmacie.selected);
 			});
 		};

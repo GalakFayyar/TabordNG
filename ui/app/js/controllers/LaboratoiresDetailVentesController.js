@@ -5,8 +5,8 @@
 
 	angular.module('tabordNG').controller('LaboratoiresDetailVentesController', LaboratoiresDetailVentesController);
 
-	LaboratoiresDetailVentesController.$inject = ['$scope', '$rootScope', '$filter', 'uiGridConstants', 'ngProgress', 'VenteService'];
-	function LaboratoiresDetailVentesController ($scope, $rootScope, $filter, uiGridConstants, ngProgress, VenteService) {
+	LaboratoiresDetailVentesController.$inject = ['$scope', '$rootScope', '$filter', 'uiGridConstants', 'VenteService'];
+	function LaboratoiresDetailVentesController ($scope, $rootScope, $filter, uiGridConstants, VenteService) {
 		$.AdminLTE.layout.activate();
 
 		$scope.formatNumbers = function (number) {
@@ -112,7 +112,7 @@
 			$scope.grid.detailVentePeriode.data = [];
 
 			// Call service, load data in grid...
-			ngProgress.complete();
+			$rootScope.ngProgress.complete();
 		}
 
 		load_data();

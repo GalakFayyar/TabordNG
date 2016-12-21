@@ -1,0 +1,32 @@
+PROCEDURE Enregistrer_COMMENTA_4()
+NumMois4	est un entier  = 4
+Pct			est un réel
+Mtt			est un monétaire
+HDésactiveFiltre(COMMENTA)
+HLitRecherchePremier(COMMENTA,CM_CLE1,HConstruitValClé(COMMENTA,CM_CLE1,PE.PECLEUNIK,"R",NumMois4))
+SI HTrouve()
+	SI Rech_CR_Mois("R","M"," ",NumMois4,"CR.CR_MTTMA")>Rech_CR_Mois("P","M"," ",NumMois4,"CR.CR_MTTMA")
+		CM.CM_OBSC="La marge réalisée est supérieure aux prévisions du mois"
+	SINON
+		CM.CM_OBSC="Nous constatons une dégradations de la marge prévue"
+	FIN
+	
+	SI Rech_CR_Mois("R","E",3,NumMois4,"CR.CR_MTTCA")<>0
+		Pct = Rech_CR_Mois("R","C",3,NumMois4,"CR.CR_MTTCA")*100/...
+			  Rech_CR_Mois("R","E",3,NumMois4,"CR.CR_MTTCA")
+	SINON
+		Pct = 0		
+	FIN
+	CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+				"Le secteur Parapharmacie et divers représente "+NumériqueVersChaîne(Pct,"+6.2f")+" % "+...
+				"du CA HT global depuis le début de l'exercice"
+	
+	Mtt = Rech_CA("R","TC.CA_CAMOY")
+	CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+		        "Le CA TTC moyen journalier réalisé à ce jour est de "+NumériqueVersChaîne(Mtt,"10.2fS")+" euros"
+						
+	HModifie("COMMENTA")
+	
+FIN
+
+

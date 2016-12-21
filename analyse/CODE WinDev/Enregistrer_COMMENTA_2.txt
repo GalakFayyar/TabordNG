@@ -1,0 +1,42 @@
+PROCEDURE Enregistrer_COMMENTA_2()
+NumMois1	est un entier  = 1
+NumMois2	est un entier  = 2
+Pct1,Pct2	sont des réel
+HDésactiveFiltre(COMMENTA)
+HLitRecherchePremier(COMMENTA,CM_CLE1,HConstruitValClé(COMMENTA,CM_CLE1,PE.PECLEUNIK,"R",NumMois2))
+SI HTrouve()
+	SI Rech_EF_Mois("R",NumMois2,"EF.EF_MTEFE")>Rech_EF_Mois("R",NumMois2,"EF.EF_MTRAT")
+		CM.CM_OBSC="L'efficacité économique est très correcte"
+	SINON
+		CM.CM_OBSC="L'efficacité économique est à améliorer"
+	FIN
+	
+	 SI Rech_RA("R","RA.RA_PCFR1")>Rech_RA("R","RA.RA_PCFR2")
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...	 
+					"Les frais de personnel annuel sont élevés"
+	SINON
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...	 
+					"Peu de frais de personnel sur l'exercice"
+	FIN
+	
+	SI (Rech_CA_Mois("P",NumMois1,"CA.CA_TTC")+Rech_CA_Mois("P",NumMois2,"CA.CA_TTC"))<>0
+		Pct1 = (Rech_CA_Mois("R",NumMois1,"CA.CA_TTC")+Rech_CA_Mois("R",NumMois2,"CA.CA_TTC"))*100/...
+			   (Rech_CA_Mois("P",NumMois1,"CA.CA_TTC")+Rech_CA_Mois("P",NumMois2,"CA.CA_TTC"))
+	SINON
+		Pct1 = 0	
+	FIN
+	SI (Rech_CA_Mois("A",NumMois1,"CA.CA_TTC")+Rech_CA_Mois("A",NumMois2,"CA.CA_TTC"))<>0
+		Pct2 = (Rech_CA_Mois("R",NumMois1,"CA.CA_TTC")+Rech_CA_Mois("R",NumMois2,"CA.CA_TTC"))*100/...
+			   (Rech_CA_Mois("A",NumMois1,"CA.CA_TTC")+Rech_CA_Mois("A",NumMois2,"CA.CA_TTC"))
+	SINON
+		Pct2 = 0	
+	FIN
+	CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...	 
+				"L'évolution du CA TTC est depuis le début de l'exercice :"+RC+...
+				TAB+"- Par rapport aux prévisions "+NumériqueVersChaîne(Pct1,"+6.2f")+" %"+RC+...
+				TAB+"- Par rapport à l'exercice prédédent "+NumériqueVersChaîne(Pct2,"+6.2f")+" %"
+				
+	HModifie("COMMENTA")
+FIN
+
+

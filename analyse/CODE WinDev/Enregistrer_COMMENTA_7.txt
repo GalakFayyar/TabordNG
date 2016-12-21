@@ -1,0 +1,69 @@
+PROCEDURE Enregistrer_COMMENTA_7()	
+NumMois7	est un entier  = 7
+i			est un entier 
+
+MttMedic_A,MttMedic_P,MttMedic_R		est un monétaire=0
+MttOTC_A,MttOTC_P,MttOTC_R				est un monétaire=0
+MttPara_A,MttPara_P,MttPara_R			est un monétaire=0
+MttService_A,MttService_P,MttService_R	est un monétaire=0
+
+MttCumul_A,MttCumul_P,MttCumul_R		est un monétaire=0
+
+PctMedic_A,PctMedic_P,PctMedic_R		est une chaîne
+PctOTC_A,PctOTC_P,PctOTC_R				est une chaîne
+PctPara_A,PctPara_P,PctPara_R			est une chaîne
+PctService_A,PctService_P,PctService_R	est une chaîne
+
+HDésactiveFiltre(COMMENTA)
+HLitRecherchePremier(COMMENTA,CM_CLE1,HConstruitValClé(COMMENTA,CM_CLE1,PE.PECLEUNIK,"R",NumMois7))
+SI HTrouve()
+	POUR i=1 A NumMois7
+		MttMedic_A = MttMedic_A+Rech_CA_Mois("A",i,"CA.CA_HT1")	
+		MttMedic_P = MttMedic_P+Rech_CA_Mois("P",i,"CA.CA_HT1")		
+		MttMedic_R = MttMedic_R+Rech_CA_Mois("R",i,"CA.CA_HT1")		
+
+		MttOTC_A = MttOTC_A+Rech_CA_Mois("A",i,"CA.CA_HT2")	
+		MttOTC_P = MttOTC_P+Rech_CA_Mois("P",i,"CA.CA_HT2")		
+		MttOTC_R = MttOTC_R+Rech_CA_Mois("R",i,"CA.CA_HT2")		
+
+		MttPara_A = MttPara_A+Rech_CA_Mois("A",i,"CA.CA_HT3")	
+		MttPara_P = MttPara_P+Rech_CA_Mois("P",i,"CA.CA_HT3")		
+		MttPara_R = MttPara_R+Rech_CA_Mois("R",i,"CA.CA_HT3")		
+
+		MttService_A = MttService_A+Rech_CA_Mois("A",i,"CA.CA_HT5")	
+		MttService_P = MttService_P+Rech_CA_Mois("P",i,"CA.CA_HT5")		
+		MttService_R = MttService_R+Rech_CA_Mois("R",i,"CA.CA_HT5")			
+	FIN
+	MttCumul_A=MttMedic_A+MttOTC_A+MttPara_A+MttService_A
+	MttCumul_P=MttMedic_P+MttOTC_P+MttPara_P+MttService_P
+	MttCumul_R=MttMedic_R+MttOTC_R+MttPara_R+MttService_R
+	SI MttCumul_A<>0
+		PctMedic_A = NumériqueVersChaîne((MttMedic_A*100/MttCumul_A),"5.2f")
+		PctOTC_A   = NumériqueVersChaîne((MttOTC_A*100/MttCumul_A),"5.2f")
+		PctPara_A  = NumériqueVersChaîne((MttPara_A*100/MttCumul_A),"5.2f")
+		PctService_A  = NumériqueVersChaîne((MttService_A*100/MttCumul_A),"5.2f")
+	FIN
+	SI MttCumul_P<>0
+		PctMedic_P = NumériqueVersChaîne((MttMedic_P*100/MttCumul_P),"5.2f")
+		PctOTC_P   = NumériqueVersChaîne((MttOTC_P*100/MttCumul_P),"5.2f")
+		PctPara_P  = NumériqueVersChaîne((MttPara_P*100/MttCumul_P),"5.2f")
+		PctService_P = NumériqueVersChaîne((MttService_P*100/MttCumul_P),"5.2f")
+	FIN
+	SI MttCumul_R<>0
+		PctMedic_R = NumériqueVersChaîne((MttMedic_R*100/MttCumul_R),"5.2f")
+		PctOTC_R   = NumériqueVersChaîne((MttOTC_R*100/MttCumul_R),"5.2f")
+		PctPara_R  = NumériqueVersChaîne((MttPara_R*100/MttCumul_R),"5.2f")
+		PctService_R = NumériqueVersChaîne((MttService_R*100/MttCumul_R),"5.2f")
+	FIN
+
+	CM.CM_OBSC="La structure de votre chiffre d'affaires cumulés est la suivante :"+RC+...
+			   TAB+TAB+TAB+TAB+"N-1"+TAB+"Prév"+TAB+"Réalisé"+RC+...
+			   "Médicaments remboursables"+TAB+TAB+PctMedic_A+TAB+PctMedic_P+TAB+PctMedic_R+RC+...
+			   "O.T.C."+TAB+TAB+TAB+TAB+PctOTC_A+TAB+PctOTC_P+TAB+PctOTC_R+RC+...
+			   "Parapharmacie et divers"+TAB+TAB+PctPara_A+TAB+PctPara_P+TAB+PctPara_R+RC+...
+			   "Prestations de services"+TAB+TAB+PctService_A+TAB+PctService_P+TAB+PctService_R
+			   
+	HModifie("COMMENTA")
+FIN
+
+

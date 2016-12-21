@@ -1,0 +1,49 @@
+PROCEDURE MAJ_AGIOS_P()
+CAHT_Prev,CAHT_Reel	est un monétaire=0
+
+CAHT_Prev=Rech_CA("P","TC.CA_HT")	
+CAHT_Reel=Rech_CA("R","TC.CA_HT")
+
+TOTAL_AG_MTTP	est un monétaire=0	
+
+HFiltre("AGIOS","AG_CLE1",Convert(PE.PECLEUNIK)+"P"+Caract(0),Convert(PE.PECLEUNIK)+"P"+Caract(255))
+HLitPremier("AGIOS","AG_CLE1")
+TANTQUE PAS HEnDehors()
+	SELON AG.GR_CODE	
+		CAS "EMPRU"
+			AG.AG_MTT	= Rech_EM("B","P","TP.EM_EMPTI")
+		CAS "AUTRE"
+			AG.AG_MTT	= Rech_EM("A","P","TP.EM_EMPTI")
+		CAS "DIVER"
+			AG.AG_MTT	= Rech_EM("D","P","TP.EM_EMPTI")
+		AUTRE CAS
+			AG.AG_MTT	= AG.AG_CAHTP*CAHT_Prev/100
+	FIN		
+	SI CAHT_Prev<>0
+		AG.AG_CAHTP = AG.AG_MTT*100/CAHT_Prev
+	SINON
+		AG.AG_CAHTP = 0		
+	FIN
+	SI CAHT_Reel<>0
+		AG.AG_CAHTR = AG.AG_MTT*100/CAHT_Reel
+	SINON
+		AG.AG_CAHTR = 0		
+	FIN
+	TOTAL_AG_MTTP=TOTAL_AG_MTTP+AG.AG_MTT
+	HModifie("AGIOS")
+	HLitSuivant("AGIOS","AG_CLE1")
+FIN
+
+HDésactiveFiltre(TOTALAG)
+HLitRecherchePremier(TOTALAG,TG_CLE1,HConstruitValClé(TOTALAG,TG_CLE1,PE.PECLEUNIK,"P"))
+SI HTrouve()
+	TG.AG_MTT=TOTAL_AG_MTTP
+	HModifie("TOTALAG")
+SINON
+    TG.PECLEUNIK=PE.PECLEUNIK
+	TG.AG_REF="P"
+	TG.AG_MTT=TOTAL_AG_MTTP
+	HAjoute("TOTALAG")
+FIN
+
+

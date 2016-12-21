@@ -1,0 +1,49 @@
+PROCEDURE Enregistrer_STOCFMOI()
+CptMois,CptMoisP1 	est un entier 
+StockFin	est un monétaire
+HDésactiveFiltre(STOCFMOI)
+POUR CptMois=1 A 12
+	HLitRecherchePremier(STOCFMOI,SF_CLE1,HConstruitValClé(STOCFMOI,SF_CLE1,PE.PECLEUNIK,"R",CptMois))
+	SI HTrouve()
+		SI CptMois=1 ALORS
+			HFiltre("STOCK","ST_CLE1",Convert(PE.PECLEUNIK)+Caract(0),Convert(PE.PECLEUNIK)+Caract(255))
+			HLitPremier("STOCK","ST_CLE1")
+			SI HTrouve()
+				SF.SF_SDEB = ST.ST_TVA1+ST.ST_TVA2+ST.ST_TVA3+ST.ST_TVA4
+			FIN
+	    FIN
+		SF.SF_ACHAT= Rech_AC_Mois("R",CptMois,"AC.AC_GROSS")+Rech_AC_Mois("R",CptMois,"AC.AC_LABO")
+		SF.SF_VENTE= Rech_CA_Mois("R",CptMois,"CA.CA_HT")-Rech_CA_Mois("R",CptMois,"CA.CA_HT5")
+		SF.SF_CONSO= (Rech_CA_Mois("R",CptMois,"CA.CA_HT1")+...
+					 Rech_CA_Mois("R",CptMois,"CA.CA_HT2")+...
+					 Rech_CA_Mois("R",CptMois,"CA.CA_HT3")+...
+					 Rech_CA_Mois("R",CptMois,"CA.CA_HT4"))-...
+					 (Rech_CA_Mois("R",CptMois,"CA.CA_HT1")*Rech_MA_Mois("R",CptMois,"MA.MA_MDLRE")/100+...
+					 Rech_CA_Mois("R",CptMois,"CA.CA_HT2")*Rech_MA_Mois("R",CptMois,"MA.MA_VT1")/100+...
+					 Rech_CA_Mois("R",CptMois,"CA.CA_HT3")*Rech_MA_Mois("R",CptMois,"MA.MA_VT2")/100+...
+					 Rech_CA_Mois("R",CptMois,"CA.CA_HT4")*Rech_MA_Mois("R",CptMois,"MA.MA_VT3")/100)
+		
+		//Enlever les retours
+		SF.SF_SFIN = SF.SF_SDEB+SF.SF_ACHAT-SF.SF_CONSO
+		
+		StockFin=SF.SF_SFIN
+		SI SF.SF_CONSO<>0
+			SF.SF_ROJOU=(((SF.SF_SDEB+SF.SF_SFIN)/2)/(SF.SF_CONSO))*360/12
+			SF.SF_ROMOI=SF.SF_ROJOU/30
+		SINON
+			SF.SF_ROJOU=0
+			SF.SF_ROMOI=0
+		FIN
+		HModifie("STOCFMOI")
+		SI CptMois<12
+			CptMoisP1=CptMois+1
+			HLitRecherchePremier(STOCFMOI,SF_CLE1,HConstruitValClé(STOCFMOI,SF_CLE1,PE.PECLEUNIK,"R",CptMoisP1))
+			SI HTrouve()	
+				SF.SF_SDEB = StockFin
+				HModifie("STOCFMOI")
+			FIN
+		FIN
+	FIN
+FIN
+
+

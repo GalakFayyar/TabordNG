@@ -5,8 +5,8 @@
 
 	angular.module('tabordNG').controller('PersonnelDashboardController', PersonnelDashboardController);
 
-	PersonnelDashboardController.$inject = ['$scope', '$state', 'HelperService', 'PersonnelService', 'uiGridConstants', 'ngProgress'];
-	function PersonnelDashboardController ($scope, $state, HelperService, PersonnelService, uiGridConstants, ngProgress) {
+	PersonnelDashboardController.$inject = ['$scope', '$rootScope', '$state', 'HelperService', 'PersonnelService', 'uiGridConstants'];
+	function PersonnelDashboardController ($scope, $rootScope, $state, HelperService, PersonnelService, uiGridConstants) {
 		$.AdminLTE.layout.activate();
 
 		$scope.grid = {
@@ -121,9 +121,9 @@
 
 			PersonnelService.list({}, function (results) {
 				$scope.grid.personnel.data = results.data;
-				ngProgress.complete();
+				$rootScope.ngProgress.complete();
 			}, function (error) {
-				ngProgress.reset();
+				$rootScope.ngProgress.reset();
 				console.log('Erreur load_data(): ', error);
 			});
 		}
@@ -141,9 +141,9 @@
 				// TODO popin DELETE OK
 
 				load_data();
-				ngProgress.complete();
+				$rootScope.ngProgress.complete();
 			}, function (error) {
-				ngProgress.reset();
+				$rootScope.ngProgress.reset();
 				console.log('Erreur deletePersonnel(): ', error);
 			});
 		}

@@ -1,0 +1,87 @@
+PROCEDURE Enregistrer_PLANFINA_E(TypeEntr,ChoixPeriode)
+NumMois,CptMois	est un entier 
+HDésactiveFiltre(PLANFINA)
+POUR NumMois=1 A 12
+	HLitRecherchePremier(PLANFINA,PL_CLE1,HConstruitValClé(PLANFINA,PL_CLE1,PE.PECLEUNIK,"E",TypeEntr,ChoixPeriode,NumMois))
+	SI HTrouve()
+		PL.PL_MTTNE	= 0
+		PL.PL_MTTDO	= 0
+		PL.PL_MTTRE	= 0
+		PL.PL_MTTDI	= 0
+		PL.PL_MTTPP	= 0
+		PL.PL_MTTAP	= 0
+		PL.PL_MTTDV	= 0
+		PL.PL_MTTDT	= 0
+		PL.PL_MTTAI	= 0
+		PL.PL_MTTCI	= 0
+		PL.PL_MTTRM	= 0
+		PL.PL_MTTRV = 0
+		PL.PL_MTTEM	= 0
+		PL.PL_MTTRS	= 0
+		PL.PL_MTTAU	= 0
+		POUR CptMois=1 A 12
+			PL.PL_MTTNE=PL.PL_MTTNE+Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_MTTNE")
+			PL.PL_MTTDO=PL.PL_MTTDO+Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_MTTDO")-(Rech_AM_Zone("D",3,"AM.AM_DTN")/12)
+			PL.PL_MTTRE=PL.PL_MTTRE+Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_MTTRE")-(Rech_AM_Zone("D",3,"AM.AM_REPN")/12)
+			PL.PL_MTTDI=PL.PL_MTTDI+Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_MTTDI")
+			SELON TypeEntr
+				CAS "E"				
+					PL.PL_MTTPP=PL.PL_MTTPP+Rech_PR_Mois(CptMois,"PR.PR_TOTAL")
+				CAS "A"				
+//					selon Rech_SA("P","TS.TS_INTEG")
+//						cas 0
+//							PL.PL_MTTPP=0
+//						cas 1				
+					SI (Rech_CS2("P","TZ.TZ_CSOFF")=1 ET...
+						Rech_CS2("P","TZ.TZ_CSDED")=1) OU...
+						Rech_PB("TB.TB_IMPOT")=1 OU...
+						Rech_ES2("P","TE.TE_POFF")=1 ALORS 
+						PL.PL_MTTPP=PL.PL_MTTPP+Rech_PB_Total_Mois(CptMois,"PB.PB_TOTAL")
+					SINON
+						SI Rech_CS2("P","TZ.TZ_CSOFF")=0 ET...
+						   Rech_CS2("P","TZ.TZ_CSDED")=0 ET... 
+						   Rech_PB("TB.TB_IMPOT")=0
+							PL.PL_MTTPP=PL.PL_MTTPP+Rech_PB_Total_Mois(CptMois,"PB.PB_TOTAL")-...
+													Rech_PB_Total_Mois(CptMois,"PB.PB_IMPOT")
+						SINON
+							SI Rech_ES2("P","TE.TE_POFF")=0
+								PL.PL_MTTPP=PL.PL_MTTPP+Rech_PB_Total_Mois(CptMois,"PB.PB_TOTAL")-...
+														Rech_PB_Total_Mois(CptMois,"PB.PB_PREV")		
+							FIN
+						FIN				
+//					fin
+					FIN			
+			FIN		
+			SELON TypeEntr
+				CAS "E"
+					PL.PL_MTTAP=PL.PL_MTTAP+Rech_PR_Mois(CptMois,"PR.PR_APPOR")
+				CAS "A"
+					SELON Rech_SA("P","TS.TS_INTEG")
+						CAS 0
+							PL.PL_MTTAP=PL.PL_MTTAP+Rech_PB_Total_Mois(CptMois,"PB.PB_APPOR")+...
+													Rech_RM_Mois("P","T",CptMois,"RM.RM_SBRUT")
+						CAS 1
+							PL.PL_MTTAP=PL.PL_MTTAP+Rech_PB_Total_Mois(CptMois,"PB.PB_APPOR")
+					FIN	
+			FIN
+			PL.PL_MTTAI=PL.PL_MTTAI+Rech_IV_Mois("P",CptMois,"IV.IV_TOTAL")
+			PL.PL_MTTCI=PL.PL_MTTCI+Rech_IM_Mois("P",CptMois,"IM.IM_TOTAL")	
+			PL.PL_MTTRM=PL.PL_MTTRM+Rech_EM_Mois("B","P",CptMois,"EM.EM_EMPTC")+...
+									Rech_EM_Mois("A","P",CptMois,"EM.EM_EMPTC")+...
+									Rech_EM_Mois("D","P",CptMois,"EM.EM_EMPTC")		
+			PL.PL_MTTRV=PL.PL_MTTRV+Rech_CU_Mois(CptMois,"CU.CU_MTTCA")												
+		FIN
+		PL.PL_MTTCA=PL.PL_MTTNE+PL.PL_MTTDO-PL.PL_MTTRE+PL.PL_MTTDI
+		SI PL.PL_MTTDI<0
+			PL.PL_MTTDV=PL.PL_MTTDI
+		SINON
+			PL.PL_MTTDT=PL.PL_MTTDI
+		FIN			
+		PL.PL_MTTEM=PL.PL_MTTPP+PL.PL_MTTAI+PL.PL_MTTRM+PL.PL_MTTDV
+		PL.PL_MTTRS=PL.PL_MTTAP+PL.PL_MTTCI+PL.PL_MTTDT+PL.PL_MTTRV
+		PL.PL_MTTAU=PL.PL_MTTCA+PL.PL_MTTRS-PL.PL_MTTEM		
+		HModifie("PLANFINA")
+	FIN
+FIN
+
+

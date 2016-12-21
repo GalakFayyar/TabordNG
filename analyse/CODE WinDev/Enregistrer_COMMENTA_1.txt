@@ -1,0 +1,37 @@
+PROCEDURE Enregistrer_COMMENTA_1()
+NumMois	est un entier  = 1
+HDésactiveFiltre(COMMENTA)
+HLitRecherchePremier(COMMENTA,CM_CLE1,HConstruitValClé(COMMENTA,CM_CLE1,PE.PECLEUNIK,"R",NumMois))
+SI HTrouve()
+	SI Rech_CA_Mois("R",NumMois,"CA.CA_TTC")>Rech_CA_Mois("P",NumMois,"CA.CA_TTC")
+		CM.CM_OBSC="Le chiffre d'affaires réalisé est supérieur à vos prévisions"
+	SINON
+		CM.CM_OBSC="Le chiffre d'affaires réalisé est inférieur à vos prévisions"
+	FIN
+	
+	SI Rech_PL_Mois("M",cTypeEntr,"R",NumMois,"PL.PL_MTTAU")>0
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+					"L'autofinancement du mois est positif"
+	SINON
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+					"L'autofinancement du mois est négatif"
+	FIN
+	SI Rech_CR_Mois("R","M"," ",NumMois,"CR.CR_MTTMA")>Rech_CR_Mois("P","M"," ",NumMois,"CR.CR_MTTMA")
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+					"La marge globale du mois est supérieure à vos prévisions"	
+	SINON
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+					"La marge globale du mois est inférieure à vos prévisions"			
+	FIN
+	
+	SI Rech_SF_Mois(NumMois,"SF.SF_SFIN")>Rech_SF_Mois(NumMois,"SF.SF_SDEB")
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+					"Attention, nous constatons une augmentation de vos stocks"
+	SINON
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+					"Votre stock théorique a diminué en fin de mois"
+	FIN
+	HModifie("COMMENTA")
+FIN
+
+

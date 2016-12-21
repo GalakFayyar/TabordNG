@@ -6,8 +6,8 @@
 	angular.module('tabordNG').controller('MerchandisingFormsController', MerchandisingFormsController);
 	angular.module('tabordNG').controller('MerchandisingDashboardController', MerchandisingDashboardController);
 
-	MerchandisingFormsController.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'HelperService', 'MerchandisingService', 'ngProgress'];
-	function MerchandisingFormsController ($scope, $rootScope, $state, $timeout, HelperService, MerchandisingService, ngProgress) {
+	MerchandisingFormsController.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'HelperService', 'MerchandisingService'];
+	function MerchandisingFormsController ($scope, $rootScope, $state, $timeout, HelperService, MerchandisingService) {
 		$.AdminLTE.layout.activate();
 
 		// Manage form display if action is triggered by user (create/update)
@@ -424,18 +424,18 @@
 
 		// Get All Forms for Current Pharmacy
 		var getData = function () {
-			ngProgress.start();
+			$rootScope.ngProgress.start();
 			if ($rootScope.pharmacie != undefined) {
 				MerchandisingService.get_forms({'subaction': $rootScope.pharmacie.selected.id}, function (results) {
 					$scope.survey.list = results.data;
 					console.log($scope.survey.list);
-					ngProgress.complete();
+					$rootScope.ngProgress.complete();
 				}, function (error) {
-					ngProgress.reset();
+					$rootScope.ngProgress.reset();
 					console.log('Erreur getData(): ', error);
 				});
 			} else {
-				ngProgress.reset();
+				$rootScope.ngProgress.reset();
 				console.log("Aucune pharmacie sélectionnée...")
 			}
 		};
@@ -445,10 +445,10 @@
 			if ($scope.survey.selected != undefined && $scope.survey.selected.id != null && $scope.survey.selected.id != -1) {
 				// Case Update existing form
 				MerchandisingService.update_form({}, {'form': $scope.survey.selected}, function (result) {
-					ngProgress.complete();
+					$rootScope.ngProgress.complete();
 					console.log(result);
 				}, function (error) {
-					ngProgress.reset();
+					$rootScope.ngProgress.reset();
 					console.log('Erreur de mise à jour du formulaire: ', $scope.survey.selected);
 				});
 			} else {
@@ -456,10 +456,10 @@
 				MerchandisingService.create_form({}, {'form': $scope.survey.selected}, function (result) {
 					// Get new id generated
 					$scope.survey.selected.id = result.id;
-					ngProgress.complete();
+					$rootScope.ngProgress.complete();
 					console.log(result);
 				}, function (error) {
-					ngProgress.reset();
+					$rootScope.ngProgress.reset();
 					console.log('Erreur de création du formulaire: ', $scope.survey.selected);
 				});
 			}
@@ -480,12 +480,12 @@
 		$scope.deleteForm = function () {
 			$scope.displayForms = false;
 			MerchandisingService.delete_form({'subresource': $scope.survey.selected.id}, {}, function (result) {
-				ngProgress.complete();
+				$rootScope.ngProgress.complete();
 				console.log(result);
 				getData();
 				$scope.survey.selected = null;
 			}, function (error) {
-				ngProgress.reset();
+				$rootScope.ngProgress.reset();
 				console.log('Erreur de suppression du formulaire: ', $scope.survey.selected);
 			});
 		};
@@ -512,10 +512,10 @@
 
 		$scope.selectedFormTab = 'indicateurs';
 		$scope.tabHeadingClick = function (tab) {
-			ngProgress.start();
+			$rootScope.ngProgress.start();
 			resetCurrentTemplatesURL();
 			$scope.templatesUrl[tab].current = $scope.templatesUrl[tab].ref;
-			ngProgress.complete();
+			$rootScope.ngProgress.complete();
 			if ($scope.selectedFormTab != tab) {
 				$timeout(function(){
 					$(":checkbox").labelauty();
@@ -530,7 +530,7 @@
 			$(":checkbox").labelauty();
 			$(":radio").labelauty({ minimum_width: "100%" });
 			HelperService.initDatePicker('#dateForm');
-			ngProgress.complete();
+			$rootScope.ngProgress.complete();
 			getData();
 		}, 500);
 
@@ -754,11 +754,11 @@
 		};
 	}
 
-	MerchandisingDashboardController.$inject = ['$scope', '$rootScope', '$timeout', 'HelperService', 'MerchandisingService', 'ngProgress'];
-	function MerchandisingDashboardController ($scope, $rootScope, $timeout, HelperService, MerchandisingService, ngProgress) {
+	MerchandisingDashboardController.$inject = ['$scope', '$rootScope', '$timeout', 'HelperService', 'MerchandisingService'];
+	function MerchandisingDashboardController ($scope, $rootScope, $timeout, HelperService, MerchandisingService) {
 		// UI Init
 		$timeout(function(){
-			ngProgress.complete();
+			$rootScope.ngProgress.complete();
 		}, 500);
 	}
 })();

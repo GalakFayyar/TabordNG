@@ -1,0 +1,18 @@
+PROCEDURE Enregistrer_COMMENTA_8()
+NumMois8	est un entier  = 8
+Pct			est un réel
+Mtt			est un monétaire
+HDésactiveFiltre(COMMENTA)
+HLitRecherchePremier(COMMENTA,CM_CLE1,HConstruitValClé(COMMENTA,CM_CLE1,PE.PECLEUNIK,"R",NumMois8))
+SI HTrouve()
+	Pct = Rech_FP_Mois("R",NumMois8,"FP.FP_PCTOC")
+	CM.CM_OBSC = "Les frais de personnel cumulés sont de "+NumériqueVersChaîne(Pct,"+5.2f")+" %"
+
+	Mtt = Rech_PL_Mois("C",cTypeEntr,"R",NumMois8,"PL.PL_MTTAU")
+	CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+				"L'autofinancement cumulé est de "+NumériqueVersChaîne(Mtt,"+10.2fS")+" euros"
+
+   	HModifie("COMMENTA")
+FIN
+
+

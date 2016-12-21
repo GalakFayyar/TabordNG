@@ -1,0 +1,54 @@
+PROCEDURE Enregistrer_REPARASS(ChoixPeriode)
+i,CptMois	est un entier 
+
+POUR CptMois=1 A 12
+	HFiltre("REPARASS","RP_CLE1",Convert(PE.PECLEUNIK)+ChoixPeriode+Convert(CptMois)+Caract(0),+...
+								 Convert(PE.PECLEUNIK)+ChoixPeriode+Convert(CptMois)+Caract(255))
+	HLitPremier("REPARASS","RP_CLE1")
+	TANTQUE PAS HEnDehors()	
+		HSupprime("REPARASS")									 
+		HLitSuivant("REPARASS","RP_CLE1")
+	FIN
+FIN
+
+Mtt_CS	est un monétaire = Rech_CS("P","CS.CS_MTT")
+Mtt_ES	est un monétaire = Rech_CS("P","ES.ES_EMPTC")
+	
+HDésactiveFiltre(ASSOCIE)			
+POUR CptMois=1 A 12		
+	i=0
+	HLitPremier("ASSOCIE","AE_CLE1")
+	TANTQUE PAS HEnDehors()
+		HRAZ("REPARASS")
+		i++
+		RP.PECLEUNIK= PE.PECLEUNIK
+		RP.RP_REF	= ChoixPeriode
+		RP.RP_NUM  	= i
+		RP.RP_MOIS	= CptMois
+		
+		RP.RP_LIBEL = MoisSelonIndice(PE.PE_DTDEB,CptMois) 
+		RP.AE_NOM	= AE.AE_NOM
+		RP.AE_PRENO	= AE.AE_PRENO
+		RP.RP_CAF	= Rech_PL_Mois("M","A",ChoixPeriode,CptMois,"PL.PL_MTTCA")
+		RP.RP_RETRA	= Rech_RE_Mois(ChoixPeriode,CptMois,"RE.RE_RETRA")
+		RP.RP_RECAP	= (Rech_PL_Mois("M","A",ChoixPeriode,CptMois,"PL.PL_MTTCA")*Rech_RE_Mois(ChoixPeriode,CptMois,"RE.RE_PCAP")/100)
+		RP.RP_REPAR	= RP.RP_RETRA+RP.RP_RECAP
+		SELON Rech_SA("P","TS.TS_INTEG")
+			CAS 0		
+				RP.RP_PRELE	= 	Rech_PB_Mois(CptMois,"PB.PB_TOTAL")-...
+								(Rech_SA(ChoixPeriode,"TS.TS_TTIT")/12)+...
+								(Mtt_CS/12)+...
+								(Mtt_ES/12)-...
+								Rech_PB_Mois(CptMois,"PB.PB_APPOR")
+			CAS 1
+				RP.RP_PRELE =	(Mtt_CS/12)+...
+								(Mtt_ES/12)-...
+								 Rech_PB_Mois(CptMois,"PB.PB_APPOR")	
+		FIN
+		RP.RP_DIFF	= RP.RP_RETRA+RP.RP_RECAP-RP.RP_PRELE
+		HAjoute("REPARASS")
+		HLitSuivant("ASSOCIE","AE_CLE1")
+	FIN
+FIN
+
+

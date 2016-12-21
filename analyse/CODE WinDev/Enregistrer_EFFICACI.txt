@@ -1,0 +1,42 @@
+PROCEDURE Enregistrer_EFFICACI(ChoixPeriode)
+CptMois est un entier 
+HDésactiveFiltre(EFFICACI)
+POUR CptMois=1 A 12
+	HLitRecherchePremier(EFFICACI,EF_CLE1,HConstruitValClé(EFFICACI,EF_CLE1,PE.PECLEUNIK,ChoixPeriode,CptMois))
+	SI HTrouve()
+		EF.EF_MTCAM	= Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_MTTCA")
+		EF.EF_PCCAM	= Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_PCTCA")
+		EF.EF_MTCAC = Rech_CR_Mois(ChoixPeriode,"C"," ",CptMois,"CR.CR_MTTCA")
+		EF.EF_PCCAC = Rech_CR_Mois(ChoixPeriode,"C"," ",CptMois,"CR.CR_PCTCA")
+		EF.EF_MTCAE = Rech_CR_Mois(ChoixPeriode,"E"," ",CptMois,"CR.CR_MTTCA")
+		EF.EF_PCCAE = Rech_CR_Mois(ChoixPeriode,"E"," ",CptMois,"CR.CR_PCTCA")
+
+		EF.EF_MTVAM	= Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_MTTVA")
+		EF.EF_PCVAM	= Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_PCTVA")
+		EF.EF_MTVAC	= Rech_CR_Mois(ChoixPeriode,"C"," ",CptMois,"CR.CR_MTTVA")
+		EF.EF_PCVAC	= Rech_CR_Mois(ChoixPeriode,"C"," ",CptMois,"CR.CR_PCTVA")
+		EF.EF_MTVAE	= Rech_CR_Mois(ChoixPeriode,"E"," ",CptMois,"CR.CR_MTTVA")
+		EF.EF_PCVAE	= Rech_CR_Mois(ChoixPeriode,"E"," ",CptMois,"CR.CR_PCTVA")
+		
+		EF.EF_EFFEM = Rech_SA("P","TS.TS_EFMOY")
+		EF.EF_EFFEC	= EF.EF_EFFEM
+		EF.EF_EFFEE	= EF.EF_EFFEM
+	
+		SI EF.EF_EFFEM<>0
+			EF.EF_MTEFM = EF.EF_MTVAM/EF.EF_EFFEM
+			EF.EF_MTEFC = EF.EF_MTVAC/EF.EF_EFFEM
+			EF.EF_MTEFE = EF.EF_MTVAE/EF.EF_EFFEM
+        SINON
+			EF.EF_MTEFM = 0
+			EF.EF_MTEFC = 0
+			EF.EF_MTEFE = 0
+		FIN
+		
+		EF.EF_MTRAT	= 0
+		EF.EF_PCRAT	= 0
+	
+		HModifie("EFFICACI")
+	FIN
+FIN
+
+

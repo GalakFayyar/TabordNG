@@ -1,0 +1,52 @@
+PROCEDURE MAJ_RESULTAT_P()
+MttTotal_Rémunération	est un monétaire = 0
+HDésactiveFiltre(ASSOCIE)
+HDésactiveFiltre(TOTALRM)
+HDésactiveFiltre(SALARIE)
+HDésactiveFiltre(EMPASS)
+HDésactiveFiltre(FRAISDIV)
+HLitPremier("ASSOCIE","SLCLEUNIK")
+TANTQUE PAS HEnDehors()
+	HLitRecherche("TOTALRM","SLCLEUNIK",AE.SLCLEUNIK)
+	SI HTrouve()
+		MttTotal_Rémunération=MttTotal_Rémunération+TU.RM_COUT
+	FIN
+	HLitSuivant("ASSOCIE","SLCLEUNIK")
+FIN
+HLitPremier("ASSOCIE","SLCLEUNIK")
+TANTQUE PAS HEnDehors()
+	HFiltre("RESULTAT","RE_CLE1",Convert(AE.AECLEUNIK)+"P"+Caract(0),Convert(AE.AECLEUNIK)+"P"+Caract(255))
+	HLitPremier("RESULTAT","RE_CLE1")
+	TANTQUE PAS HEnDehors()
+		HLitRecherchePremier(REMUNERA,RM_CLE1,HConstruitValClé(REMUNERA,RM_CLE1,PE.PECLEUNIK,AE.SLCLEUNIK,RE.RE_MOIS))
+        SI HTrouve()
+			RE.RE_RETRA	= RM.RM_COUT
+		FIN
+		HLitRecherche("SALARIE","SLCLEUNIK",AE.SLCLEUNIK)
+        SI HTrouve()
+			RE.RE_PCAP	= SL.SL_PCTCA
+			SELON Rech_SA("P","TS.TS_INTEG")
+				CAS 0					
+					RE.RE_RECAP	= (Rech_CR_Mois("R","E"," ",1,"CR.CR_MTTNE")*SL.SL_PCTCA/100)/12	
+				CAS 1
+					RE.RE_RECAP	= ((Rech_CR_Mois("R","E"," ",1,"CR.CR_MTTNE")-MttTotal_Rémunération)*SL.SL_PCTCA/100)/12
+			FIN		
+		FIN
+		RE.RE_STOTA = RE.RE_RETRA+RE.RE_RECAP
+		RE.RE_CSP	= Rech_CS2("P","TZ.CS_MTT")/12
+		HLitRecherchePremier(EMPASS,ES_CLE1,HConstruitValClé(EMPASS,ES_CLE1,AE.AECLEUNIK,"P",RE.RE_MOIS))
+        SI HTrouve()
+			RE.RE_IEPER	= ES.ES_EMPTI
+		FIN		
+		HLitRecherchePremier(FRAISDIV,FD_CLE1,HConstruitValClé(FRAISDIV,FD_CLE1,AE.AECLEUNIK,"P",RE.RE_MOIS))
+        SI HTrouve()
+			RE.RE_FRDIV	= FD.FD_TOTAL
+		FIN
+		RE.RE_RNIMP	= RE.RE_STOTA-RE.RE_CSP-RE.RE_IEPER-RE.RE_FRDIV
+		HModifie("RESULTAT")
+		HLitSuivant("RESULTAT","RE_CLE1")
+	FIN
+	HLitSuivant("ASSOCIE","SLCLEUNIK")
+FIN
+
+

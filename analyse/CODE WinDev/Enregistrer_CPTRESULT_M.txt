@@ -1,0 +1,236 @@
+PROCEDURE Enregistrer_CPTRESUL_M(ChoixPeriode,ChoixTVA)
+
+Ratio		est un réel 
+NumMois		est un entier 
+CA_Mois		est un monétaire
+
+MontantIS	est un monétaire
+HDésactiveFiltre(CPTRESUL)
+POUR NumMois=1 A 12
+	//Recherche du CA total du mois pour le calcul du ratio
+	HLitRecherchePremier(CPTRESUL,CR_CLE1,HConstruitValClé(CPTRESUL,CR_CLE1,PE.PECLEUNIK,ChoixPeriode,"M"," ",NumMois))
+	SI HTrouve()
+		CA_Mois = CR.CR_MTTCA
+	FIN
+	HLitRecherchePremier(CPTRESUL,CR_CLE1,HConstruitValClé(CPTRESUL,CR_CLE1,PE.PECLEUNIK,ChoixPeriode,"M",ChoixTVA,NumMois))
+	SI HTrouve()
+		SELON ChoixTVA
+			CAS "1","2","3"	//2,10% 5,50% 19,60%
+				CR.CR_MTTPD = 0
+				CR.CR_MTTPR = 0
+			AUTRE CAS
+				SI ChoixPeriode="R"
+				 	CR.CR_MTTPD = CalculCAMois_ReelPrec(NumMois,"CA.CA_HT5")
+				SINON
+					CR.CR_MTTPD = Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT5")
+				FIN
+				CR.CR_MTTPR = CR.CR_MTTPD
+		FIN
+		SELON ChoixTVA
+			CAS "1"	//2,10%
+				SI ChoixPeriode="R"
+					CR.CR_MTTVT = CalculCAMois_ReelPrec(NumMois,"CA.CA_HT1")+...
+								  CalculCAMois_ReelPrec(NumMois,"CA.CA_HT4")
+				SINON
+					CR.CR_MTTVT = Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT1")+...
+								  Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT4")
+            	FIN
+			CAS "2"	//5,50%
+				SI ChoixPeriode="R"
+					CR.CR_MTTVT = CalculCAMois_ReelPrec(NumMois,"CA.CA_HT2")
+				SINON
+					CR.CR_MTTVT = Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT2")
+	        	FIN
+			CAS "3"	//19,60%
+				SI ChoixPeriode="R"
+					CR.CR_MTTVT = CalculCAMois_ReelPrec(NumMois,"CA.CA_HT3")
+				SINON
+					CR.CR_MTTVT = Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT3")
+	        	FIN
+			AUTRE CAS		
+				SI ChoixPeriode="R"
+					CR.CR_MTTVT = CalculCAMois_ReelPrec(NumMois,"CA.CA_HT1")+...
+								  CalculCAMois_ReelPrec(NumMois,"CA.CA_HT2")+...
+								  CalculCAMois_ReelPrec(NumMois,"CA.CA_HT3")+...
+								  CalculCAMois_ReelPrec(NumMois,"CA.CA_HT4")							  
+				SINON
+					CR.CR_MTTVT = Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT1")+...
+								  Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT2")+...
+								  Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT3")+...
+								  Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT4")
+        		FIN
+		FIN
+		CR.CR_MTTCA = CR.CR_MTTVT+CR.CR_MTTPD
+		
+		SELON ChoixTVA
+			CAS "1","2","3"	//2,10% 5,50% 
+				SI CA_Mois<>0
+					Ratio = CR.CR_MTTCA /CA_Mois			
+                SINON
+			        Ratio = 0
+				FIN
+			AUTRE CAS
+			 	Ratio = 1
+		FIN	
+		SI ChoixPeriode="R"
+			CR.CR_MTCA2 = CalculCAMois_ReelPrec(NumMois,"CA.CA_TTC")
+	    SINON 
+			CR.CR_MTCA2 = Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_TTC")
+        FIN
+		SELON ChoixTVA
+			CAS "1"	//2,10%
+				SI ChoixPeriode="R"
+					CR.CR_MTTMA	= (CalculCAMois_ReelPrec(NumMois,"CA.CA_HT1")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_MDLRE")/100)+...
+								  (CalculCAMois_ReelPrec(NumMois,"CA.CA_HT4")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_VT3")/100)
+				SINON	
+					CR.CR_MTTMA	= Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT1")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_MDLRE")/100
+            	FIN
+			CAS "2"	//5,50%
+				SI ChoixPeriode="R"
+					CR.CR_MTTMA	= CalculCAMois_ReelPrec(NumMois,"CA.CA_HT2")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_VT1")/100
+				SINON	
+					CR.CR_MTTMA	= Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT2")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_VT1")/100
+	        	FIN
+			CAS "3"	//19,60%
+				SI ChoixPeriode="R"
+					CR.CR_MTTMA	= CalculCAMois_ReelPrec(NumMois,"CA.CA_HT3")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_VT2")/100
+				SINON	
+					CR.CR_MTTMA	= Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT3")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_VT2")/100
+	        	FIN
+			AUTRE CAS		
+				SI ChoixPeriode="R"
+					CR.CR_MTTMA	= CalculCAMois_ReelPrec(NumMois,"CA.CA_HT1")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_MDLRE")/100+...
+								  CalculCAMois_ReelPrec(NumMois,"CA.CA_HT2")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_VT1")/100+...
+								  CalculCAMois_ReelPrec(NumMois,"CA.CA_HT3")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_VT2")/100+...
+								  CalculCAMois_ReelPrec(NumMois,"CA.CA_HT4")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_VT3")/100
+				SINON
+					CR.CR_MTTMA	= Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT1")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_MDLRE")/100+...
+								  Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT2")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_VT1")/100+...
+								  Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT3")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_VT2")/100+...
+								  Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_HT4")*Rech_MA_Mois(ChoixPeriode,NumMois,"MA.MA_VT3")/100
+        		FIN
+		FIN
+		CR.CR_MTTAC	= CR.CR_MTTVT-CR.CR_MTTMA
+		CR.CR_MTTCO = Rech_AT("AT.AT_MTT2")*Ratio/12
+		CR.CR_MTTAU	= Rech_FR("P","TL.TL_MTT")*Ratio/12
+		CR.CR_MTTVA	= CR.CR_MTTMA+CR.CR_MTTPR-CR.CR_MTTCO-CR.CR_MTTAU
+		CR.CR_MTTIM	= Rech_TA("P","TQ.TA_MTT")*Ratio/12
+		
+		//ORI 
+		//CR.CR_MTTCH	= Rech_CH("P","TH.CH_MTT")*Ratio/12
+		//FIN ORI
+		
+		//TEST
+		ChAsso est un monétaire=0
+		HDésactiveFiltre(ASSOCIE)
+		HLitRecherche(ASSOCIE,ASSOCIE.PECLEUNIK,PE.PECLEUNIK)
+		TANTQUE HTrouve(ASSOCIE)
+			HLitRecherche(TOTALCS,TOTALCS.TZ_CLE1,HConstruitValClé(TOTALCS,TZ_CLE1,ASSOCIE.AECLEUNIK,"P"))
+			TANTQUE HTrouve(TOTALCS)
+				SI TOTALCS.TZ_CSDED=0 ALORS
+					ChAsso+=TOTALCS.CS_MTT	
+				FIN				
+				HLitSuivant(TOTALCS)
+			FIN			
+			HLitSuivant(ASSOCIE)
+		FIN		
+		
+	
+			
+		CR.CR_MTTCH	= (Rech_CH("P","TH.CH_MTT")*Ratio/12)+(ChAsso*Ratio/12)
+		
+				
+//		CH1 = Rech_FP_Mois(LeChoixPeriode,LeNoMois,"FP.FP_MTCHM")
+//		CH2 = Rech_FP_Mois(LeChoixPeriode,LeNoMois,"FP.FP_PCCHM")
+//		CH3 = Rech_FP_Mois(LeChoixPeriode,LeNoMois,"FP.FP_MTCHC")
+//		CH4 = Rech_FP_Mois(LeChoixPeriode,LeNoMois,"FP.FP_PCCHC")
+//		CH5 = Rech_FP_Mois(LeChoixPeriode,LeNoMois,"FP.FP_MTCHE")
+		//FIN TEST
+		
+		
+		SELON Rech_SA("P","TS.TS_INTEG")
+			CAS 0
+				CR.CR_MTTSA = Rech_SA("P","TS.TS_TOTAL")*Ratio/12
+			CAS 1
+				CR.CR_MTTSA = (Rech_SA("P","TS.TS_TBRUT")+Rech_SA("P","TS.TS_TEXO"))*Ratio/12	
+		FIN		
+		CR.CR_MTTEB = CR.CR_MTTVA-CR.CR_MTTIM-CR.CR_MTTSA-CR.CR_MTTCH
+		CR.CR_MTTRE	= Rech_AM("D","TM.TM_MTT2")*Ratio/12
+		CR.CR_MTTAT	= Rech_AU("AU.AU_MTT2")*Ratio/12
+		CR.CR_MTTTR	= Rech_TF("TF.TF_MTT2")*Ratio/12
+		CR.CR_MTTDO	= (Rech_AM("A","TM.TM_MTT1")+Rech_AM("A","TM.TM_MTT2")+Rech_AM("A","TM.TM_MTT3")+...
+					   Rech_AM("B","TM.TM_MTT1")+Rech_AM("B","TM.TM_MTT2")+Rech_AM("B","TM.TM_MTT3")+...
+				 	   Rech_AM("C","TM.TM_MTT1")+Rech_AM("C","TM.TM_MTT2")+Rech_AM("C","TM.TM_MTT3")+...
+					   Rech_AM("D","TM.TM_MTT1"))*Ratio/12		
+		CR.CR_MTTGE = Rech_AR("AR.AR_MTT2")*Ratio/12
+		CR.CR_MTTEX	= CR.CR_MTTEB+CR.CR_MTTRE+CR.CR_MTTAT+CR.CR_MTTTR-CR.CR_MTTDO-CR.CR_MTTGE
+		CR.CR_MTTFI	= Rech_FC("FC.FC_MTT2")*Ratio/12
+		CR.CR_MTTAR = Rech_AG("P","TG.AG_MTT")*Ratio/12
+		CR.CR_MTTAV	= CR.CR_MTTEX+CR.CR_MTTFI-CR.CR_MTTAR
+		
+		CR.CR_MTTDI = Rech_DI("DI.DI_MTT2")*Ratio/12
+		
+		SELON CL.CL_IS
+			CAS 0
+				CR.CR_MTTIP = 0
+			CAS 1
+				SI (CR.CR_MTTAV+CR.CR_MTTDI)<(CL.CL_PLAFO/12) ALORS
+					MontantIS=(CR.CR_MTTAV+CR.CR_MTTDI)*(CL.CL_TXRED/100)
+				SINON	
+					MontantIS	= ((CL.CL_PLAFO/12)*CL.CL_TXRED/100)+...
+								  ((CR.CR_MTTAV+CR.CR_MTTDI)-(CL.CL_PLAFO/12))*CL.CL_TXNOR/100
+				FIN
+				CR.CR_MTTIP	= MontantIS+(MontantIS*CL.CL_CONTR/100)
+				
+				SI CR.CR_MTTIP<0 ALORS
+					CR.CR_MTTIP=0
+				FIN
+		FIN
+		
+		CR.CR_MTTNE	= CR.CR_MTTAV+CR.CR_MTTDI-CR.CR_MTTIP
+
+		CR.CR_PCTCA = 100
+		SI CR.CR_MTTVT<>0
+			CR.CR_PCTAC	= CR.CR_MTTAC*100/CR.CR_MTTVT
+		FIN
+		SI CR.CR_MTTCA<>0
+			CR.CR_PCTVT = CR.CR_MTTVT*100/CR.CR_MTTCA
+			CR.CR_PCTMA	= 100-CR.CR_PCTAC  
+			CR.CR_PCTPD = CR.CR_MTTPD*100/CR.CR_MTTCA
+			CR.CR_PCTPR = CR.CR_PCTPD
+			CR.CR_PCTCO = CR.CR_MTTCO*100/CR.CR_MTTCA
+			CR.CR_PCTAU	= CR.CR_MTTAU*100/CR.CR_MTTCA
+			CR.CR_PCTVA	= CR.CR_MTTVA*100/CR.CR_MTTCA
+			CR.CR_PCTIM	= CR.CR_MTTIM*100/CR.CR_MTTCA
+			CR.CR_PCTCH	= CR.CR_MTTCH*100/CR.CR_MTTCA
+			CR.CR_PCTSA	= CR.CR_MTTSA*100/CR.CR_MTTCA
+			CR.CR_PCTEB	= CR.CR_MTTEB*100/CR.CR_MTTCA
+			CR.CR_PCTRE	= CR.CR_MTTRE*100/CR.CR_MTTCA
+			CR.CR_PCTAT	= CR.CR_MTTAT*100/CR.CR_MTTCA
+			CR.CR_PCTTR	= CR.CR_MTTTR*100/CR.CR_MTTCA
+			CR.CR_PCTDO	= CR.CR_MTTDO*100/CR.CR_MTTCA
+			CR.CR_PCTGE	= CR.CR_MTTGE*100/CR.CR_MTTCA
+			CR.CR_PCTEX = CR.CR_MTTEX*100/CR.CR_MTTCA
+			CR.CR_PCTFI = CR.CR_MTTFI*100/CR.CR_MTTCA
+			CR.CR_PCTAR = CR.CR_MTTAR*100/CR.CR_MTTCA
+			CR.CR_PCTAV = CR.CR_MTTAV*100/CR.CR_MTTCA	
+			CR.CR_PCTDI	= CR.CR_MTTDI*100/CR.CR_MTTCA
+			CR.CR_PCTIP	= CR.CR_MTTIP*100/CR.CR_MTTCA
+			CR.CR_PCTNE	= CR.CR_MTTNE*100/CR.CR_MTTCA
+		FIN
+		
+        SELON ChoixPeriode
+			CAS "A"
+				CR.CR_NBJOUR	= Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_NJOURP")
+        	AUTRE CAS
+				CR.CR_NBJOUR	= Rech_CA_Mois(ChoixPeriode,NumMois,"CA.CA_NJOUR")
+		FIN
+
+		CR.CR_HAGRO = 	Rech_AC_Mois("R",NumMois,"AC.AC_GROSS")
+		CR.CR_HALABO = 	Rech_AC_Mois("R",NumMois,"AC.AC_LABO")
+		
+		HModifie("CPTRESUL")	
+	FIN	
+FIN
+
+

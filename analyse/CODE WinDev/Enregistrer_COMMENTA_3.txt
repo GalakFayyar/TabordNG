@@ -1,0 +1,30 @@
+PROCEDURE Enregistrer_COMMENTA_3()
+NumMois1	est un entier  = 1
+NumMois2	est un entier  = 2
+NumMois3	est un entier  = 3
+Pct			est un réel
+HDésactiveFiltre(COMMENTA)
+HLitRecherchePremier(COMMENTA,CM_CLE1,HConstruitValClé(COMMENTA,CM_CLE1,PE.PECLEUNIK,"R",NumMois3))
+SI HTrouve()
+	Pct = (Rech_MA_Mois("R",NumMois1,"MA.MA_MDLRE")+...
+		  Rech_MA_Mois("R",NumMois2,"MA.MA_MDLRE")+...
+		  Rech_MA_Mois("R",NumMois3,"MA.MA_MDLRE"))/3
+	CM.CM_OBSC="La MDL retraitée ressort depuis de début de l'exercie à "+NumériqueVersChaîne(Pct,"+6.2f")+" %"
+
+
+	SI Rech_PL_Mois("C",cTypeEntr,"R",NumMois3,"PL.PL_MTTAU")>0
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+					"L'autofinancement du mois est positif"
+	SINON
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+					"L'autofinancement du mois est négatif"
+	FIN
+	
+	Pct = Rech_CR_Mois("R","C"," ",NumMois3,"CR.CR_PCTEB")
+	CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+				"L'E.B.E. cumulé (retraitements réalisés) est de "+NumériqueVersChaîne(Pct,"+6.2f")+" %"
+	
+	HModifie("COMMENTA")
+FIN
+
+

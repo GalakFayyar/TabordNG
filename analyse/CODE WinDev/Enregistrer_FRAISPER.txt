@@ -1,0 +1,53 @@
+PROCEDURE Enregistrer_FRAISPER(ChoixPeriode)
+CptMois est un entier 
+HDésactiveFiltre(FRAISPER)
+POUR CptMois=1 A 12
+	HLitRecherchePremier(FRAISPER,FP_CLE1,HConstruitValClé(FRAISPER,FP_CLE1,PE.PECLEUNIK,ChoixPeriode,CptMois))
+	SI HTrouve()
+		FP.FP_MTCAM = Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_MTTCA")
+		FP.FP_PCCAM = Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_PCTCA")
+		FP.FP_MTCAC = Rech_CR_Mois(ChoixPeriode,"C"," ",CptMois,"CR.CR_MTTCA")
+		FP.FP_PCCAC = Rech_CR_Mois(ChoixPeriode,"C"," ",CptMois,"CR.CR_PCTCA")
+		FP.FP_MTCAE = Rech_CR_Mois(ChoixPeriode,"E"," ",CptMois,"CR.CR_MTTCA")
+		FP.FP_PCCAE = Rech_CR_Mois(ChoixPeriode,"E"," ",CptMois,"CR.CR_PCTCA")
+	
+		FP.FP_MTSAM = Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_MTTSA")
+		FP.FP_PCSAM = Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_PCTSA")
+		FP.FP_MTSAC = Rech_CR_Mois(ChoixPeriode,"C"," ",CptMois,"CR.CR_MTTSA")
+		FP.FP_PCSAC = Rech_CR_Mois(ChoixPeriode,"C"," ",CptMois,"CR.CR_PCTSA")
+		FP.FP_MTSAE = Rech_CR_Mois(ChoixPeriode,"E"," ",CptMois,"CR.CR_MTTSA")
+		FP.FP_PCSAE = Rech_CR_Mois(ChoixPeriode,"E"," ",CptMois,"CR.CR_PCTSA")
+	
+		FP.FP_MTCHM = Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_MTTCH")
+		FP.FP_PCCHM = Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_PCTCH")
+		FP.FP_MTCHC = Rech_CR_Mois(ChoixPeriode,"C"," ",CptMois,"CR.CR_MTTCH")
+		FP.FP_PCCHC = Rech_CR_Mois(ChoixPeriode,"C"," ",CptMois,"CR.CR_PCTCH")
+		FP.FP_MTCHE = Rech_CR_Mois(ChoixPeriode,"E"," ",CptMois,"CR.CR_MTTCH")
+		FP.FP_PCCHE = Rech_CR_Mois(ChoixPeriode,"E"," ",CptMois,"CR.CR_PCTCH")
+		
+		FP.FP_MTTOM = FP.FP_MTSAM+FP.FP_MTCHM
+		FP.FP_MTTOC = FP.FP_MTSAC+FP.FP_MTCHC
+		FP.FP_MTTOE = FP.FP_MTSAE+FP.FP_MTCHE
+		
+		SI FP.FP_MTCAM<>0
+			FP.FP_PCTOM	= FP.FP_MTTOM*100/FP.FP_MTCAM
+		SINON
+			FP.FP_PCTOM	= 0	
+		FIN
+		SI FP.FP_MTCAC<>0
+			FP.FP_PCTOC	= FP.FP_MTTOC*100/FP.FP_MTCAC
+		SINON
+			FP.FP_PCTOC	= 0	
+		FIN
+		SI FP.FP_MTCAE<>0
+			FP.FP_PCTOE	= FP.FP_MTTOE*100/FP.FP_MTCAE
+		SINON
+			FP.FP_PCTOE	= 0	
+		FIN
+		
+		
+		HModifie("FRAISPER")	
+	FIN
+FIN
+
+

@@ -1,0 +1,68 @@
+PROCEDURE MAJ_CHARGE_P()
+CNSalaireBrut,CNSalaireCadre,CNSalaireNonCadre,CNT1,CNT2,SalaireExo	est un monétaire=0
+	
+CNSalaireBrut		= Rech_CN("P","CN.CN_SALB")	
+CNSalaireCadre		= Rech_CN("P","CN.CN_SALCA")	
+CNSalaireNonCadre	= Rech_CN("P","CN.CN_SALNC")	
+CNT1				= Rech_CN("P","CN.CN_T1")	
+CNT2				= Rech_CN("P","CN.CN_T2")	
+
+SalaireExo			= Rech_SA("P","TS.TS_TEXO")
+
+TOTAL_CH_MTTP		est un monétaire = 0
+MttExonere			est un monétaire = 0
+TOTAL_CH_SALHEP,TOTAL_CH_SALEXP sont des réels
+
+HFiltre("CHARGE","CH_CLE1",Convert(PE.PECLEUNIK)+"P"+Caract(0),Convert(PE.PECLEUNIK)+"P"+Caract(255))
+HLitPremier("CHARGE","CH_CLE1")
+TANTQUE PAS HEnDehors()
+	SELON CH.GR_CODE
+		CAS "URSSA","ASSED","MEDEC","SOCIA"	
+			CH.CH_MTT = CNSalaireBrut*CH.CH_SALHE/100
+			CH.CH_SALEX = 0
+		CAS "AGFFF","PRENC"	
+			CH.CH_MTT = CNSalaireNonCadre*CH.CH_SALHE/100
+			CH.CH_SALEX = 0
+		CAS "AGFT1","PRET1","COGMP"	
+			CH.CH_MTT = CNT1*CH.CH_SALHE/100
+			CH.CH_SALEX = 0	
+		CAS "AGFT2","PRET2","CAPEC"	
+			CH.CH_MTT = CNT2*CH.CH_SALHE/100
+			CH.CH_SALEX = 0	
+		CAS "CSALE"
+			CH.CH_MTT = SalaireExo*CH.CH_SALEX/100
+			CH.CH_SALHE = 0	
+			MttExonere=MttExonere+CH.CH_MTT
+	FIN
+	TOTAL_CH_MTTP	= TOTAL_CH_MTTP+CH.CH_MTT
+	HModifie("CHARGE")
+	HLitSuivant("CHARGE","CH_CLE1")
+FIN
+
+SI CNSalaireBrut<>0
+	TOTAL_CH_SALHEP	= (TOTAL_CH_MTTP-MttExonere)*100/CNSalaireBrut
+SINON
+	TOTAL_CH_SALHEP	= 0	
+FIN
+SI SalaireExo<>0
+	TOTAL_CH_SALEXP	= MttExonere*100/SalaireExo
+SINON
+	TOTAL_CH_SALEXP	= 0	
+FIN
+HDésactiveFiltre(TOTALCH)
+HLitRecherchePremier(TOTALCH,TH_CLE1,HConstruitValClé(TOTALCH,TH_CLE1,PE.PECLEUNIK,"P"))
+SI HTrouve()
+	TH.CH_MTT=TOTAL_CH_MTTP
+	TH.CH_SALHE = TOTAL_CH_SALHEP
+	TH.CH_SALEX = TOTAL_CH_SALEXP
+	HModifie("TOTALCH")
+SINON
+    TH.PECLEUNIK=PE.PECLEUNIK
+	TH.CH_REF	="P"
+	TH.CH_MTT=TOTAL_CH_MTTP
+	TH.CH_SALHE = TOTAL_CH_SALHEP
+	TH.CH_SALEX = TOTAL_CH_SALEXP
+	HAjoute("TOTALCH")
+FIN
+
+

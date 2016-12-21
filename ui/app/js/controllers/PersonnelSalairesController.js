@@ -5,8 +5,8 @@
 
 	angular.module('tabordNG').controller('PersonnelSalairesController', PersonnelSalairesController);
 
-	PersonnelSalairesController.$inject = ['$scope', 'HelperService', 'uiGridConstants', 'PersonnelService', 'ngProgress'];
-	function PersonnelSalairesController ($scope, HelperService, uiGridConstants, PersonnelService, ngProgress) {
+	PersonnelSalairesController.$inject = ['$scope', '$rootScope', 'HelperService', 'uiGridConstants', 'PersonnelService'];
+	function PersonnelSalairesController ($scope, $rootScope, HelperService, uiGridConstants, PersonnelService) {
 		$.AdminLTE.layout.activate();
 
 		$scope.grid = {
@@ -87,9 +87,9 @@
 		var load_data = function () {
 			PersonnelService.list_with_salaries({}, function (results) {
 				$scope.grid.salaires.data = results.data;
-				ngProgress.complete();
+				$rootScope.ngProgress.complete();
 			}, function (error) {
-				ngProgress.reset();
+				$rootScope.ngProgress.reset();
 				console.log('Erreur load_data(): ', error);
 			});
 		}

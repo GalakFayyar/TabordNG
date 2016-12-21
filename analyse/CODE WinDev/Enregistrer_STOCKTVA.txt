@@ -1,0 +1,90 @@
+PROCEDURE Enregistrer_STOCKTVA(ChoixPeriode)
+CptMois,CptMoisP1 est un entier 
+StockFin1,StockFin2,StockFin3,StockFin4	est un monétaire
+HDésactiveFiltre(STOCKTVA)
+POUR CptMois=1 A 12
+	HLitRecherchePremier(STOCKTVA,SK_CLE1,HConstruitValClé(STOCKTVA,SK_CLE1,PE.PECLEUNIK,ChoixPeriode,CptMois))
+	SI HTrouve()
+		SI CptMois=1 ALORS
+			HFiltre("STOCK","ST_CLE1",Convert(PE.PECLEUNIK)+Caract(0),Convert(PE.PECLEUNIK)+Caract(255))
+			HLitPremier("STOCK","ST_CLE1")
+			SI HTrouve()
+				SK.SK_SDEB1 = ST.ST_TVA1
+				SK.SK_SDEB2 = ST.ST_TVA2
+				SK.SK_SDEB3 = ST.ST_TVA3
+				SK.SK_SDEB4 = ST.ST_TVA4
+			FIN			
+		FIN
+		SK.SK_ACH1 	= Rech_AC_Mois(ChoixPeriode,CptMois,"AC.AC_AHT1")+Rech_AC_Mois(ChoixPeriode,CptMois,"AC.AC_AHT11")
+		SK.SK_ACH2 	= Rech_AC_Mois(ChoixPeriode,CptMois,"AC.AC_AHT2")
+		SK.SK_ACH3 	= Rech_AC_Mois(ChoixPeriode,CptMois,"AC.AC_AHT3")
+		SK.SK_ACH4 	= Rech_AC_Mois(ChoixPeriode,CptMois,"AC.AC_AHT4")
+		
+		SK.SK_VT1 	= Rech_CA_Mois(ChoixPeriode,CptMois,"CA.CA_HT1")
+		SK.SK_VT2 	= Rech_CA_Mois(ChoixPeriode,CptMois,"CA.CA_HT2")
+		SK.SK_VT3 	= Rech_CA_Mois(ChoixPeriode,CptMois,"CA.CA_HT3")
+		SK.SK_VT4 	= Rech_CA_Mois(ChoixPeriode,CptMois,"CA.CA_HT4")
+
+		SK.SK_ACO1 	= Rech_CA_Mois(ChoixPeriode,CptMois,"CA.CA_HT1")-...
+			 		 (Rech_CA_Mois(ChoixPeriode,CptMois,"CA.CA_HT1")*Rech_MA_Mois(ChoixPeriode,CptMois,"MA.MA_MDLRE")/100)
+		SK.SK_ACO2 	= Rech_CA_Mois(ChoixPeriode,CptMois,"CA.CA_HT2")-...
+			 		 (Rech_CA_Mois(ChoixPeriode,CptMois,"CA.CA_HT2")*Rech_MA_Mois(ChoixPeriode,CptMois,"MA.MA_VT1")/100)
+		SK.SK_ACO3 	= Rech_CA_Mois(ChoixPeriode,CptMois,"CA.CA_HT3")-...
+			 		 (Rech_CA_Mois(ChoixPeriode,CptMois,"CA.CA_HT3")*Rech_MA_Mois(ChoixPeriode,CptMois,"MA.MA_VT2")/100)
+		SK.SK_ACO4 	= Rech_CA_Mois(ChoixPeriode,CptMois,"CA.CA_HT4")-...
+			 		 (Rech_CA_Mois(ChoixPeriode,CptMois,"CA.CA_HT4")*Rech_MA_Mois(ChoixPeriode,CptMois,"MA.MA_VT3")/100)		
+		
+		//Enlever les retours		
+		SK.SK_SFIN1 = SK.SK_SDEB1+SK.SK_ACH1-SK.SK_ACO1-Rech_AC_Mois(ChoixPeriode,CptMois,"AC.AC_RHT1")-Rech_AC_Mois(ChoixPeriode,CptMois,"AC.AC_RHT11")
+		SK.SK_SFIN2 = SK.SK_SDEB2+SK.SK_ACH2-SK.SK_ACO2-Rech_AC_Mois(ChoixPeriode,CptMois,"AC.AC_RHT2")
+		SK.SK_SFIN3 = SK.SK_SDEB3+SK.SK_ACH3-SK.SK_ACO3-Rech_AC_Mois(ChoixPeriode,CptMois,"AC.AC_RHT3")
+		SK.SK_SFIN4 = SK.SK_SDEB4+SK.SK_ACH4-SK.SK_ACO4-Rech_AC_Mois(ChoixPeriode,CptMois,"AC.AC_RHT4")
+		StockFin1	= SK.SK_SFIN1 
+		StockFin2	= SK.SK_SFIN2 
+		StockFin3	= SK.SK_SFIN3 
+		StockFin4	= SK.SK_SFIN4 
+
+		SI SK.SK_ACO1<>0
+			SK.SK_JOUR1 = (((SK.SK_SDEB1+SK.SK_SFIN1)/2)/(SK.SK_ACO1))*360/12
+			SK.SK_MOIS1 = SK.SK_JOUR1/30
+		SINON
+			SK.SK_JOUR1 = 0
+			SK.SK_MOIS1 = 0		
+		FIN
+		SI SK.SK_ACO2<>0
+			SK.SK_JOUR2 = (((SK.SK_SDEB2+SK.SK_SFIN2)/2)/(SK.SK_ACO2))*360/12
+			SK.SK_MOIS2 = SK.SK_JOUR2/30
+		SINON
+			SK.SK_JOUR2 = 0
+			SK.SK_MOIS2 = 0		
+		FIN
+		SI SK.SK_ACO3<>0
+			SK.SK_JOUR3 = (((SK.SK_SDEB3+SK.SK_SFIN3)/2)/(SK.SK_ACO3))*360/12
+			SK.SK_MOIS3 = SK.SK_JOUR3/30
+		SINON
+			SK.SK_JOUR3 = 0
+			SK.SK_MOIS3 = 0		
+		FIN
+		SI SK.SK_ACO4<>0
+			SK.SK_JOUR4 = (((SK.SK_SDEB4+SK.SK_SFIN4)/2)/(SK.SK_ACO4))*360/12
+			SK.SK_MOIS4 = SK.SK_JOUR4/30
+		SINON
+			SK.SK_JOUR4 = 0
+			SK.SK_MOIS4 = 0		
+		FIN
+       	HModifie("STOCKTVA")
+		SI CptMois<12
+			CptMoisP1=CptMois+1
+			HLitRecherchePremier(STOCKTVA,SK_CLE1,HConstruitValClé(STOCKTVA,SK_CLE1,PE.PECLEUNIK,ChoixPeriode,CptMoisP1))
+			SI HTrouve()		
+				SK.SK_SDEB1  = StockFin1
+				SK.SK_SDEB2  = StockFin2
+				SK.SK_SDEB3  = StockFin3
+				SK.SK_SDEB4  = StockFin4
+				HModifie("STOCKTVA")
+			FIN
+		FIN		
+	FIN
+FIN
+
+

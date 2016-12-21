@@ -1,0 +1,20 @@
+PROCEDURE Enregistrer_COMMENTA_9()
+NumMois9	est un entier  = 9
+Pct_Medic,Pct_OTC,Pct_Para	est un réel=0
+HDésactiveFiltre(COMMENTA)
+HLitRecherchePremier(COMMENTA,CM_CLE1,HConstruitValClé(COMMENTA,CM_CLE1,PE.PECLEUNIK,"R",NumMois9))
+SI HTrouve()
+	SI Rech_CR_Mois("R","E"," ",NumMois9,"CR.CR_MTTNE")<>0
+		Pct_Medic = Rech_CR_Mois("R","C","1",NumMois9,"CR.CR_MTTNE")*100/Rech_CR_Mois("R","E"," ",NumMois9,"CR.CR_MTTNE")
+		Pct_OTC	  = Rech_CR_Mois("R","C","2",NumMois9,"CR.CR_MTTNE")*100/Rech_CR_Mois("R","E"," ",NumMois9,"CR.CR_MTTNE")
+		Pct_Para  = Rech_CR_Mois("R","C","3",NumMois9,"CR.CR_MTTNE")*100/Rech_CR_Mois("R","E"," ",NumMois9,"CR.CR_MTTNE")
+	FIN
+	CM.CM_OBSC="Votre résultat cumulé est formé par : "+RC+...
+			   TAB+"- Secteur médicament remboursable "+TAB+NumériqueVersChaîne(Pct_Medic,"5.2f")+" %"+RC+...
+			   TAB+"- Secteur OTC "+TAB+TAB+TAB+NumériqueVersChaîne(Pct_OTC,"5.2f")+" %"+RC+...
+			   TAB+"- Secteur Parapharmacie et divers "+TAB+NumériqueVersChaîne(Pct_Para,"5.2f")+" %"
+			   
+   	HModifie("COMMENTA")
+FIN
+
+

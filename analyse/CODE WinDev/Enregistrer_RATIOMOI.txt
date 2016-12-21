@@ -1,0 +1,210 @@
+PROCEDURE Enregistrer_RATIOMOI(ChoixPeriode1,ChoixPeriode2)
+NumMois,CptMois	est un entier 
+
+HDésactiveFiltre(RATIOMOI)
+POUR NumMois=1 A 12
+	HLitRecherchePremier(RATIOMOI,RT_CLE1,HConstruitValClé(RATIOMOI,RT_CLE1,PE.PECLEUNIK,ChoixPeriode1,ChoixPeriode2,NumMois))
+	SI HTrouve()
+		SI Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_MTTCA")<>0
+			RT.RT_CAHNM	= (Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_MTTCA")-...
+						   Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_MTTCA"))*100/...
+						   Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_MTTCA")
+		SINON
+			RT.RT_CAHNM	= 0
+		FIN	
+		SI Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_MTTCA")<>0
+			RT.RT_CAHNC	= (Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_MTTCA")-...
+						   Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_MTTCA"))*100/...
+						   Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_MTTCA")
+		SINON
+			RT.RT_CAHNC	= 0
+		FIN
+		SI Rech_CR_Mois(ChoixPeriode2,"E"," ",NumMois,"CR.CR_MTTCA")<>0
+			RT.RT_CAHNE = (Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_MTTCA")-...
+						   Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_MTTCA"))*100/...
+						   Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_MTTCA")
+		SINON
+			RT.RT_CAHNE	= 0
+		FIN
+		SI Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_NBJOUR")<>0 ET...
+		   Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_MTTCA")<>0 ALORS	
+			RT.RT_CAHRM = ((Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_MTTCA")/...
+							Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_NBJOUR"))-...
+						   (Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_MTTCA")/...
+							Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_NBJOUR")))/...
+						   (Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_MTTCA")/...
+							Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_NBJOUR"))*100
+		SINON
+			RT.RT_CAHRM = 0			
+		FIN
+		SI Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_NBJOUR")<>0 ET...
+		   Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_MTTCA")<>0 ALORS
+			RT.RT_CAHRC = ((Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_MTTCA")/Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_NBJOUR"))-...
+						   (Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_MTTCA")/Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_NBJOUR")))/...
+						   (Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_MTTCA")/Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_NBJOUR"))*100
+		SINON
+			RT.RT_CAHRC = 0			
+		FIN
+		SI Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_NBJOUR")<>0 ET...
+		   Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_MTTCA")<>0 ALORS
+			RT.RT_CAHRE = ((Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_MTTCA")/Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_NBJOUR"))-...
+						   (Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_MTTCA")/Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_NBJOUR")))/...
+						   (Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_MTTCA")/Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_NBJOUR"))*100
+		SINON
+			RT.RT_CAHRE = 0			
+		FIN
+		SI Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_MTCA2")<>0	
+			RT.RT_CATNM = (Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_MTCA2")-...
+						   Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_MTCA2"))*100/...
+						   Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_MTCA2")
+		SINON
+			RT.RT_CATNM = 0			
+		FIN
+		SI Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_MTCA2")<>0
+			RT.RT_CATNC = (Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_MTCA2")-...
+						   Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_MTCA2"))*100/...
+						   Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_MTCA2")
+		SINON
+			RT.RT_CATNC = 0			
+		FIN
+		SI Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_MTCA2")<>0
+			RT.RT_CATNE = (Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_MTCA2")-...
+						   Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_MTCA2"))*100/...
+						   Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_MTCA2")
+		SINON
+			RT.RT_CATNE = 0			
+		FIN
+		SI Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_NBJOUR")<>0 ET...
+		   Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_MTCA2")<>0 ALORS
+			RT.RT_CATRM = ((Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_MTCA2")/Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_NBJOUR"))-...
+						   (Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_MTCA2")/Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_NBJOUR")))/...
+						   (Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_MTCA2")/Rech_CR_Mois(ChoixPeriode2,"M"," ",NumMois,"CR.CR_NBJOUR"))*100
+		SINON
+			RT.RT_CATRM = 0			
+		FIN
+		SI Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_NBJOUR")<>0 ET...
+		   Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_MTCA2")<>0 ALORS
+			RT.RT_CATRC = ((Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_MTCA2")/Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_NBJOUR"))-...
+						   (Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_MTCA2")/Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_NBJOUR")))/...
+						   (Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_MTCA2")/Rech_CR_Mois(ChoixPeriode2,"C"," ",NumMois,"CR.CR_NBJOUR"))*100
+		SINON
+			RT.RT_CATRC = 0			
+		FIN
+		SI Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_NBJOUR")<>0 ET...
+		   Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_MTCA2")<>0 ALORS
+			RT.RT_CATRE = ((Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_MTCA2")/Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_NBJOUR"))-...
+						   (Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_MTCA2")/Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_NBJOUR")))/...
+						   (Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_MTCA2")/Rech_CR_Mois(ChoixPeriode2,"E"," ",12,"CR.CR_NBJOUR"))*100
+		SINON
+			RT.RT_CATRE = 0			
+		FIN
+		RT.RT_MAM = Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_PCTMA")
+		RT.RT_MAC = Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_PCTMA")
+		RT.RT_MAE = Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_PCTMA")
+		SI Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_MTTCA")<>0
+			RT.RT_FRM = (Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_MTTSA")+...
+						 Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_MTTCH")-...
+						(Rech_CP(ChoixPeriode1,"TI.CP_MTT")/12))*100/Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_MTTCA")
+		SINON
+			RT.RT_FRM = 0		
+		FIN
+		RT.RT_FRC	= 0
+		POUR CptMois=1 A 12
+			SI CptMois<=NumMois
+				RT.RT_FRC = RT.RT_FRC+Rech_CR_Mois(ChoixPeriode1,"M"," ",CptMois,"CR.CR_MTTSA")+...
+							Rech_CR_Mois(ChoixPeriode1,"M"," ",CptMois,"CR.CR_MTTCH")-...
+							Rech_CP(ChoixPeriode1,"TI.CP_MTT")/12
+			FIN	  
+		FIN	 
+		SI Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_MTTCA")<>0
+			RT.RT_FRC = RT.RT_FRC*100/Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_MTTCA")
+		SINON
+			RT.RT_FRC = 0
+		FIN
+		SI Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_MTTCA")<>0
+			RT.RT_FRE = (Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_MTTSA")+...
+						 Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_MTTCH")-...
+						(Rech_CP(ChoixPeriode1,"TI.CP_MTT")))*100/Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_MTTCA")
+		SINON
+			RT.RT_FRE = 0
+		FIN
+		RT.RT_VAM = Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_PCTVA")
+		RT.RT_VAC = Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_PCTVA")
+		RT.RT_VAE = Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_PCTVA")
+		RT.RT_EBM = Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_PCTEB")
+		RT.RT_EBC = Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_PCTEB")
+		RT.RT_EBE = Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_PCTEB")
+		RT.RT_RCM = Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_PCTAV")
+		RT.RT_RCC = Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_PCTAV")
+		RT.RT_RCE = Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_PCTAV")
+		RT.RT_FIM = Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_PCTAR")
+		RT.RT_FIC = Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_PCTAR")
+		RT.RT_FIE = Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_PCTAR")	
+	
+		SI Rech_SA("P","TS.TS_EFMOY")<>0
+			RT.RT_EFM = Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_MTTVA")/Rech_SA("P","TS.TS_EFMOY")
+			RT.RT_EFC = Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_MTTVA")/Rech_SA("P","TS.TS_EFMOY")
+			RT.RT_EFE = Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_MTTVA")/Rech_SA("P","TS.TS_EFMOY")
+		SINON
+			RT.RT_EFM = 0	
+			RT.RT_EFC = 0 
+			RT.RT_EFE = 0						
+		FIN
+		SI Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_MTTCA")<>0
+			RT.RT_AHM = (Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_HAGRO")+Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_HALABO"))/...
+						 Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_MTTCA")*100 	
+		SINON
+			RT.RT_AHM = 0			
+		FIN
+		SI Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_MTTCA")<>0
+			RT.RT_AHC = (Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_HAGRO")+Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_HALABO"))/...
+						 Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_MTTCA")*100 	
+		SINON
+			RT.RT_AHC = 0
+		FIN
+		SI Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_MTTCA")<>0
+			RT.RT_AHE = (Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_HAGRO")+Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_HALABO"))/...
+						 Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_MTTCA")*100 
+		SINON
+			RT.RT_AHE = 0
+		FIN
+		RT.RT_AGM	= Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_HAGRO")
+		RT.RT_AGC	= Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_HAGRO")
+		RT.RT_AGE	= Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_HAGRO")
+
+		RT.RT_ALM	= Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_HALABO")
+		RT.RT_ALC	= Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_HALABO")
+		RT.RT_ALE	= Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_HALABO")
+
+		SI (Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_HAGRO")+Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_HALABO"))<>0
+			RT.RT_AGTM = (Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_HAGRO")/...
+						(Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_HAGRO")+Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_HALABO")))*100
+			RT.RT_ALTM = (Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_HALABO")/...
+						(Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_HAGRO")+Rech_CR_Mois(ChoixPeriode1,"M"," ",NumMois,"CR.CR_HALABO")))*100
+		SINON
+			RT.RT_AGTM = 0			
+			RT.RT_ALTM = 0	
+		FIN
+		SI (Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_HAGRO")+Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_HALABO"))<>0
+			RT.RT_AGTC = (Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_HAGRO")/...
+						(Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_HAGRO")+Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_HALABO")))*100
+			RT.RT_ALTC =(Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_HALABO")/...
+						(Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_HAGRO")+Rech_CR_Mois(ChoixPeriode1,"C"," ",NumMois,"CR.CR_HALABO")))*100
+		SINON
+			RT.RT_AGTC = 0
+			RT.RT_ALTC = 0					
+		FIN
+		SI (Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_HAGRO")+Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_HALABO"))<>0
+			RT.RT_AGTE = (Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_HAGRO")/...
+						(Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_HAGRO")+Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_HALABO")))*100
+			RT.RT_ALTE = (Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_HALABO")/...
+						(Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_HAGRO")+Rech_CR_Mois(ChoixPeriode1,"E"," ",12,"CR.CR_HALABO")))*100
+		SINON
+			RT.RT_AGTE = 0
+			RT.RT_ALTE = 0						
+		FIN
+		HModifie("RATIOMOI")
+	FIN
+FIN
+
+

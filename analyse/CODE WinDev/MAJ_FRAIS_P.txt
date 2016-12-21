@@ -1,0 +1,51 @@
+PROCEDURE MAJ_FRAIS_P()
+CAHT_Prev,CAHT_Reel,CAHT_Service_Prev,CAHT_Service_Reel	est un monétaire=0
+ValPctMargeService	est un réel
+
+TOTAL_FR_MTTP	est un monétaire = 0
+
+CAHT_Prev			= Rech_CA("P","TC.CA_HT")	
+CAHT_Reel			= Rech_CA("R","TC.CA_HT")
+CAHT_Service_Prev	= Rech_CA("P","TC.CA_HT5")
+CAHT_Service_Reel	= Rech_CA("R","TC.CA_HT5")
+ValPctMargeService	= PctMargeService()
+
+HFiltre("FRAIS","FR_CLE1",Convert(PE.PECLEUNIK)+"P"+Caract(0),Convert(PE.PECLEUNIK)+"P"+Caract(255))
+HLitPremier("FRAIS","FR_CLE1")
+TANTQUE PAS HEnDehors()
+	SELON FR.GR_CODE
+		CAS "SERVI"
+			SI ValPctMargeService<>100
+				FR.FR_MTT = FR.FR_PCTV*CAHT_Service_Reel/(100-ValPctMargeService)	
+	        SINON
+				FR.FR_MTT = 0				
+			FIN
+			SI CAHT_Service_Prev<>0
+				FR.FR_PCTP = FR.FR_MTT*(100-ValPctMargeService)/CAHT_Service_Prev
+			SINON
+				FR.FR_PCTP = 0
+			FIN
+		AUTRE CAS
+			FR.FR_MTT = FR.FR_PCTV*CAHT_Reel/100	
+			SI CAHT_Prev<>0
+				FR.FR_PCTP = FR.FR_MTT*100/CAHT_Prev
+			SINON
+				FR.FR_PCTP = 0
+			FIN			
+	FIN
+	TOTAL_FR_MTTP = TOTAL_FR_MTTP+FR.FR_MTT
+	FR.FR_PCTR=FR.FR_PCTV
+	HModifie("FRAIS")
+	HLitSuivant("FRAIS","FR_CLE1")
+FIN
+HDésactiveFiltre(TOTALFR)
+HLitRecherchePremier(TOTALFR,TL_CLE1,HConstruitValClé(TOTALFR,TL_CLE1,PE.PECLEUNIK,"P"))
+SI HTrouve()
+	TL.TL_MTT=TOTAL_FR_MTTP
+	HModifie("TOTALFR")
+SINON
+    TL.PECLEUNIK=PE.PECLEUNIK
+	TL.FR_REF	="P"
+	TL.TL_MTT=TOTAL_FR_MTTP
+	HAjoute("TOTALFR")
+FIN

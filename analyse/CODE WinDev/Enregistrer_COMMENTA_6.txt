@@ -1,0 +1,38 @@
+PROCEDURE Enregistrer_COMMENTA_6()
+NumMois1	est un entier  = 1	
+NumMois6	est un entier  = 6
+Pct			est un réel
+HDésactiveFiltre(COMMENTA)
+HLitRecherchePremier(COMMENTA,CM_CLE1,HConstruitValClé(COMMENTA,CM_CLE1,PE.PECLEUNIK,"R",NumMois6))
+SI HTrouve()
+	Pct = Rech_RT_Mois("R","A",NumMois6,"RT.RT_CATNC")
+	CM.CM_OBSC = "L'évolution du CA TTC est depuis le début de "+NumériqueVersChaîne(Pct,"+5.2f")+" %"
+	
+	SI Rech_SF_Mois(NumMois6,"SF.SF_SFIN")>Rech_SF_Mois(NumMois1,"SF.SF_SFIN")
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+					"Nous constatons une augmentation des stocks par rapport à votre début d'exercice"
+	SINON
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+					"Nous constatons une diminution des stocks par rapport à votre début d'exercice"
+	FIN
+
+	SI Rech_EF_Mois("R",NumMois6,"EF.EF_MTEFE")>Rech_EF_Mois("R",NumMois6,"EF.EF_MTRAT")
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+					"L'efficacité économique est correcte"
+	SINON
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+					"L'efficacité économique est à améliorer"
+	FIN
+	
+	SI (Rech_EF_Mois("R",NumMois6,"EF.EF_MTEFE")+2000)>Rech_EF_Mois("R",NumMois6,"EF.EF_MTRAT")
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+					"Il faut peut-être prévoir l'embauche d'un collaborateur"
+	SINON
+		CM.CM_OBSC=	CM.CM_OBSC+RC+RC+...
+					"L'embauche d'un collaborateur n'apparait pas indispensable"
+	FIN	
+
+   	HModifie("COMMENTA")
+FIN
+
+

@@ -1,0 +1,56 @@
+PROCEDURE Enregistrer_RATIOCOM(ChoixPeriode)
+CptMois	est un entier 
+HDésactiveFiltre(RATIOCOM)
+HLitRecherchePremier(RATIOCOM,RA_CLE1,HConstruitValClé(RATIOCOM,RA_CLE1,PE.PECLEUNIK,ChoixPeriode))
+SI HTrouve()
+	SI Rech_CA("A","TC.CA_HT")<>0
+		RA.RA_PCCA1	= (Rech_CA("R","TC.CA_HT")-Rech_CA("A","TC.CA_HT"))*100/...
+					   Rech_CA("A","TC.CA_HT")
+	SINON
+		RA.RA_PCCA1	= 0		
+	FIN
+	RA.RA_PCCA2	= 0
+	RA.RA_PCMA1	= Rech_CR_Mois(ChoixPeriode,"E"," ",12,"CR.CR_PCTMA")
+	RA.RA_PCMA2 = 0
+	RA.RA_PCEB1	= Rech_CR_Mois(ChoixPeriode,"E"," ",12,"CR.CR_PCTEB")
+	RA.RA_PCEB2	= 0
+	RA.RA_PCVA1	= Rech_CR_Mois(ChoixPeriode,"E"," ",12,"CR.CR_PCTVA")
+	RA.RA_PCVA2	= 0
+	RA.RA_PCFF1	= Rech_CR_Mois(ChoixPeriode,"E"," ",12,"CR.CR_PCTAR")
+	RA.RA_PCFF2	= 0
+	RA.RA_PCRE1	= Rech_CR_Mois(ChoixPeriode,"E"," ",12,"CR.CR_PCTAV")
+	RA.RA_PCRE2	= 0
+	SI Rech_SA("P","TS.TS_EFMOY")<>0
+		RA.RA_MTEE1 = Rech_CR_Mois(ChoixPeriode,"E"," ",12,"CR.CR_MTTVA")/Rech_SA("P","TS.TS_EFMOY")
+    SINON
+		RA.RA_MTEE1 = 0		
+	FIN
+	RA.RA_MTEE2 = 0
+	RA.RA_PCFR1 = 0
+	POUR CptMois=1 A 12
+		RA.RA_PCFR1 = RA.RA_PCFR1+Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_MTTSA")+...
+				  	  Rech_CR_Mois(ChoixPeriode,"M"," ",CptMois,"CR.CR_MTTCH")-...
+				  	  Rech_CP(ChoixPeriode,"TI.CP_MTT")/12
+	FIN
+	SI Rech_CR_Mois(ChoixPeriode,"E"," ",12,"CR.CR_MTTCA")<>0
+		RA.RA_PCFR1	= RA.RA_PCFR1*100/Rech_CR_Mois(ChoixPeriode,"E"," ",12,"CR.CR_MTTCA")
+	SINON
+		RA.RA_PCFR1	= 0
+	FIN
+	RA.RA_PCFR2 = 0
+	SI Rech_CR_Mois(ChoixPeriode,"E"," ",12,"CR.CR_MTTCA")<>0
+		SELON cTypeEntr
+			CAS "E"
+				RA.RA_PCCP1 = Rech_CP(ChoixPeriode,"TI.CP_MTT")*100/Rech_CR_Mois(ChoixPeriode,"E"," ",12,"CR.CR_MTTCA")
+			CAS "A"
+				RA.RA_PCCP1 = Rech_CS(ChoixPeriode,"CS.CS_MTT")*100/Rech_CR_Mois(ChoixPeriode,"E"," ",12,"CR.CR_MTTCA")
+		FIN
+    SINON
+		RA.RA_PCCP1 = 0
+	FIN
+	RA.RA_PCCP2 = 0
+	
+	HModifie("RATIOCOM")
+FIN
+
+

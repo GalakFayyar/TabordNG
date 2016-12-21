@@ -1,0 +1,29 @@
+PROCEDURE Enregistrer_COMMENTA_10()
+NumMois1		est un entier  = 1		
+NumMois10		est un entier  = 10
+Pct1,Pct2,Pct3	est un réel
+HDésactiveFiltre(COMMENTA)
+HLitRecherchePremier(COMMENTA,CM_CLE1,HConstruitValClé(COMMENTA,CM_CLE1,PE.PECLEUNIK,"R",NumMois10))
+SI HTrouve()
+	Pct1 = Rech_RT_Mois("R","A",NumMois10,"RT.RT_CATNC")
+	Pct2 = Rech_CR_Mois("R","C"," ",NumMois10,"CR.CR_PCTEB")
+	SI Rech_CR_Mois("R","C","1",NumMois10,"CR.CR_MTTVT")<>0
+		Pct3 = Rech_CR_Mois("R","C","1",NumMois10,"CR.CR_MTTVT")*100/Rech_CR_Mois("R","C"," ",NumMois10,"CR.CR_MTTVT")
+	FIN
+	CM.CM_OBSC="A deux mois de la fin de votre exercice, il apparaît : "+RC+RC+...
+ 			   "- L'évolution du CA TTC est depuis le début de "+NumériqueVersChaîne(Pct1,"+5.2f")+" %"+RC+RC+...
+ 			   "- L'E.B.E. cumulé (retraitements réalisés) est de "+NumériqueVersChaîne(Pct2,"+5.2f")+" %"+RC+RC+...
+ 			   "- Les ventes HT de médicaments remboursables sur les ventes totales HT représentent "+NumériqueVersChaîne(Pct3,"+5.2f")+" %"
+			   
+	SI Rech_SF_Mois(NumMois10,"SF.SF_ROJOU")>Rech_SF_Mois(NumMois1,"SF.SF_ROJOU")   
+		CM.CM_OBSC=CM.CM_OBSC+RC+RC+...
+					"La rotation des stocks est moins bonne qu'au début de l'exercice"
+	SINON
+		CM.CM_OBSC=CM.CM_OBSC+RC+RC+...
+					"La rotation des stocks s'est améliorée depuis le début de l'exercice"
+	FIN
+
+	HModifie("COMMENTA")
+FIN
+
+
