@@ -1,0 +1,20 @@
+<div class="btn-toolbar" role="toolbar">
+	<div class="btn-group btn-group-justified" role="group">
+		<label class="btn" ng-class="{'btn-primary': ($parent.period.selected == choice.id), 'btn-default': ($parent.period.selected != choice.id)}" ng-repeat="choice in period.list">
+			<input type="radio" ng-model="$parent.period.selected" value="{{choice.id}}" autocomplete="off" style="visibility:hidden" />
+			{{choice.libelle}}
+		</label>
+	</div>
+</div>
+<div
+	ui-grid="grid.ca" 
+	class="" 
+	style="margin-top:15px"
+	ui-grid-edit 
+	ui-grid-row-edit 
+	ui-grid-exporter 
+	ui-grid-auto-resize 
+	ui-grid-resize-columns 
+	ui-grid-pinning 
+	ui-grid-selection>
+</div>

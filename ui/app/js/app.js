@@ -67,11 +67,12 @@
 				},
 				parent: 'app'
 			})
+			/******************************************************************/
 			.state('pharmacie_chiffres', {
 				url: 'pharmacie/chiffres',
 				views: {
 					'content': {
-						templateUrl: 'views/dashboard/pharmacie_chiffres.html',
+						templateUrl: 'views/pharmacie/dashboard.html',
 						controller: 'PharmacieChiffresController'
 					}
 				},

@@ -1,0 +1,40 @@
+<section class="content-header">
+	<h1>
+		Gestion de la pharmacie
+		<small>Consultation</small>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li><a href="#">Forms</a></li>
+		<li class="active">General Elements</li>
+	</ol>
+</section>
+
+<section class="content">
+	<div class="nav-tabs-custom">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="" data-toggle="tab" ng-click="tabHeadingClick('ca')" aria-expanded="true">CA</a></li>
+			<li class=""><a href="" data-toggle="tab" ng-click="tabHeadingClick('marge')" aria-expanded="false">Marge</a></li>
+			<li class=""><a href="" data-toggle="tab" ng-click="tabHeadingClick('stock')" aria-expanded="false">Stock</a></li>
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" ng-click="tabHeadingClick('frais_generaux')" href="" aria-expanded="false">
+					Frais <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="tabHeadingClick('frais_generaux')">Frais Généraux</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="tabHeadingClick('frais_financiers')">Frais Financiers</a></li>
+					<li role="presentation" class="divider"></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="" ng-click="tabHeadingClick('divers')">Divers</a></li>
+				</ul>
+			</li>
+			<li class=""><a href="" data-toggle="tab" ng-click="tabHeadingClick('impots_taxes')" aria-expanded="false">Impôts &amp; Taxes</a></li>
+			<li class=""><a href="" data-toggle="tab" ng-click="tabHeadingClick('emprunts')" aria-expanded="false">Emprunts</a></li>
+			<li class=""><a href="" data-toggle="tab" ng-click="tabHeadingClick('investissements')" aria-expanded="false">Investissements</a></li>
+			<li class=""><a href="" data-toggle="tab" ng-click="tabHeadingClick('cessions_immos')" aria-expanded="false">Cessions Immos</a></li>
+			<li class=""><a href="" data-toggle="tab" ng-click="tabHeadingClick('amortissements')" aria-expanded="false">Amortissements</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="" ng-include="selectedPage" style="padding-top:10px">Chargement ...</div>
+		</div>
+	</div>
+</section>
