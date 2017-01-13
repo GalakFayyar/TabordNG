@@ -61,7 +61,7 @@
 					{
 						name: 'mois',
 						displayName: 'Mois',
-						//width: 90,
+						minWidth: 90,
 						pinnedLeft: true,
 						enableFiltering: false, 
 						enableSorting: false,
@@ -240,19 +240,83 @@
 			$scope.grid.ca.data = data_bidon_reelle;
 		}
 
+		$scope.ca = {
+			precedent: {
+				tx_1: {
+					princeps: {value:12, color:"#3c8dbc"},
+					generique: {value:28, color:"#00c0ef"}
+				},
+				tx_2: {value:10, color:"#00a65a"},
+				tx_3: {value:27, color:"#f39c12"},
+				tx_services: {value:23, color:"#d2d6de"}
+			}
+		};
+
+		var getChartData = function () {
+			return [
+				{id:0, libelle:"Princeps 2,1%", value:$scope.ca.precedent.tx_1.princeps.value, color:$scope.ca.precedent.tx_1.princeps.color},
+				{id:1, libelle:"Générique 2,1%", value:$scope.ca.precedent.tx_1.generique.value, color:$scope.ca.precedent.tx_1.generique.color},
+				{id:2, libelle:"7%", value:$scope.ca.precedent.tx_2.value, color:$scope.ca.precedent.tx_2.color},
+				{id:3, libelle:"20%", value:$scope.ca.precedent.tx_3.value, color:$scope.ca.precedent.tx_3.color},
+				{id:4, libelle:"Services 20%", value:$scope.ca.precedent.tx_services.value, color:$scope.ca.precedent.tx_services.color}
+			];
+		};
+
+		$scope.chart = {
+			ca: {
+				precedent: {
+					options: {
+						chart: {
+							type: 'pieChart',
+							height: 200,
+							width: 300,
+							x: function(d){return d.libelle;},
+							y: function(d){return d.value;},
+							pieLabelsOutside: true,
+							showLabels: true,
+							labelType: "percent",
+							duration: 500,
+							showLegend: false,
+							noData: "Aucune donnée à afficher",
+						}  
+					},
+					data: getChartData()
+				}
+			}
+		};
+
+		$scope.info = {};
+
+		$scope.refreshPieChart = function () {
+			var test =  Number($scope.ca.precedent.tx_1.princeps.value) +
+						Number($scope.ca.precedent.tx_1.generique.value) +
+						Number($scope.ca.precedent.tx_2.value) +
+						Number($scope.ca.precedent.tx_3.value) +
+						Number($scope.ca.precedent.tx_services.value);
+
+			if (parseInt(test) == 100)
+			{
+				$scope.info.error_sum_prc = undefined;
+				$scope.chart.ca.precedent.data = getChartData();
+			}
+			else
+				$scope.info.error_sum_prc = "Erreur : la somme n'est pas égale à 100%.";
+		}
+
 		$scope.refreshGridCA = function () {
 			$rootScope.ngProgress.start();
 
 			// TODO : service de récupération des données
+			console.log("Rechargement des données");
 
-			switch ($scope.period) {
-				case 1:
+			switch ($scope.period.selected) {
+				case "1":
 					$scope.grid.ca.data = data_bidon_precedente;
 					break;
-				case 2:
+				case "2":
 					$scope.grid.ca.data = data_bidon_reelle;
 					break;
-				case 3:
+				case "3":
 					$scope.grid.ca.data = data_bidon_previsionnelle;
 					break;
 				default:

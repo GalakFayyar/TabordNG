@@ -18,3 +18,49 @@
 	ui-grid-pinning 
 	ui-grid-selection>
 </div>
+
+<div ng-show="period.selected == '1'">
+	<h3 class="box-title">Répartition du CA HT (%)</h3>
+	<div class="row">
+		<div class="col-md-3">
+			<div style="width:100%; display:block">
+				<nvd3 options="chart.ca.precedent.options" data="chart.ca.precedent.data" class="with-3d-shadow with-transitions"></nvd3>
+				<span ng-show="info.error_sum_prc" class="text-red">{{info.error_sum_prc}}</span>
+			</div>
+		</div>
+		<div class="col-md-3">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="tx_precedent_princeps_1" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_1.princeps.color}}">Princeps 2,1%</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="tx_precedent_princeps_1" ng-model="ca.precedent.tx_1.princeps.value" ng-change="refreshPieChart()"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="tx_precedent_generique_1" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_1.generique.color}}">Générique 2,1%</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="tx_precedent_generique_1" ng-model="ca.precedent.tx_1.generique.value" ng-change="refreshPieChart()"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="tx_precedent_2" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_2.color}}">7%</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="tx_precedent_2" ng-model="ca.precedent.tx_2.value" ng-change="refreshPieChart()"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="tx_precedent_3" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_3.color}}">20%</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="tx_precedent_3" ng-model="ca.precedent.tx_3.value" ng-change="refreshPieChart()"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="tx_precedent_services" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_services.color}}">Services 20%</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="tx_precedent_services" ng-model="ca.precedent.tx_services.value" ng-change="refreshPieChart()"/>
+						</div>
+					</div>
+				</form>
+		</div>
+	</div>
+</div>
