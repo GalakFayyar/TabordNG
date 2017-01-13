@@ -38,31 +38,31 @@
 		};
 		
 		$scope.login = function() {
-			//$state.go('dashboard');
+			$state.go('dashboard');
 
 			// BOUCHON DEV
-			UserService.authenticate({}, {username: $scope.username, password: $scope.password}, function (authenticatedUser) {
-				console.log(authenticatedUser);
-				if (authenticatedUser.data && authenticatedUser.data.authenticated) {
-					console.log('authentication succesful');
-					$rootScope.user = authenticatedUser.data;
+			// UserService.authenticate({}, {username: $scope.username, password: $scope.password}, function (authenticatedUser) {
+			// 	console.log(authenticatedUser);
+			// 	if (authenticatedUser.data && authenticatedUser.data.authenticated) {
+			// 		console.log('authentication succesful');
+			// 		$rootScope.user = authenticatedUser.data;
 
-					if ($scope.rememberMe) {
-						//$cookieStore.put('tabordngUser', $rootScope.user);
-						HelperService.setCookieData($rootScope.user);
-					}
+			// 		if ($scope.rememberMe) {
+			// 			//$cookieStore.put('tabordngUser', $rootScope.user);
+			// 			HelperService.setCookieData($rootScope.user);
+			// 		}
 
-					$state.go('dashboard');
-				} else {
-					console.log('authentication failed');
-					$scope.authentication = {
-						status: 'failed',
-						message: 'Echec de l\'authentification avec ce username'
-					};
-				}
-			}, function (toto) {
-				console.log(toto);
-			});
+			// 		$state.go('dashboard');
+			// 	} else {
+			// 		console.log('authentication failed');
+			// 		$scope.authentication = {
+			// 			status: 'failed',
+			// 			message: 'Echec de l\'authentification avec ce username'
+			// 		};
+			// 	}
+			// }, function (toto) {
+			// 	console.log(toto);
+			// });
 
 			/*
 			UserService.authenticate($.param({username : $scope.username, password : $scope.password}), function(authenticatedUser) {

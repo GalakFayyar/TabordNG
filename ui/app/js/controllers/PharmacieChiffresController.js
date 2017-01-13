@@ -5,8 +5,8 @@
 
 	angular.module('tabordNG').controller('PharmacieChiffresController', PharmacieChiffresController);
 
-	PharmacieChiffresController.$inject = ['$scope', '$rootScope', '$filter', 'HelperService', 'PharmacieChiffresService', 'uiGridConstants'];
-	function PharmacieChiffresController ($scope, $rootScope, $filter, HelperService, PharmacieChiffresService, uiGridConstants) {
+	PharmacieChiffresController.$inject = ['$scope', '$rootScope', 'HelperService', 'PharmacieChiffresService', 'uiGridConstants'];
+	function PharmacieChiffresController ($scope, $rootScope, HelperService, PharmacieChiffresService, uiGridConstants) {
 		$.AdminLTE.layout.activate();
 
 		$scope.period = {
@@ -61,7 +61,7 @@
 					{
 						name: 'mois',
 						displayName: 'Mois',
-						width: 90,
+						//width: 90,
 						pinnedLeft: true,
 						enableFiltering: false, 
 						enableSorting: false,
@@ -187,7 +187,7 @@
 			}
 		}
 
-		var data_bidon = [
+		var data_bidon_reelle = [
 				{mois:'JANVIER',nb_jours_n_1:21,nb_jours_n:20,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:155,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
 				{mois:'FEVRIER',nb_jours_n_1:21,nb_jours_n:20,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
 				{mois:'MARS',nb_jours_n_1:21,nb_jours_n:20,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
@@ -199,8 +199,36 @@
 				{mois:'SEPTEMBRE',nb_jours_n_1:21,nb_jours_n:20,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
 				{mois:'OCTOBRE',nb_jours_n_1:21,nb_jours_n:20,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
 				{mois:'NOVEMBRE',nb_jours_n_1:21,nb_jours_n:20,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
-				{mois:'DECEMBRE',nb_jours_n_1:21,nb_jours_n:20,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24}			];
-
+				{mois:'DECEMBRE',nb_jours_n_1:21,nb_jours_n:20,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24}
+			],
+			data_bidon_precedente = [
+				{mois:'JANVIER',nb_jours_n_1:22,nb_jours_n:21,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:155,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'FEVRIER',nb_jours_n_1:22,nb_jours_n:21,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'MARS',nb_jours_n_1:22,nb_jours_n:21,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'AVRIL',nb_jours_n_1:22,nb_jours_n:21,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'MAI',nb_jours_n_1:22,nb_jours_n:21,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'JUIN',nb_jours_n_1:22,nb_jours_n:21,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'JUILLET',nb_jours_n_1:22,nb_jours_n:21,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'AOUT',nb_jours_n_1:22,nb_jours_n:21,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'SEPTEMBRE',nb_jours_n_1:22,nb_jours_n:21,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'OCTOBRE',nb_jours_n_1:22,nb_jours_n:21,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'NOVEMBRE',nb_jours_n_1:22,nb_jours_n:21,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'DECEMBRE',nb_jours_n_1:22,nb_jours_n:21,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24}
+			],
+			data_bidon_previsionnelle = [
+				{mois:'JANVIER',nb_jours_n_1:23,nb_jours_n:22,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:155,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'FEVRIER',nb_jours_n_1:23,nb_jours_n:22,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'MARS',nb_jours_n_1:23,nb_jours_n:22,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'AVRIL',nb_jours_n_1:23,nb_jours_n:22,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'MAI',nb_jours_n_1:23,nb_jours_n:22,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'JUIN',nb_jours_n_1:23,nb_jours_n:22,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'JUILLET',nb_jours_n_1:23,nb_jours_n:22,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'AOUT',nb_jours_n_1:23,nb_jours_n:22,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'SEPTEMBRE',nb_jours_n_1:23,nb_jours_n:22,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'OCTOBRE',nb_jours_n_1:23,nb_jours_n:22,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'NOVEMBRE',nb_jours_n_1:23,nb_jours_n:22,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24},
+				{mois:'DECEMBRE',nb_jours_n_1:23,nb_jours_n:22,prc_augm_souhaite:4.5,prc_augm_reelle:3.9,princeps_tx_1:154,generique_tx_1:21,tx_2:471.5,tx_3:512.75,services_tx:8.1,total_ht:2387.70,total_tva:254.7,total_ttc:2614.24}
+			];
 		var load_data = function () {
 			/*PharmacieChiffresService.get({}, function (results) {
 				$scope.grid.salaires.data = results.data;
@@ -209,7 +237,32 @@
 				$rootScope.ngProgress.reset();
 				console.log('Erreur load_data(): ', error);
 			});*/
-			$scope.grid.ca.data = data_bidon;
+			$scope.grid.ca.data = data_bidon_reelle;
+		}
+
+		$scope.refreshGridCA = function () {
+			$rootScope.ngProgress.start();
+
+			// TODO : service de récupération des données
+
+			switch ($scope.period) {
+				case 1:
+					$scope.grid.ca.data = data_bidon_precedente;
+					break;
+				case 2:
+					$scope.grid.ca.data = data_bidon_reelle;
+					break;
+				case 3:
+					$scope.grid.ca.data = data_bidon_previsionnelle;
+					break;
+				default:
+					$scope.grid.ca.data = data_bidon_reelle;
+					break;
+			}
+
+			$scope.tngDashboardChiffresPharmacieGridApi.core.refresh();
+
+			$rootScope.ngProgress.complete();
 		}
 
 		load_data();

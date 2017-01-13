@@ -6,8 +6,8 @@
 
 	angular.module('tabordNG').factory('HelperService', HelperService);
 
-	HelperService.$inject = ['$rootScope', '$cookies'];
-	function HelperService ($rootScope, $cookies) {
+	HelperService.$inject = ['$rootScope', '$cookies', '$filter'];
+	function HelperService ($rootScope, $cookies, $filter) {
 		var _user = "";
 		// Fonctions communes à la factory et exposée
 		return {

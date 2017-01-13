@@ -1,6 +1,6 @@
 <div class="btn-toolbar" role="toolbar">
 	<div class="btn-group btn-group-justified" role="group">
-		<label class="btn" ng-class="{'btn-primary': ($parent.period.selected == choice.id), 'btn-default': ($parent.period.selected != choice.id)}" ng-repeat="choice in period.list">
+		<label ng-click="refreshGridCA()" class="btn" ng-class="{'btn-primary': ($parent.period.selected == choice.id), 'btn-default': ($parent.period.selected != choice.id)}" ng-repeat="choice in period.list">
 			<input type="radio" ng-model="$parent.period.selected" value="{{choice.id}}" autocomplete="off" style="visibility:hidden" />
 			{{choice.libelle}}
 		</label>
