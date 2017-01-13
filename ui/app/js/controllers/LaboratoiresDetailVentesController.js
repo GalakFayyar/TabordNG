@@ -5,14 +5,11 @@
 
 	angular.module('tabordNG').controller('LaboratoiresDetailVentesController', LaboratoiresDetailVentesController);
 
-	LaboratoiresDetailVentesController.$inject = ['$scope', '$rootScope', '$filter', 'uiGridConstants', 'VenteService'];
-	function LaboratoiresDetailVentesController ($scope, $rootScope, $filter, uiGridConstants, VenteService) {
+	LaboratoiresDetailVentesController.$inject = ['$scope', '$rootScope', '$filter', 'uiGridConstants', 'HelperService', 'VenteService'];
+	function LaboratoiresDetailVentesController ($scope, $rootScope, $filter, uiGridConstants, HelperService, VenteService) {
 		$.AdminLTE.layout.activate();
 
-		$scope.formatNumbers = function (number) {
-			var _number = $filter('number')(number, 2); 
-			return _number.replace(',', ' ');
-		}
+		$scope.formatNumbers = HelperService.formatNumbers;
 
 		$scope.grid = {
             detailVentePeriode: {

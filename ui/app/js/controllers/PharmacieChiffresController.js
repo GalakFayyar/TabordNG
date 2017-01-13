@@ -5,8 +5,8 @@
 
 	angular.module('tabordNG').controller('PharmacieChiffresController', PharmacieChiffresController);
 
-	PharmacieChiffresController.$inject = ['$scope', '$rootScope', '$filter', 'PharmacieChiffresService', 'uiGridConstants'];
-	function PharmacieChiffresController ($scope, $rootScope, $filter, PharmacieChiffresService, uiGridConstants) {
+	PharmacieChiffresController.$inject = ['$scope', '$rootScope', '$filter', 'HelperService', 'PharmacieChiffresService', 'uiGridConstants'];
+	function PharmacieChiffresController ($scope, $rootScope, $filter, HelperService, PharmacieChiffresService, uiGridConstants) {
 		$.AdminLTE.layout.activate();
 
 		$scope.period = {
@@ -17,10 +17,6 @@
 			],
 			selected : 2
 		};
-
-		$scope.toto = function () {
-			console.log("toto");
-		}
 
 		$scope.templatesUrl = {
 			ca: 'views/pharmacie/form-ca.html',
@@ -41,10 +37,7 @@
 			$scope.selectedPage = $scope.templatesUrl[page];
 		}
 
-		$scope.formatNumbers = function (number) {
-			var _number = $filter('number')(number, 2); 
-			return _number.replace(',', ' ');
-		}
+		$scope.formatNumbers = HelperService.formatNumbers;
 
 		$scope.grid = {
 			ca: {

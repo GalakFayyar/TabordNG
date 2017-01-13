@@ -60,6 +60,10 @@
 					language: 'fr',
 					weekStart: 1
 				});
+			},
+			formatNumbers: function (number) {
+				var _number = $filter('number')(number, 2); 
+				return _number.replace(',', ' ');
 			}
 		};
 	}
