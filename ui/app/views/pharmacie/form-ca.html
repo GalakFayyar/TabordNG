@@ -143,38 +143,125 @@
 			</form>
 		</div>
 		<div class="col-md-6">
-			<form class="form-horizontal">
-				<div class="form-group">
-					<label for="reel_repartition_ca" class="col-sm-6 control-label">CA Moyen journalier TTC N-1</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="reel_repartition_ca" ng-model="ca.reel.repartition_ca.total_ht" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="ca_reel_moyen_journalier_ttc" class="col-sm-6 control-label">CA Moyen journalier TTC N-1</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="ca_reel_moyen_journalier_ttc" ng-model="ca.reel.ca_moyen_journalier_ttc" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="ca_reel_moyen_journalier_ht" class="col-sm-6 control-label">CA Moyen journalier HT N-1</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="ca_reel_moyen_journalier_ht" ng-model="ca.reel.ca_moyen_journalier_ht" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="ca_reel_ht_dernier_bilan" class="col-sm-6 control-label">CA HT dernier bilan connu</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="ca_reel_ht_dernier_bilan" ng-model="ca.reel.ca_ht_dernier_bilan" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="diff_reel_dernier_bilan" class="col-sm-6 control-label">Différence dernier bilan connu</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="diff_reel_dernier_bilan" ng-model="ca.reel.diff_dernier_bilan" />
-					</div>
-				</div>
-			</form>
+			<table class="table table-bordered table-hover table-condensed">
+				<thead>
+					<tr>
+						<th></th>
+						<th>N-1</th>
+						<th>Prévision</th>
+						<th>Réalisé</th> 
+						<th>Ecarts N-1</th> 
+						<th>Ecarts Prévision</th> 
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>CA moyen journalier TTC</th>
+						<td>{{ca.reel.ca_moyen_journalier.ttc.n_1}}</td>
+						<td>{{ca.reel.ca_moyen_journalier.ttc.prevision}}</td>
+						<td>{{ca.reel.ca_moyen_journalier.ttc.realise}}</td>
+						<td>{{ca.reel.ca_moyen_journalier.ttc.ecarts_n_1}}</td>
+						<td>{{ca.reel.ca_moyen_journalier.ttc.ecarts_prevision}}</td>
+					</tr>
+					<tr>
+						<th>CA moyen journalier HT</th>
+						<td>{{ca.reel.ca_moyen_journalier.ht.n_1}}</td>
+						<td>{{ca.reel.ca_moyen_journalier.ht.prevision}}</td>
+						<td>{{ca.reel.ca_moyen_journalier.ht.realise}}</td>
+						<td>{{ca.reel.ca_moyen_journalier.ht.ecarts_n_1}}</td>
+						<td>{{ca.reel.ca_moyen_journalier.ht.ecarts_prevision}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-bordered table-hover table-condensed">
+				<thead>
+					<tr>
+						<th>Répartition du CA HT (%)</th>
+						<th>Princeps 2,1%</th>
+						<th>7%</th>
+						<th>20%</th> 
+						<th>Services 20%</th> 
+						<th>Générique 2,1%</th> 
+						<th>Total HT</th> 
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>Période précédente</th>
+						<td>{{ca.precedent.repartition_ca.tx_1.princeps.value}}</td>
+						<td>{{ca.precedent.repartition_ca.tx_2.value}}</td>
+						<td>{{ca.precedent.repartition_ca.tx_3.value}}</td>
+						<td>{{ca.precedent.repartition_ca.tx_services.value}}</td>
+						<td>{{ca.precedent.repartition_ca.tx_1.generique.value}}</td>
+						<td>{{ca.precedent.repartition_ca.total_ht}}</td>
+					</tr>
+					<tr>
+						<th>Période Prévisionnelle</th>
+						<td>{{ca.previsionnel.repartition_ca.tx_1.princeps.value}}</td>
+						<td>{{ca.previsionnel.repartition_ca.tx_2.value}}</td>
+						<td>{{ca.previsionnel.repartition_ca.tx_3.value}}</td>
+						<td>{{ca.previsionnel.repartition_ca.tx_services.value}}</td>
+						<td>{{ca.previsionnel.repartition_ca.tx_1.generique.value}}</td>
+						<td>{{ca.previsionnel.repartition_ca.total_ht}}</td>
+					</tr>
+					<tr>
+						<th>Réalisé</th>
+						<td>{{ca.reel.repartition_ca.tx_1.princeps.value}}</td>
+						<td>{{ca.reel.repartition_ca.tx_2.value}}</td>
+						<td>{{ca.reel.repartition_ca.tx_3.value}}</td>
+						<td>{{ca.reel.repartition_ca.tx_services.value}}</td>
+						<td>{{ca.reel.repartition_ca.tx_1.generique.value}}</td>
+						<td>{{ca.reel.repartition_ca.total_ht}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-bordered table-hover table-condensed">
+				<thead>
+					<tr>
+						<th>Ecarts</th>
+						<th>Princeps 2,1%</th>
+						<th>7%</th>
+						<th>20%</th> 
+						<th>Services 20%</th> 
+						<th>Générique 2,1%</th> 
+						<th>Total HT</th> 
+						<th>Total TVA</th> 
+						<th>Total TTC</th> 
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>N-1</th>
+						<td>{{ca.reel.ecarts.n_1.tx_1.princeps.value}}</td>
+						<td>{{ca.reel.ecarts.n_1.tx_2.value}}</td>
+						<td>{{ca.reel.ecarts.n_1.tx_3.value}}</td>
+						<td>{{ca.reel.ecarts.n_1.tx_services.value}}</td>
+						<td>{{ca.reel.ecarts.n_1.tx_1.generique.value}}</td>
+						<td>{{ca.reel.ecarts.n_1.total_ht}}</td>
+						<td>{{ca.reel.ecarts.n_1.total_tva}}</td>
+						<td>{{ca.reel.ecarts.n_1.total_ttc}}</td>
+					</tr>
+					<tr>
+						<th>Prévisions</th>
+						<td>{{ca.reel.ecarts.previsions.tx_1.princeps.value}}</td>
+						<td>{{ca.reel.ecarts.previsions.tx_2.value}}</td>
+						<td>{{ca.reel.ecarts.previsions.tx_3.value}}</td>
+						<td>{{ca.reel.ecarts.previsions.tx_services.value}}</td>
+						<td>{{ca.reel.ecarts.previsions.tx_1.generique.value}}</td>
+						<td>{{ca.reel.ecarts.previsions.total_ht}}</td>
+						<td>{{ca.reel.ecarts.previsions.total_tva}}</td>
+						<td>{{ca.reel.ecarts.previsions.total_ttc}}</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
@@ -223,38 +310,72 @@
 			</form>
 		</div>
 		<div class="col-md-6">
-			<form class="form-horizontal">
-				<div class="form-group">
-					<label for="previsionnel_repartition_ca" class="col-sm-6 control-label">CA Moyen journalier TTC N-1</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="previsionnel_repartition_ca" ng-model="ca.previsionnel.repartition_ca.total_ht" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="ca_previsionnel_moyen_journalier_ttc" class="col-sm-6 control-label">CA Moyen journalier TTC N-1</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="ca_previsionnel_moyen_journalier_ttc" ng-model="ca.previsionnel.ca_moyen_journalier_ttc" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="ca_previsionnel_moyen_journalier_ht" class="col-sm-6 control-label">CA Moyen journalier HT N-1</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="ca_previsionnel_moyen_journalier_ht" ng-model="ca.previsionnel.ca_moyen_journalier_ht" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="ca_previsionnel_ht_dernier_bilan" class="col-sm-6 control-label">CA HT dernier bilan connu</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="ca_previsionnel_ht_dernier_bilan" ng-model="ca.previsionnel.ca_ht_dernier_bilan" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="diff_previsionnel_dernier_bilan" class="col-sm-6 control-label">Différence dernier bilan connu</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="diff_previsionnel_dernier_bilan" ng-model="ca.previsionnel.diff_dernier_bilan" />
-					</div>
-				</div>
-			</form>
+			<table class="table table-bordered table-hover table-condensed">
+				<thead>
+					<tr>
+						<th></th>
+						<th>N-1</th>
+						<th>N</th>
+						<th>Ecarts N-1</th> 
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>CA moyen journalier TTC</th>
+						<td>{{ca.previsionnel.ca_moyen_journalier.ttc.n_1}}</td>
+						<td>{{ca.previsionnel.ca_moyen_journalier.ttc.n}}</td>
+						<td>{{ca.previsionnel.ca_moyen_journalier.ttc.ecarts_n_1}}</td>
+					</tr>
+					<tr>
+						<th>CA moyen journalier HT</th>
+						<td>{{ca.previsionnel.ca_moyen_journalier.ht.n_1}}</td>
+						<td>{{ca.previsionnel.ca_moyen_journalier.ht.n}}</td>
+						<td>{{ca.previsionnel.ca_moyen_journalier.ht.ecarts_n_1}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-bordered table-hover table-condensed">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Princeps 2,1%</th>
+						<th>7%</th>
+						<th>20%</th> 
+						<th>Services 20%</th> 
+						<th>Générique 2,1%</th> 
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>Répartition du CA HT (%)</th>
+						<td>{{ca.previsionnel.repartition_ca.tx_1.princeps.value}}</td>
+						<td>{{ca.previsionnel.repartition_ca.tx_2.value}}</td>
+						<td>{{ca.previsionnel.repartition_ca.tx_3.value}}</td>
+						<td>{{ca.previsionnel.repartition_ca.tx_services.value}}</td>
+						<td>{{ca.previsionnel.repartition_ca.tx_1.generique.value}}</td>
+					</tr>
+					<tr>
+						<th>Augmentation prévue (%)</th>
+						<td>{{ca.previsionnel.prc_augmentation_prevue.tx_1.princeps.value}}</td>
+						<td>{{ca.previsionnel.prc_augmentation_prevue.tx_2.value}}</td>
+						<td>{{ca.previsionnel.prc_augmentation_prevue.tx_3.value}}</td>
+						<td>{{ca.previsionnel.prc_augmentation_prevue.tx_services.value}}</td>
+						<td>{{ca.previsionnel.prc_augmentation_prevue.tx_1.generique.value}}</td>
+					</tr>
+					<tr>
+						<th>Augmentation prévue (Euros)</th>
+						<td>{{ca.previsionnel.mt_augmentation_prevue.tx_1.princeps.value}}</td>
+						<td>{{ca.previsionnel.mt_augmentation_prevue.tx_2.value}}</td>
+						<td>{{ca.previsionnel.mt_augmentation_prevue.tx_3.value}}</td>
+						<td>{{ca.previsionnel.mt_augmentation_prevue.tx_services.value}}</td>
+						<td>{{ca.previsionnel.mt_augmentation_prevue.tx_1.generique.value}}</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

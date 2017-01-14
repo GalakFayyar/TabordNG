@@ -270,15 +270,39 @@
 				},
 				prc_augmentation_prevue: {
 					tx_1: {
-						princeps: {value:24, color:"#3c8dbc"},
-						generique: {value:16, color:"#00c0ef"}
+						princeps: {value:24},
+						generique: {value:16}
 					},
-					tx_2: {value:12, color:"#00a65a"},
-					tx_3: {value:3, color:"#f39c12"},
-					tx_services: {value:45, color:"#d2d6de"},
+					tx_2: {value:12},
+					tx_3: {value:3},
+					tx_services: {value:45},
 					total_ht:7618
 				},
 				mt_augmentation_prevue: {
+					tx_1: {
+						princeps: {value:24},
+						generique: {value:16}
+					},
+					tx_2: {value:12},
+					tx_3: {value:3},
+					tx_services: {value:45},
+					total_ht:7618
+				},
+				ca_moyen_journalier: {
+					ttc: {
+						n_1: 124,
+						n: 141,
+						ecarts_n_1: (141-124)
+					},
+					ht: {
+						n_1: 128,
+						n: 184,
+						ecarts_n_1: (184-128)
+					}
+				}
+			}, 
+			reel: {
+				repartition_ca: {
 					tx_1: {
 						princeps: {value:24, color:"#3c8dbc"},
 						generique: {value:16, color:"#00c0ef"}
@@ -288,10 +312,48 @@
 					tx_services: {value:45, color:"#d2d6de"},
 					total_ht:7618
 				},
-				ca_moyen_journalier_ttc: 7156,
-				ca_moyen_journalier_ht: 6513,
-				ca_ht_dernier_bilan: 8713,
-				diff_dernier_bilan: 321
+				ecarts: {
+					n_1: {
+						tx_1: {
+							princeps: {value:24},
+							generique: {value:16}
+						},
+						tx_2: {value:12},
+						tx_3: {value:3},
+						tx_services: {value:45},
+						total_ht:7618,
+						total_tva:8780,
+						total_ttc:9047
+					}, 
+					previsions: {
+						tx_1: {
+							princeps: {value:24},
+							generique: {value:16}
+						},
+						tx_2: {value:12},
+						tx_3: {value:3},
+						tx_services: {value:45},
+						total_ht:7618,
+						total_tva:8780,
+						total_ttc:9047
+					}
+				},
+				ca_moyen_journalier: {
+					ttc: {
+						n_1: 124,
+						prevision: 141,
+						realise: 139,
+						ecarts_n_1: (139-124),
+						ecarts_prevision: (141-139)
+					},
+					ht: {
+						n_1: 124,
+						prevision: 141,
+						realise: 139,
+						ecarts_n_1: (139-124),
+						ecarts_prevision: (141-139)
+					}
+				}
 			}
 		};
 
@@ -342,6 +404,24 @@
 						}  
 					},
 					data: getChartData('previsionnel')
+				},
+				reel: {
+					options: {
+						chart: {
+							type: 'pieChart',
+							height: 200,
+							width: 300,
+							x: function(d){return d.libelle;},
+							y: function(d){return d.value;},
+							pieLabelsOutside: true,
+							showLabels: true,
+							labelType: "percent",
+							duration: 500,
+							showLegend: false,
+							noData: "Aucune donnée à afficher",
+						}  
+					},
+					data: getChartData('reel')
 				}
 			}
 		};
