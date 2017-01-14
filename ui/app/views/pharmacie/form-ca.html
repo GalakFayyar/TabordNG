@@ -25,42 +25,236 @@
 		<div class="col-md-3">
 			<div style="width:100%; display:block">
 				<nvd3 options="chart.ca.precedent.options" data="chart.ca.precedent.data" class="with-3d-shadow with-transitions"></nvd3>
-				<span ng-show="info.error_sum_prc" class="text-red">{{info.error_sum_prc}}</span>
+				<span ng-show="info.precedent.error_sum_prc" class="text-red">{{info.precedent.error_sum_prc}}</span>
 			</div>
 		</div>
 		<div class="col-md-3">
-				<form class="form-horizontal">
-					<div class="form-group">
-						<label for="tx_precedent_princeps_1" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_1.princeps.color}}">Princeps 2,1%</label>
-						<div class="col-sm-4">
-							<input type="text" class="form-control" id="tx_precedent_princeps_1" ng-model="ca.precedent.tx_1.princeps.value" ng-change="refreshPieChart()"/>
-						</div>
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="tx_precedent_princeps_1" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_1.princeps.color}}">Princeps 2,1%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_precedent_princeps_1" ng-model="ca.precedent.repartition_ca.tx_1.princeps.value" ng-change="refreshPieChart('precedent')"/>
 					</div>
-					<div class="form-group">
-						<label for="tx_precedent_generique_1" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_1.generique.color}}">Générique 2,1%</label>
-						<div class="col-sm-4">
-							<input type="text" class="form-control" id="tx_precedent_generique_1" ng-model="ca.precedent.tx_1.generique.value" ng-change="refreshPieChart()"/>
-						</div>
+				</div>
+				<div class="form-group">
+					<label for="tx_precedent_generique_1" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_1.generique.color}}">Générique 2,1%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_precedent_generique_1" ng-model="ca.precedent.repartition_ca.tx_1.generique.value" ng-change="refreshPieChart('precedent')"/>
 					</div>
-					<div class="form-group">
-						<label for="tx_precedent_2" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_2.color}}">7%</label>
-						<div class="col-sm-4">
-							<input type="text" class="form-control" id="tx_precedent_2" ng-model="ca.precedent.tx_2.value" ng-change="refreshPieChart()"/>
-						</div>
+				</div>
+				<div class="form-group">
+					<label for="tx_precedent_2" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_2.color}}">7%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_precedent_2" ng-model="ca.precedent.repartition_ca.tx_2.value" ng-change="refreshPieChart('precedent')"/>
 					</div>
-					<div class="form-group">
-						<label for="tx_precedent_3" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_3.color}}">20%</label>
-						<div class="col-sm-4">
-							<input type="text" class="form-control" id="tx_precedent_3" ng-model="ca.precedent.tx_3.value" ng-change="refreshPieChart()"/>
-						</div>
+				</div>
+				<div class="form-group">
+					<label for="tx_precedent_3" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_3.color}}">20%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_precedent_3" ng-model="ca.precedent.repartition_ca.tx_3.value" ng-change="refreshPieChart('precedent')"/>
 					</div>
-					<div class="form-group">
-						<label for="tx_precedent_services" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_services.color}}">Services 20%</label>
-						<div class="col-sm-4">
-							<input type="text" class="form-control" id="tx_precedent_services" ng-model="ca.precedent.tx_services.value" ng-change="refreshPieChart()"/>
-						</div>
+				</div>
+				<div class="form-group">
+					<label for="tx_precedent_services" class="col-sm-8 control-label" style="color:{{ca.precedent.tx_services.color}}">Services 20%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_precedent_services" ng-model="ca.precedent.repartition_ca.tx_services.value" ng-change="refreshPieChart('precedent')"/>
 					</div>
-				</form>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-6">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="precedent_repartition_ca" class="col-sm-6 control-label">CA Moyen journalier TTC N-1</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="precedent_repartition_ca" ng-model="ca.precedent.repartition_ca.total_ht" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="ca_precedent_moyen_journalier_ttc" class="col-sm-6 control-label">CA Moyen journalier TTC N-1</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="ca_precedent_moyen_journalier_ttc" ng-model="ca.precedent.ca_moyen_journalier_ttc" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="ca_precedent_moyen_journalier_ht" class="col-sm-6 control-label">CA Moyen journalier HT N-1</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="ca_precedent_moyen_journalier_ht" ng-model="ca.precedent.ca_moyen_journalier_ht" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="ca_precedent_ht_dernier_bilan" class="col-sm-6 control-label">CA HT dernier bilan connu</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="ca_precedent_ht_dernier_bilan" ng-model="ca.precedent.ca_ht_dernier_bilan" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="diff_precedent_dernier_bilan" class="col-sm-6 control-label">Différence dernier bilan connu</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="diff_precedent_dernier_bilan" ng-model="ca.precedent.diff_dernier_bilan" />
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div ng-show="period.selected == '2'">
+	<h3 class="box-title">Répartition du CA HT (%)</h3>
+	<div class="row">
+		<div class="col-md-3">
+			<div style="width:100%; display:block">
+				<nvd3 options="chart.ca.reel.options" data="chart.ca.reel.data" class="with-3d-shadow with-transitions"></nvd3>
+				<span ng-show="info.reel.error_sum_prc" class="text-red">{{info.reel.error_sum_prc}}</span>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="tx_reel_princeps_1" class="col-sm-8 control-label" style="color:{{ca.reel.tx_1.princeps.color}}">Princeps 2,1%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_reel_princeps_1" ng-model="ca.reel.repartition_ca.tx_1.princeps.value" ng-change="refreshPieChart('reel')"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tx_reel_generique_1" class="col-sm-8 control-label" style="color:{{ca.reel.tx_1.generique.color}}">Générique 2,1%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_reel_generique_1" ng-model="ca.reel.repartition_ca.tx_1.generique.value" ng-change="refreshPieChart('reel')"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tx_reel_2" class="col-sm-8 control-label" style="color:{{ca.reel.tx_2.color}}">7%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_reel_2" ng-model="ca.reel.repartition_ca.tx_2.value" ng-change="refreshPieChart('reel')"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tx_reel_3" class="col-sm-8 control-label" style="color:{{ca.reel.tx_3.color}}">20%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_reel_3" ng-model="ca.reel.repartition_ca.tx_3.value" ng-change="refreshPieChart('reel')"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tx_reel_services" class="col-sm-8 control-label" style="color:{{ca.reel.tx_services.color}}">Services 20%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_reel_services" ng-model="ca.reel.repartition_ca.tx_services.value" ng-change="refreshPieChart('reel')"/>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-6">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="reel_repartition_ca" class="col-sm-6 control-label">CA Moyen journalier TTC N-1</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="reel_repartition_ca" ng-model="ca.reel.repartition_ca.total_ht" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="ca_reel_moyen_journalier_ttc" class="col-sm-6 control-label">CA Moyen journalier TTC N-1</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="ca_reel_moyen_journalier_ttc" ng-model="ca.reel.ca_moyen_journalier_ttc" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="ca_reel_moyen_journalier_ht" class="col-sm-6 control-label">CA Moyen journalier HT N-1</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="ca_reel_moyen_journalier_ht" ng-model="ca.reel.ca_moyen_journalier_ht" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="ca_reel_ht_dernier_bilan" class="col-sm-6 control-label">CA HT dernier bilan connu</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="ca_reel_ht_dernier_bilan" ng-model="ca.reel.ca_ht_dernier_bilan" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="diff_reel_dernier_bilan" class="col-sm-6 control-label">Différence dernier bilan connu</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="diff_reel_dernier_bilan" ng-model="ca.reel.diff_dernier_bilan" />
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div ng-show="period.selected == '3'">
+	<h3 class="box-title">Répartition du CA HT (%)</h3>
+	<div class="row">
+		<div class="col-md-3">
+			<div style="width:100%; display:block">
+				<nvd3 options="chart.ca.previsionnel.options" data="chart.ca.previsionnel.data" class="with-3d-shadow with-transitions"></nvd3>
+				<span ng-show="info.previsionnel.error_sum_prc" class="text-red">{{info.previsionnel.error_sum_prc}}</span>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="tx_previsionnel_princeps_1" class="col-sm-8 control-label" style="color:{{ca.previsionnel.tx_1.princeps.color}}">Princeps 2,1%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_previsionnel_princeps_1" ng-model="ca.previsionnel.repartition_ca.tx_1.princeps.value" ng-change="refreshPieChart('previsionnel')"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tx_previsionnel_generique_1" class="col-sm-8 control-label" style="color:{{ca.previsionnel.tx_1.generique.color}}">Générique 2,1%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_previsionnel_generique_1" ng-model="ca.previsionnel.repartition_ca.tx_1.generique.value" ng-change="refreshPieChart('previsionnel')"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tx_previsionnel_2" class="col-sm-8 control-label" style="color:{{ca.previsionnel.tx_2.color}}">7%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_previsionnel_2" ng-model="ca.previsionnel.repartition_ca.tx_2.value" ng-change="refreshPieChart('previsionnel')"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tx_previsionnel_3" class="col-sm-8 control-label" style="color:{{ca.previsionnel.tx_3.color}}">20%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_previsionnel_3" ng-model="ca.previsionnel.repartition_ca.tx_3.value" ng-change="refreshPieChart('previsionnel')"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tx_previsionnel_services" class="col-sm-8 control-label" style="color:{{ca.previsionnel.tx_services.color}}">Services 20%</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="tx_previsionnel_services" ng-model="ca.previsionnel.repartition_ca.tx_services.value" ng-change="refreshPieChart('previsionnel')"/>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-6">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="previsionnel_repartition_ca" class="col-sm-6 control-label">CA Moyen journalier TTC N-1</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="previsionnel_repartition_ca" ng-model="ca.previsionnel.repartition_ca.total_ht" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="ca_previsionnel_moyen_journalier_ttc" class="col-sm-6 control-label">CA Moyen journalier TTC N-1</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="ca_previsionnel_moyen_journalier_ttc" ng-model="ca.previsionnel.ca_moyen_journalier_ttc" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="ca_previsionnel_moyen_journalier_ht" class="col-sm-6 control-label">CA Moyen journalier HT N-1</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="ca_previsionnel_moyen_journalier_ht" ng-model="ca.previsionnel.ca_moyen_journalier_ht" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="ca_previsionnel_ht_dernier_bilan" class="col-sm-6 control-label">CA HT dernier bilan connu</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="ca_previsionnel_ht_dernier_bilan" ng-model="ca.previsionnel.ca_ht_dernier_bilan" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="diff_previsionnel_dernier_bilan" class="col-sm-6 control-label">Différence dernier bilan connu</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="diff_previsionnel_dernier_bilan" ng-model="ca.previsionnel.diff_dernier_bilan" />
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>

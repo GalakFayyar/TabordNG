@@ -141,7 +141,6 @@
 						height: 200,
 						x: function(d){return d.libelle;},
 						y: function(d){return d.value;},
-						showLabels: false,
 						pieLabelsOutside: true,
 						showLabels: true,
 						labelType: "percent",
